@@ -28,4 +28,8 @@ public class Accident {
 
     @Column(name = "accident_picture")
     String accidentPicture;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "camera_id")
+    Camera camera;
 }

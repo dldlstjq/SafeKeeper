@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.List;
 
 /**
  * 유저 모델 정의.
@@ -31,7 +32,7 @@ public class User extends BaseEntity{
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "room_id")
-    Room room;
+    List<Room> room;
 
     // 유저 Password
     @JsonIgnore

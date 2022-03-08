@@ -17,4 +17,13 @@ public class Camera{
     // 배치 장소
     @Column(name = "camera_place")
     String cameraPlace;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "construction_id")
+    Construction construction;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "room_id")
+    Room room;
+
 }
