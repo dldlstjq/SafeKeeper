@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Entity;
+import javax.persistence.*;
 
 /**
  * 유저 모델 정의.
@@ -15,12 +15,27 @@ import javax.persistence.Entity;
 @Getter
 @Setter
 public class User extends BaseEntity{
-    String position;
-    String department;
-    String name;
+    // 부서
+    @Column(name = "user_department")
+    String userDepartment;
+    // 유저 이름
+    @Column(name = "user_name")
+    String userName;
+    // 유저 ID
+    @Column(name = "user_id")
     String userId;
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "construction_id")
+    Construction construction;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinColumn(name = "room_id")
+    Room room;
+
+    // 유저 Password
     @JsonIgnore
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    String password;
+    @Column(name = "user_password")
+    String userPassword;
 }
