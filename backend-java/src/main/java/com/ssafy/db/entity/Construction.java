@@ -17,6 +17,6 @@ public class Construction{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long constructionId;
     // 회사이름
-    @Column(name = "construction_name")
+    @Column(name = "construction_name", nullable = false)
     String constructName;
 }
