@@ -15,11 +15,11 @@ public class Camera{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long cameraId;
     // 배치 장소
-    @Column(name = "camera_place")
+    @Column(name = "camera_place", nullable = false)
     String cameraPlace;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "construction_id")
+    @JoinColumn(name = "construction_id", nullable = false)
     Construction construction;
 
     @ManyToOne(fetch = FetchType.EAGER)
