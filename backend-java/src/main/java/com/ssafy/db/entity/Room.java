@@ -18,13 +18,13 @@ public class Room{
     Long roomId;
 
     //방 이름
-    @Column(name = "room_name")
+    @Column(name = "room_name", nullable = false)
     String roomName;
 
     // 방 Password
     @JsonIgnore
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    @Column(name = "room_password")
+    @Column(name = "room_password", nullable = false)
     String roomPassword;
 
 
