@@ -1,7 +1,7 @@
 import {useState,} from 'react'
 import { TextField, Button, } from '@mui/material'
 import styled from '@emotion/styled'
-import axios from 'axios'
+// import axios from 'axios'
 
 const Form = styled.form`
 	margin: 10px;
@@ -23,6 +23,7 @@ export function SignupForm(){
 	})
 
 	function allClear(){
+		// console.log('allclear');
 		for (const key in inputs) {
 			if (!inputs[key][1]) {
 				return false
@@ -31,13 +32,13 @@ export function SignupForm(){
 		return true
 	}
 	
-
 	function submit(e){
 		e.preventDefault();
 		// axios.post(url,data:inputs,)
 	}
 
 	function validate(name,val){
+		// console.log('validate');
 		switch (name) {
 			case 'id':
 				return val.length<=10
@@ -57,24 +58,12 @@ export function SignupForm(){
 	}
 
 	function handleChange(e){
+		// console.log('handleChange');
 		const {name,value}=e.target
 		setInputs({
 			...inputs,
 			[name]:[value,validate(name,value)]
 		})
-		if (name==='pw') {
-			if (value!==inputs.pw2[0]) {
-				setInputs({
-					...inputs,
-					pw2:[inputs.pw2[0],false]
-				})
-			} else {
-				setInputs({
-					...inputs,
-					pw2:[inputs.pw2[0],true]
-				})
-			} 
-		}
 	}
 
 	return(
@@ -136,8 +125,6 @@ export function SignupForm(){
 }
 
 export function LoginForm(){
-	
-	
 	function submit(e){
 		e.preventDefault()
 		const data = new FormData(e.currentTarget);
