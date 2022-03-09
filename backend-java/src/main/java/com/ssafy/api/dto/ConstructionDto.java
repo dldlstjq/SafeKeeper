@@ -1,6 +1,7 @@
 package com.ssafy.api.dto;
 
 import com.ssafy.common.model.response.BaseResponseBody;
+import com.ssafy.db.entity.Construction;
 import com.ssafy.db.entity.User;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -26,11 +27,13 @@ public class ConstructionDto {
     @Getter
     @Setter
     @ApiModel("ConstructionResponse")
-    public static class UserRes{
+    public static class ConstructionRes{
+        @ApiModelProperty(name="회사 이름", example="ssafy")
+        String constructionName;
 
-        public static com.ssafy.api.dto.UserDto.UserRes of(User user) {
-            com.ssafy.api.dto.UserDto.UserRes res = new com.ssafy.api.dto.UserDto.UserRes();
-            res.setUserId(user.getUserId());
+        public static ConstructionRes of(Construction construction) {
+            ConstructionRes res = new ConstructionRes();
+            res.setConstructionName(construction.getConstructName());
             return res;
         }
     }
