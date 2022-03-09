@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
-
+import lombok.Builder;
 import javax.persistence.*;
 import java.util.List;
 
@@ -28,4 +28,10 @@ public class Room{
     String roomPassword;
 
 
+    @Builder
+    public Room(Long roomId, String roomName, String roomPassword){
+        this.roomId = roomId;
+        this.roomName = roomName;
+        this.roomPassword = roomPassword;
+    }
 }
