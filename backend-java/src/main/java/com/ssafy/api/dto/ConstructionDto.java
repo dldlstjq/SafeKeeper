@@ -28,11 +28,14 @@ public class ConstructionDto {
     @Setter
     @ApiModel("ConstructionResponse")
     public static class ConstructionRes{
+        @ApiModelProperty(name="회사 아이디", example="1")
+        Long constructionId;
         @ApiModelProperty(name="회사 이름", example="ssafy")
         String constructionName;
 
         public static ConstructionRes of(Construction construction) {
             ConstructionRes res = new ConstructionRes();
+            res.setConstructionId(construction.getConstructionId());
             res.setConstructionName(construction.getConstructName());
             return res;
         }
