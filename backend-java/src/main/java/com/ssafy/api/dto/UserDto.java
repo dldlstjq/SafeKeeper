@@ -30,10 +30,14 @@ public class UserDto {
     @Setter
     @ApiModel("UserRegisterPostRequest")
     public static class UserRegisterPostReq {
-        @ApiModelProperty(name="유저 ID", example="ssafy_web")
+        @ApiModelProperty(name="유저 ID", example="your_id", required = true)
         String id;
-        @ApiModelProperty(name="유저 Password", example="your_password")
+        @ApiModelProperty(name="유저 Password", example="your_password", required = true)
         String password;
+        @ApiModelProperty(name="유저 이름", example="your_name", required = true)
+        String name;
+        @ApiModelProperty(name="유저 부서", example="your_role", required = true)
+        String role;
     }
 
     /**
@@ -72,5 +76,4 @@ public class UserDto {
             return res;
         }
     }
-
 }
