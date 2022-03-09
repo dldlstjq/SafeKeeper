@@ -3,6 +3,7 @@ package com.ssafy.api.dto;
 import com.ssafy.api.dto.UserDto.UserLoginPostRes;
 import com.ssafy.api.dto.UserDto.UserRes;
 import com.ssafy.common.model.response.BaseResponseBody;
+import com.ssafy.db.entity.Construction;
 import com.ssafy.db.entity.User;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -38,6 +39,8 @@ public class UserDto {
         String name;
         @ApiModelProperty(name="유저 부서", example="your_role", required = true)
         String role;
+        @ApiModelProperty(name="회사 이름", example="your_construction", required = true)
+        Construction construction;
     }
 
     /**
