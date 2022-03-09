@@ -3,14 +3,16 @@ import { Button } from "@mui/material";
 import { Box, } from "@mui/system";
 import { useNavigate } from "react-router-dom";
 
-export default function Mainpage(){
-	const navigate = useNavigate()
-	const Bigbtn = styled(Button)`
+export const Bigbtn = styled(Button)`
 	width:150px;
 	height:150px;
 	margin:10px;
 	background-color:violet;
 	`
+
+export default function Mainpage(){
+	const navigate = useNavigate()
+	
 	return (
 		<Box sx={{
 			display: 'flex',
