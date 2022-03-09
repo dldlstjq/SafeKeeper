@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.*;
 import com.ssafy.api.dto.ConstructionDto.ConstructionRegisterPostReq;
 import springfox.documentation.annotations.ApiIgnore;
 
+import java.util.List;
+
 /**
  * 회사 등록 API 요청 처리를 위한 컨트롤러 정의.
  */
@@ -43,22 +45,19 @@ public class ConstructionController {
         return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
     }
 
-   /*
+
     @GetMapping("/getConstruction")
-    @ApiOperation(value = "회사 정보 조회", notes = "db에 등록된 회사 정보를 응답한다.")
+    @ApiOperation(value = "회사 정보 조회", notes = "db에 등록된 회사 정보를 조회한다.")
     @ApiResponses({
             @ApiResponse(code = 200, message = "성공"),
             @ApiResponse(code = 401, message = "인증 실패"),
             @ApiResponse(code = 404, message = "사용자 없음"),
             @ApiResponse(code = 500, message = "서버 오류")
     })
-    public ResponseEntity<ConstructionDto.UserRes> getConstructionInfo(@ApiIgnore Authentication authentication) {
+    public ResponseEntity<List<ConstructionDto.ConstructionRes>> getConstructionList() {
 
-        SsafyUserDetails userDetails = (SsafyUserDetails)authentication.getDetails();
-        String userId = userDetails.getUsername();
-        User user = userService.getUserByUserId(userId);
-
-        return ResponseEntity.status(200).body(UserDto.UserRes.of(user));
+        List<ConstructionDto.ConstructionRes> list = constructionService.getConstructionList();
+        return ResponseEntity.status(200).body(list);
     }
-    */
+
 }
