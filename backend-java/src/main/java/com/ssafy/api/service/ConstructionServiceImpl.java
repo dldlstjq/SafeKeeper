@@ -37,6 +37,7 @@ public class ConstructionServiceImpl implements ConstructionService{
 
         for (Construction construction : list) {
             ConstructionDto.ConstructionRes constructionListRes = new ConstructionDto.ConstructionRes();
+            constructionListRes.setConstructionId(construction.getConstructionId());
             constructionListRes.setConstructionName(construction.getConstructName());
             result.add(constructionListRes);
         }
