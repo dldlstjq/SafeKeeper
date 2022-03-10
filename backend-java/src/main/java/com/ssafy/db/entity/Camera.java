@@ -1,6 +1,7 @@
 package com.ssafy.db.entity;
 
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -26,4 +27,11 @@ public class Camera{
     @JoinColumn(name = "room_id")
     Room room;
 
+    @Builder
+    public Camera(Long cameraId, String cameraPlace, Construction construction,  Room room){
+        this.cameraId = cameraId;
+        this.cameraPlace = cameraPlace;
+        this.construction = construction;
+        this.room = room;
+    }
 }
