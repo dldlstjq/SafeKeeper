@@ -22,28 +22,35 @@ export function SignupForm(){
     id:['',false],
 		name:['',false],
 		team:['',false],
-		// const_name:['',false],
+		company:['',false],
 		pw:['',false],
 		pw2:['',false],
 	})
-  const [company,setCompany]=useState('a')
+  const [companies,setCompanies]=useState(
+    // axios로 받아올 것
+    [{label:'samsung',id:0},{label:'multicampus',id:1},{label:'KT',id:2}]
+  )
+  
   const {pw,pw2} = inputs
+  
   useEffect(() => { 
     if (pw[0]!==pw2[0]){
       setInputs({...inputs,pw2:[inputs.pw2[0],false]})
     } else {setInputs({...inputs,pw2:[inputs.pw2[0],true]})}
   },[pw])
-	function allClear(){
+	
+  function allClear(){
 		for (const key in inputs) {
-      if (!inputs[key][1]) {
-				return false
-			} 
+      if (!inputs[key][1]) return false 
 		}
 		return true
 	}
 	function submit(e){
-    const data = {id:inputs}
-    // console.log(inputs);
+    const data = {}
+    for (const key in inputs) {
+      data[key]=inputs[key][0]
+    }
+    console.log(data)
 	}
 	function validate(name,val){
 		switch (name) {
@@ -57,12 +64,13 @@ export function SignupForm(){
 				return Boolean(val) && val.length<=10 && !/[^A-Za-zㄱ-ㅎㅏ-ㅣ가-힣]/.test(val)
 			case 'team':
         return Boolean(val) && val.length<=45
-      case 'const_name':
+      case 'company':
         return Boolean(val) && val.length<=30
 			default:
 				break;
 		}
 	}
+
 	function handleChange(e){
 		const {name,value}=e.target
 		setInputs({
@@ -70,29 +78,30 @@ export function SignupForm(){
 			[name]:[value,validate(name,value)]
 		})
 	}
+
   function add(){
     axios.post(BASE_URL+'/api/v1/construction',{'constructName':'abc'})
-    .then(res=>console.log(res))
+    .then(res=>{
+      console.log(res)
+      // setCompanies([...companies, res.??? ]) // companies 변경
+    }) 
     .catch(err=>console.log(err))
   }
-  const x = [{label:'a',id:1},{label:'b',id:2},{label:'회사가 없으세요?',id:3}]
+
+  
   
 	return(
 		<div>
-  		{/* <Autocomplete
-        // value={company}
-        // inputValue={inputValue}
-        // onInputChange={(event, newInputValue) => {
-          //   setInputValue(newInputValue);
-          // }}
-        // getOptionSelected={(option, value) => option.id === value.id}
-        getOptionLabel={(option) => option.label}
-        onChange={(e)=>handleChange(e)}
+  		<Autocomplete
+        size='small'
+        disablePortal
         id="company"
-        options={x}
+        options={companies}
         sx={{ width: 300 }}
-        renderInput={(params) => <TextFieldMargin {...params} size='small' label="회사선택" />}
-      /> */}
+        renderInput={(params) => <TextField {...params} label="회사선택" />}
+        onChange={(e)=>setInputs({...inputs, company:[e.target.innerText,validate('company',e.target.innerText)]})}
+        isOptionEqualToValue={(o,v)=>o.id===v.id}
+      />
       <TextFieldMargin 
 				name="id"
 				label="id"
@@ -116,7 +125,7 @@ export function SignupForm(){
         <InputLabel htmlFor="outlined-adornment-password">회사등록</InputLabel>
         <OutlinedInput
           id="addCompany"
-          onChange={(e)=>setCompany(e.target.value)}
+          // onChange={(e)=>setCompany(e.target.value)}
           endAdornment={
             <InputAdornment position="end">
               <Button variant='contained' size='small' onClick={add} >등록</Button>
@@ -160,7 +169,7 @@ export function SignupForm(){
 				error={Boolean(inputs.pw2[0]) && !inputs.pw2[1]}
 				helperText={inputs.pw2[0] && !inputs.pw2[1] && '일치하지 않습니다'}
 			/>
-			<Bigbtn onClick={()=>submit()} variant='contained' disabled={!allClear()}>회원등록</Bigbtn>
+			<Bigbtn onClick={submit} variant='contained' disabled={!allClear()}>회원등록</Bigbtn>
 		</div>
 	)
 }
