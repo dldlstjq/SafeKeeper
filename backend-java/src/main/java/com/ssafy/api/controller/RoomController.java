@@ -12,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 /**
  * 방 등록 API 요청 처리를 위한 컨트롤러 정의.
  */
@@ -38,5 +40,19 @@ public class RoomController {
         Room room = roomService.createRoom(registerInfo);
 
         return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
+    }
+
+    @GetMapping("")
+    @ApiOperation(value = "회사 정보 조회", notes = "db에 등록된 회사 정보를 조회한다.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "성공"),
+            @ApiResponse(code = 401, message = "인증 실패"),
+            @ApiResponse(code = 404, message = "사용자 없음"),
+            @ApiResponse(code = 500, message = "서버 오류")
+    })
+    public ResponseEntity<List<RoomDto.RoomRes>> getAllRoomList() {
+
+        List<RoomDto.RoomRes> list = roomService.getAllRoomList();
+        return ResponseEntity.status(200).body(list);
     }
 }
