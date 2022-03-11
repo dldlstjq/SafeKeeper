@@ -1,14 +1,8 @@
-import styled from "@emotion/styled";
-import { Button } from "@mui/material";
+import { Bigbtn } from "./Common";
 import { Box, } from "@mui/system";
 import { useNavigate } from "react-router-dom";
 
-export const Bigbtn = styled(Button)`
-	width:150px;
-	height:150px;
-	margin:10px;
-	background-color:violet;
-	`
+
 
 export default function Mainpage(){
 	const navigate = useNavigate()
