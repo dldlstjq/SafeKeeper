@@ -8,6 +8,8 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
 public class CameraDto {
 
     /**
@@ -49,14 +51,17 @@ public class CameraDto {
     }
 
 
-//    /**
-//     * 회사별 카메라 조회 API
-//     */
-//    @Getter
-//    @Setter
-//    @ApiModel("ConstCameraReq")
-//    public static class ConstCameraRes{
-//        @ApiModelProperty(name="회사", required = true )
-//        Construction construction;
-//    }
+    /**
+     * 회사별 카메라 조회 API
+     */
+    @Getter
+    @Setter
+    @ApiModel("ConstCameraReq")
+    public static class ConstCameraReq{
+        @ApiModelProperty(name="회사", required = true )
+        Construction construction;
+    }
+
 }
+
+

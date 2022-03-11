@@ -55,21 +55,26 @@ public class CameraController {
         return ResponseEntity.status(200).body(list);
     }
 
-//    @GetMapping("/getConstCameraList")
-//    @ApiOperation(value = "카메라 조회", notes = "db에 등록된 카메라를 조회한다.")
-//    @ApiResponses({
-//            @ApiResponse(code = 200, message = "성공"),
-//            @ApiResponse(code = 401, message = "인증 실패"),
-//            @ApiResponse(code = 404, message = "사용자 없음"),
-//            @ApiResponse(code = 500, message = "서버 오류")
-//    })
-//    public ResponseEntity<List<CameraDto.CameraRes>> getConstCameraList(
-//            @RequestBody @ApiParam(value="검색할 회사 정보", required = true) CameraDto.ConstCameraRes registerInfo) {
-//        List<CameraDto.CameraRes> list = cameraService.getConstCameraList(registerInfo);
-//        return ResponseEntity.status(200).body(list);
-//    }
+    //어라 왜 get안되는거지;; => RequestBody 때문
+    @PostMapping("/getConstCameraList")
+    @ApiOperation(value = "회사별 카메라 조회", notes = "회사별 카메라를 조회한다.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "성공"),
+            @ApiResponse(code = 401, message = "인증 실패"),
+            @ApiResponse(code = 404, message = "사용자 없음"),
+            @ApiResponse(code = 500, message = "서버 오류")
+    })
+    public ResponseEntity<List<CameraDto.CameraRes>> getConstCameraList(
+            @RequestBody @ApiParam(value="검색할 회사 정보", required = true) CameraDto.ConstCameraReq registerInfo) {
+        List<CameraDto.CameraRes> list = cameraService.getConstCameraList(registerInfo);
+        System.out.println(list);
+        return ResponseEntity.status(200).body(list);
+    }
 
 
+    //Todo update
+
+    //Todo delete
 
 
 

@@ -2,9 +2,7 @@ package com.ssafy.api.service;
 
 
 import com.ssafy.api.dto.CameraDto;
-import com.ssafy.api.dto.ConstructionDto;
 import com.ssafy.db.entity.Camera;
-import com.ssafy.db.entity.Construction;
 
 import java.util.List;
 
@@ -15,6 +13,9 @@ import java.util.List;
 public interface CameraService {
     Camera createCamera(CameraDto.CameraRegisterPostReq CameraRegisterInfo);
     List<CameraDto.CameraRes> getAllCameraList(); //전체 카메라 리스트 반환
-//    List<CameraDto.CameraRes> getConstCameraList(); //회사별 카메라 리스트 반환
+    List<CameraDto.CameraRes> getConstCameraList(CameraDto.ConstCameraReq registerInfo); //회사별 카메라 리스트 반환
+    //방별 카메라 반환
+    //카메라 update
+    //카메라 delete
 
 }
