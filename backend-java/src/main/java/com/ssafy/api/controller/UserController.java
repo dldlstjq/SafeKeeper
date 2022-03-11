@@ -65,8 +65,8 @@ public class UserController {
 
 		Boolean check = userService.checkIdDuplicate(userId);
 		if(!check)
-			return ResponseEntity.status(200).body(BaseResponseBody.of(200, "중복되는 아이디가 존재합니다."));
-		return ResponseEntity.status(200).body(BaseResponseBody.of(200, "중복되는 아이디가 없습니다."));
+			return ResponseEntity.status(200).body(BaseResponseBody.of(200, "이미 존재하는 아이디입니다."));
+		return ResponseEntity.status(200).body(BaseResponseBody.of(200, "사용가능한 아이디입니다."));
 
 	}
 	
