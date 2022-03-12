@@ -1,17 +1,24 @@
 import { useState, useEffect } from "react";
 import {
   Button,
+  Grid,
   Autocomplete,
   FormControl,
   InputLabel,
   OutlinedInput,
+  IconButton,
   InputAdornment,
 } from "@mui/material";
 import Brightness3Icon from "@mui/icons-material/Brightness3";
+import styled from "@emotion/styled";
 import axios from "axios";
 import { useNavigate } from "react-router";
 import { Bigbtn, BASE_URL, Gridd, TextFieldPadding, Div } from "./Common";
-import { width } from "@mui/system";
+
+const Form = styled.form`
+  background-color: violet;
+  margin: 10px;
+`;
 
 export function SignupForm() {
   const navigate = new useNavigate();
@@ -108,14 +115,26 @@ export function SignupForm() {
 
   return (
     <Gridd container>
-      <Gridd item xs={2} />
-
-      <Gridd item container xs={6} columnSpacing={1}>
-        <Gridd item container xs={12} marginY={4}>
-          <Brightness3Icon sx={{ color: "silver", fontSize: 100, mx: "35%" }} />
+      <Gridd item xs={1} />
+      <Gridd item container xs={7} columnSpacing={1}>
+        <Gridd
+          item
+          container
+          xs={12}
+          // display="flex"
+          // justifyContent="center"
+          marginY={4}
+        >
+          <Gridd xs={4} />
+          <Brightness3Icon sx={{ color: "silver", fontSize: 100 }} />
         </Gridd>
-
-        <Gridd item xs={12}>
+        <Gridd
+          item
+          xs={6}
+          // display="flex"
+          flexWrap="wrap"
+          justifyContent="center"
+        >
           <Div>
             <TextFieldPadding
               name="id"
@@ -126,19 +145,6 @@ export function SignupForm() {
               onChange={handleChange}
               error={Boolean(inputs.id[0]) && !inputs.id[1]}
               helperText={inputs.id[0] && !inputs.id[1] && "10자 이내"}
-            />
-          </Div>
-          <Div>
-            <TextFieldPadding
-              name="name"
-              label="이름"
-              required
-              size="small"
-              onChange={handleChange}
-              error={Boolean(inputs.name[0]) && !inputs.name[1]}
-              helperText={
-                inputs.name[0] && !inputs.name[1] && "10자 이내 | 문자 허용"
-              }
             />
           </Div>
           <Div>
@@ -158,6 +164,66 @@ export function SignupForm() {
             />
           </Div>
           <Div>
+            <Autocomplete
+              display="block"
+              sx={{ width: 1, maxWidth: 194 + 28 }}
+              onChange={(event, newValue) => {
+                console.log(newValue);
+                setInputs({
+                  ...inputs,
+                  company: [newValue, Boolean(newValue)],
+                });
+              }}
+              size="small"
+              disablePortal
+              id="company"
+              options={companies}
+              renderInput={(params) => (
+                <TextFieldPadding {...params} label="회사선택" />
+              )}
+              isOptionEqualToValue={(o, v) => o.id === v.id}
+              getOptionLabel={(o) => o.constructionName}
+            />
+          </Div>
+          {exist ? (
+            <button onClick={() => setexist(false)}>회사목록에 없나요?</button>
+          ) : (
+            <FormControl size="small" sx={{ width: 1, maxWidth: 194 + 28 }}>
+              <InputLabel htmlFor="outlined-adornment-password">
+                회사등록
+              </InputLabel>
+              <OutlinedInput
+                id="addCompany"
+                value={company}
+                onChange={(e) => setCompany(e.target.value)}
+                endAdornment={
+                  <InputAdornment position="end">
+                    <Button variant="contained" size="small" onClick={add}>
+                      등록
+                    </Button>
+                  </InputAdornment>
+                }
+                label="Password"
+              />
+            </FormControl>
+          )}
+        </Gridd>
+
+        <Gridd item xs={6}>
+          <Div>
+            <TextFieldPadding
+              name="name"
+              label="이름"
+              required
+              size="small"
+              onChange={handleChange}
+              error={Boolean(inputs.name[0]) && !inputs.name[1]}
+              helperText={
+                inputs.name[0] && !inputs.name[1] && "10자 이내 | 문자 허용"
+              }
+            />
+          </Div>
+          <Div>
             <TextFieldPadding
               name="pw2"
               label="비밀번호확인"
@@ -171,78 +237,26 @@ export function SignupForm() {
               }
             />
           </Div>
-          <Div>
-            <Autocomplete
-              onChange={(event, newValue) => {
-                console.log(newValue);
-                setInputs({
-                  ...inputs,
-                  company: [newValue, Boolean(newValue)],
-                });
-              }}
-              size="small"
-              disablePortal
-              id="company"
-              options={companies}
-              renderInput={(params) => (
-                <TextFieldPadding
-                  {...params}
-                  sx={{ width: "75%" }}
-                  label="회사선택"
-                />
-              )}
-              isOptionEqualToValue={(o, v) => o.id === v.id}
-              getOptionLabel={(o) => o.constructionName}
-            />
-          </Div>
-          <Div>
-            <TextFieldPadding
-              name="role"
-              label="직책"
-              required
-              size="small"
-              onChange={handleChange}
-            />
-          </Div>
-          {exist ? (
-            <button onClick={() => setexist(false)} sx={{ pl: 1 }}>
-              회사목록에 없나요?
-            </button>
-          ) : (
-            <Div>
-              <FormControl size="small" sx={{ width: "75%" }}>
-                <InputLabel htmlFor="outlined-adornment-password">
-                  회사등록
-                </InputLabel>
-                <OutlinedInput
-                  id="addCompany"
-                  value={company}
-                  onChange={(e) => setCompany(e.target.value)}
-                  endAdornment={
-                    <InputAdornment position="end">
-                      <Button variant="contained" size="small" onClick={add}>
-                        등록
-                      </Button>
-                    </InputAdornment>
-                  }
-                  label="x"
-                />
-              </FormControl>
-            </Div>
-          )}
+          <TextFieldPadding
+            name="role"
+            label="직책"
+            required
+            size="small"
+            onChange={handleChange}
+          />
         </Gridd>
-        <Bigbtn
-          onClick={submit}
-          variant="contained"
-          disabled={!allClear()}
-          sx={{ ml: "60%" }}
-        >
+      </Gridd>
+      <Gridd
+        item
+        xs={4}
+        display="flex"
+        alignItems="end"
+        // justifyContent="center"
+      >
+        <Bigbtn onClick={submit} variant="contained" disabled={!allClear()}>
           회원 등록
         </Bigbtn>
       </Gridd>
-      {/* <Gridd item xs={4} display="flex" alignItems="end">
-        
-      </Gridd> */}
     </Gridd>
   );
 }
@@ -265,24 +279,18 @@ export function LoginForm() {
   }
 
   return (
-    <Div>
-      <form onSubmit={submit}>
-        <Div>
-          <TextFieldPadding name="id" label="아이디" required size="small" />
-        </Div>
-        <Div>
-          <TextFieldPadding
-            name="pw"
-            label="비밀번호"
-            required
-            size="small"
-            type="password"
-          />
-        </Div>
-        <Button type="submit" variant="contained">
-          로그인
-        </Button>
-      </form>
-    </Div>
+    <form onSubmit={submit}>
+      <TextFieldPadding name="id" label="아이디" required size="small" />
+      <TextFieldPadding
+        name="pw"
+        label="비밀번호"
+        required
+        size="small"
+        type="password"
+      />
+      <Button type="submit" variant="contained">
+        로그인
+      </Button>
+    </form>
   );
 }

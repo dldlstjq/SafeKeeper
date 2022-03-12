@@ -1,26 +1,36 @@
-import * as React from 'react';
-import TextField from '@mui/material/TextField';
-import Autocomplete from '@mui/material/Autocomplete';
-import { useState } from 'react';
+import styled from "@emotion/styled/";
+import { Grid, TextField } from "@mui/material";
 
-export function ComboBox() {
-  const [company, setCompany] = useState('')
+export function GridPractice() {
+  const XGrid = styled(Grid)`
+    border: 5px solid purple;
+  `;
+  const Div = styled.div`
+    // width: 100px;
+    height: 100px;
+    background-color: white;
+    border: solid 3px gold;
+  `;
+  const Span = styled.span`
+    width: 100px;
+    height: 100px;
+    background-color: green;
+  `;
 
   return (
-    <Autocomplete
-      disablePortal
-      id="combo-box-demo"
-      options={companies}
-      sx={{ width: 300 }}
-      renderInput={(params) => <TextField {...params} label="회사선택" />}
-      onChange={(e)=>{setCompany(e.target.innerText); console.log(e.target.innerText)}}
-      isOptionEqualToValue={(o,v)=>o.id===v.id}
-    />
+    <XGrid container>
+      <XGrid
+        item
+        xs={12}
+        // display="flex"
+        // justifyContent="center"
+      >
+        <Div>hi</Div>
+        <Div>x</Div>
+      </XGrid>
+      <XGrid item xs={6} display="flex" justifyContent="start">
+        <Div>ddd</Div>
+      </XGrid>
+    </XGrid>
   );
 }
-
-const companies = [
-  {label:'samsung', id:0},
-  {label:'LG', id:1},
-  {label:'KT', id:2},
-]
