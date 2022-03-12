@@ -1,5 +1,5 @@
-import { Routes, Route, BrowserRouter } from 'react-router-dom';
-import {SignupForm,LoginForm} from './Forms'
+import { Routes, Route, BrowserRouter } from 'react-router-dom'
+import { SignupForm, LoginForm } from './Forms'
 import Mainpage from './Mainpage.jsx'
 import { ComboBox } from './Test';
 import { injectGlobal } from '@emotion/css';
@@ -14,7 +14,6 @@ injectGlobal`
 `
 
 function App() {
-
   return (
       <BrowserRouter>
         <Routes>
@@ -27,4 +26,4 @@ function App() {
   );
 }
 
-export default App;
+export default App
