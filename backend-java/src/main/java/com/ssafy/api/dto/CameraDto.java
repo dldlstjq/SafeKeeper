@@ -11,7 +11,6 @@ import lombok.Setter;
 import java.util.List;
 
 public class CameraDto {
-
     /**
      * 카메라 등록 API ([POST] /api/v1/camera) 요청에 대한 응답값 정의.
      */
@@ -27,9 +26,7 @@ public class CameraDto {
 
         @ApiModelProperty(name="방", required = true)
         Room room;
-
     }
-
 
     /**
      * 전체 카메라 정보 조회 API ([GET] /api/v1/camera/getCamera) 요청에 대한 응답값 정의.
@@ -38,7 +35,6 @@ public class CameraDto {
     @Setter
     @ApiModel("CameraRes")
     public static class CameraRes{
-
         @ApiModelProperty(name="카메라 아이디", required = true, example="1")
         Long cameraId;
 
@@ -47,17 +43,15 @@ public class CameraDto {
 
         @ApiModelProperty(name="회사", required = true )
         Construction construction;
-
     }
 
-
     /**
-     * 회사별 카메라 조회 API
+     * 회사별 카메라 조회 API 응답 Dto
      */
     @Getter
     @Setter
-    @ApiModel("ConstCameraReq")
-    public static class ConstCameraReq{
+    @ApiModel("CameraConstReq")
+    public static class CameraConstReq{
         @ApiModelProperty(name="회사", required = true )
         Construction construction;
     }

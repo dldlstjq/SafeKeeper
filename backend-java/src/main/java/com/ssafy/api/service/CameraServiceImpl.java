@@ -23,8 +23,6 @@ public class CameraServiceImpl implements CameraService{
     @Autowired
     CameraRepository cameraRepository;
 
-    @Autowired
-    CameraRepository cameraRepositorySupport;
 
 
     //Todo 카메라 생성
@@ -37,6 +35,7 @@ public class CameraServiceImpl implements CameraService{
         return cameraRepository.save(camera);
     }
 
+    //Todo 카메라 모든 리스트 불러오기
     @Override
     public List<CameraDto.CameraRes> getAllCameraList() {
         List<Camera> list = cameraRepository.findAll(); //sql문 안쓰고 자동으로 해버리기 => Reporitory 갈 필요 없음
@@ -53,16 +52,16 @@ public class CameraServiceImpl implements CameraService{
         return result;
     }
 
+    //Todo 회사기반 카메라 조회
     @Override
-    public List<CameraDto.CameraRes> getConstCameraList(CameraDto.ConstCameraReq registerInfo) {
-        //Todo 회사정보로 카메라 조회하기
-        // 회사정보 전체 -> id만 가져오기
+    public List<CameraDto.CameraRes> getConstCameraList(CameraDto.CameraConstReq registerInfo) {
+        //Todo 회사정보 전체 -> id만 가져오기
         Long num  = registerInfo.getConstruction().getConstructionId();
 //        System.out.println("검색할 번호 : "+ num); // 회사 가져오는거 확인 완
 
         //Todo sql문으로 넘기기
 //        cameraRepositorySupport.selectConstSql(num); //성공!
-        List<Camera> list = cameraRepositorySupport.selectConstSql(num);
+        List<Camera> list = cameraRepository.selectConstSql(num);
 
         //Todo 검색해온 값 출력포멧으로 고치기
         List<CameraDto.CameraRes> result = new ArrayList<>();

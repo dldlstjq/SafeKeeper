@@ -24,9 +24,6 @@ public class CameraController {
     @Autowired
     CameraService cameraService;
 
-    @Autowired
-    ConstructionService constructionService;
-
     @PostMapping
     @ApiOperation(value = "카메라 등록", notes = "카메라를 등록한다")
     @ApiResponses({
@@ -65,9 +62,8 @@ public class CameraController {
             @ApiResponse(code = 500, message = "서버 오류")
     })
     public ResponseEntity<List<CameraDto.CameraRes>> getConstCameraList(
-            @RequestBody @ApiParam(value="검색할 회사 정보", required = true) CameraDto.ConstCameraReq registerInfo) {
+            @RequestBody @ApiParam(value="검색할 회사 정보", required = true) CameraDto.CameraConstReq registerInfo) {
         List<CameraDto.CameraRes> list = cameraService.getConstCameraList(registerInfo);
-        System.out.println(list);
         return ResponseEntity.status(200).body(list);
     }
 
