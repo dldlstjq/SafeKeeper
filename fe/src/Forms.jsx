@@ -259,7 +259,7 @@ export function LoginForm() {
       })
       .then((res) => {
         localStorage.setItem('jwt', res.data.accessToken)
-        navigate('/')
+        navigate('/usermain')
       })
       .catch((err) => console.log(err))
   }
