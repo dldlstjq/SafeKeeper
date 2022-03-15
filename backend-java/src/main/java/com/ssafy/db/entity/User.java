@@ -30,10 +30,6 @@ public class User extends BaseEntity{
     @JoinColumn(name = "construction_id", nullable = false)
     Construction construction;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinColumn(name = "room_id")
-    List<Room> room;
-
     // 유저 Password
     @JsonIgnore
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)

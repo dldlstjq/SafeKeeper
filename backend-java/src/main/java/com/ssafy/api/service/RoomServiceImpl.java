@@ -3,6 +3,9 @@ package com.ssafy.api.service;
 import com.ssafy.api.dto.ConstructionDto;
 import com.ssafy.api.dto.RoomDto;
 import com.ssafy.api.dto.RoomDto.RoomRegisterPostReq;
+import com.ssafy.db.entity.RoomUser;
+import com.ssafy.db.entity.User;
+import com.ssafy.db.repository.RoomUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -22,6 +25,12 @@ public class RoomServiceImpl implements RoomService{
 
     @Autowired
     PasswordEncoder passwordEncoder;
+
+    @Autowired
+    UserService userService;
+
+    @Autowired
+    RoomUserRepository roomUserRepository;
 
     @Override
     public Room createRoom(RoomDto.RoomRegisterPostReq roomRegisterInfo){
@@ -45,6 +54,29 @@ public class RoomServiceImpl implements RoomService{
             roomListRes.setRoomName(room.getRoomName());
             result.add(roomListRes);
         }
+        return result;
+    }
+
+    @Override
+    public RoomUser createRoomUser(RoomDto.RoomUserRegisterPostRequest registerInfo){
+        RoomUser roomUser = RoomUser.builder()
+                .room(registerInfo.getRoom())
+                .user(registerInfo.getUser())
+                .build();
+        return roomUserRepository.save(roomUser);
+    }
+
+
+    @Override
+    public List<RoomDto.RoomRes> getRoomListByUser(Long userId){
+        List<RoomDto.RoomRes> result = new ArrayList<>();
+        List<RoomUser> list = roomUserRepository.selectRoomByUser(userId);
+        for(RoomUser roomUser : list){
+            Room room = roomUser.getRoom();
+            RoomDto.RoomRes roomRes = RoomDto.RoomRes.of(room);
+            result.add(roomRes);
+        }
+
         return result;
     }
 }

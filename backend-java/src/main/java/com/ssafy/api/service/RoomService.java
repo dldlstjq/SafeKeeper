@@ -3,6 +3,8 @@ package com.ssafy.api.service;
 import com.ssafy.api.dto.RoomDto;
 import com.ssafy.api.dto.RoomDto.RoomRegisterPostReq;
 import com.ssafy.db.entity.Room;
+import com.ssafy.db.entity.RoomUser;
+import com.ssafy.db.entity.User;
 
 import java.util.List;
 
@@ -11,6 +13,7 @@ import java.util.List;
  */
 public interface RoomService {
     Room createRoom(RoomRegisterPostReq roomRegisterPostReq);
-
+    RoomUser createRoomUser(RoomDto.RoomUserRegisterPostRequest roomUserRegisterPostRequest);
     List<RoomDto.RoomRes> getAllRoomList();
+    List<RoomDto.RoomRes> getRoomListByUser(Long userId);
 }

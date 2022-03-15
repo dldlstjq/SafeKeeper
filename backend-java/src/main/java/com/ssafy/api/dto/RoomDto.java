@@ -3,6 +3,7 @@ package com.ssafy.api.dto;
 
 import com.ssafy.db.entity.Construction;
 import com.ssafy.db.entity.Room;
+import com.ssafy.db.entity.User;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
@@ -43,8 +44,10 @@ public class RoomDto {
         String roomName;
         @ApiModelProperty(name="방 비밀번호", required = true)
         String roomPassword;
+        @ApiModelProperty(name="유저", required = true)
+        User user;
 
-        public static RoomDto.RoomRes of(Room room) {
+        public static RoomRes of(Room room) {
             RoomRes res = new RoomRes();
             res.setRoomId(room.getRoomId());
             res.setRoomName(room.getRoomName());
@@ -52,5 +55,28 @@ public class RoomDto {
             return res;
         }
 
+        public static RoomRes of(Room room, User user) {
+            RoomRes res = new RoomRes();
+            res.setRoomId(room.getRoomId());
+            res.setRoomName(room.getRoomName());
+            res.setUser(user);
+            // 비밀번호는 나중에 논의
+            return res;
+        }
+
+
+    }
+
+    /**
+     * 방 요청 API ([post] /api/v1/room/user) 요청에 대한 응답값 정의.
+     */
+    @Getter
+    @Setter
+    @ApiModel("RoomUserRegisterPostRequest")
+    public static class RoomUserRegisterPostRequest{
+        @ApiModelProperty(name="방", required = true)
+        Room room;
+        @ApiModelProperty(name="유저", required = true)
+        User user;
     }
 }
