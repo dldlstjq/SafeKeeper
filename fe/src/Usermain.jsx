@@ -2,6 +2,8 @@ import { Fragment, useEffect, useState } from 'react'
 import styled from '@emotion/styled'
 import { RoomDialog } from './Dialogs'
 import { useNavigate } from 'react-router'
+import axios from 'axios'
+import { BASE_URL } from './Common'
 
 export default function Usermain() {
   const [rooms, setrooms] = useState([])
@@ -14,6 +16,13 @@ export default function Usermain() {
       { name: 'hi3', info: 'xxx', id: 3 },
     ])
   }, []) //방리스트 요청
+
+  function addRoom(data) {
+    axios
+      .post(BASE_URL + '/api/v1/room', data)
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err))
+  }
 
   function deleteRoom(id) {
     // axios.get(BASE_URL+'/api/v1/construction/getConstruction')
@@ -38,7 +47,7 @@ export default function Usermain() {
           enter={enter}
         />
       ))}
-      <RoomDialog btn={'방 추가'} />
+      <RoomDialog btn={'방 추가'} addRoom={addRoom} />
     </>
   )
 }

@@ -1,7 +1,7 @@
 import styled from '@emotion/styled'
 import { Button, Grid, TextField } from '@mui/material'
 
-export const BASE_URL = 'http://localhost:8080'
+export const BASE_URL = 'http://j6d101.p.ssafy.io:8080'
 
 export const Div = styled.div`
   background-color: gold;

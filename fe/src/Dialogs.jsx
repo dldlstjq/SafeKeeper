@@ -1,4 +1,4 @@
-import * as React from 'react'
+import { useState } from 'react'
 import Button from '@mui/material/Button'
 import TextField from '@mui/material/TextField'
 import Dialog from '@mui/material/Dialog'
@@ -8,7 +8,8 @@ import DialogContentText from '@mui/material/DialogContentText'
 import DialogTitle from '@mui/material/DialogTitle'
 
 export function RoomDialog({ btn, addRoom }) {
-  const [open, setOpen] = React.useState(false)
+  const [open, setOpen] = useState(false)
+  const [data, setdata] = useState(null)
 
   const handleClickOpen = () => {
     setOpen(true)
@@ -35,16 +36,25 @@ export function RoomDialog({ btn, addRoom }) {
           <TextField
             autoFocus
             margin="dense"
-            id="construction"
-            label="현장"
-            // type="email"
+            id="roomName"
+            label="방 제목"
             fullWidth
+            variant="standard"
+            onChange={setdata({ ...data })}
+          />
+          <TextField
+            autoFocus
+            margin="dense"
+            id="pw"
+            label="비밀번호"
+            fullWidth
+            type="password"
             variant="standard"
           />
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>취소</Button>
-          <Button onClick={handleClose}>추가</Button>
+          <Button onClick={addRoom()}>추가</Button>
         </DialogActions>
       </Dialog>
     </div>
