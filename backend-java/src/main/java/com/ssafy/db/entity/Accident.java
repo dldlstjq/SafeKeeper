@@ -4,12 +4,14 @@ import javax.persistence.*;
 
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import java.util.Date;
 
 @Entity
 @Getter
 @Setter
+@NoArgsConstructor
 public class Accident {
     @Id
     @Column(name = "accident_id")
@@ -19,7 +21,7 @@ public class Accident {
     @Column(name = "accident_type")
     String accidentType;
 
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "accident_date", nullable = false)
     Date accidentDate;
 
@@ -32,4 +34,15 @@ public class Accident {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "camera_id")
     Camera camera;
+
+    @Builder
+    public Accident(Long accidentId, String accidentType, Date accidentDate, String accidentDescription, String accidentPicture, Camera camera){
+        this.accidentId = accidentId;
+        this.accidentType = accidentType;
+        this.accidentDate =accidentDate;
+        this.accidentDescription = accidentDescription;
+        this.accidentPicture = accidentPicture;
+        this.camera = camera;
+
+    }
 }
