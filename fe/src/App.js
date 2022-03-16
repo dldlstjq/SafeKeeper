@@ -3,7 +3,7 @@ import { SignupForm, LoginForm } from './Forms'
 import Mainpage from './Mainpage'
 import { ComboBox } from './Test'
 import { injectGlobal } from '@emotion/css'
-import { GridPractice } from './Test'
+import Test from './Test'
 import { Appbar } from './Appbar'
 import { useState } from 'react'
 import Usermain from './Usermain'
@@ -29,7 +29,7 @@ function App() {
           <Route path="/" element={<Mainpage />} />
           <Route path="signup" element={<SignupForm />} />
           <Route path="login" element={<LoginForm />} />
-          <Route path="test" element={<GridPractice />} />
+          <Route path="test" element={<Test />} />
           <Route path="usermain" element={<Usermain />} />
           <Route path="room/:roomId" element={<Room />} />
         </Routes>
