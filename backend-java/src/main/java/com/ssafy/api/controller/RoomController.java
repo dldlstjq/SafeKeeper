@@ -36,12 +36,14 @@ public class RoomController {
             @ApiResponse(code = 404, message = "사용자 없음"),
             @ApiResponse(code = 500, message = "서버 오류")
     })
-    public ResponseEntity<? extends BaseResponseBody> roomRegister(
+    public ResponseEntity<Room> roomRegister(
             @RequestBody @ApiParam(value="방 등록 정보", required = true) RoomDto.RoomRegisterPostReq registerInfo){
 
         Room room = roomService.createRoom(registerInfo);
-
-        return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
+        Room return_room = new Room();
+        return_room.setRoomId(room.getRoomId());
+        return_room.setRoomName(room.getRoomName());
+        return ResponseEntity.status(200).body(return_room);
     }
 
     @GetMapping("")
@@ -82,8 +84,38 @@ public class RoomController {
             @ApiResponse(code = 404, message = "사용자 없음"),
             @ApiResponse(code = 500, message = "서버 오류")
     })
-    public ResponseEntity<List<RoomDto.RoomRes>> geRoomUserList(@RequestParam Long userId){
+    public ResponseEntity<List<RoomDto.RoomRes>> getRoomUserList(@RequestParam Long userId){
         List<RoomDto.RoomRes> list = roomService.getRoomListByUser(userId);
         return ResponseEntity.status(200).body(list);
+    }
+
+    @DeleteMapping("")
+    @ApiOperation(value = "방 삭제", notes = "방을 날린다")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "성공"),
+            @ApiResponse(code = 401, message = "인증 실패"),
+            @ApiResponse(code = 404, message = "사용자 없음"),
+            @ApiResponse(code = 500, message = "서버 오류")
+    })
+    public ResponseEntity<? extends BaseResponseBody> deleteRoom(@RequestParam Long roomId){
+        RoomDto.RoomDeleteDelReq roomDeleteDelReq = new RoomDto.RoomDeleteDelReq();
+        roomDeleteDelReq.setRoomId(roomId);
+        roomService.deleteRoomByRoomId(roomDeleteDelReq);
+        return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
+    }
+
+    @DeleteMapping("/user")
+    @ApiOperation(value = "방에 있는 유저 삭제, 방에서 나온다", notes = "방을 날린다")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "성공"),
+            @ApiResponse(code = 401, message = "인증 실패"),
+            @ApiResponse(code = 404, message = "사용자 없음"),
+            @ApiResponse(code = 500, message = "서버 오류")
+    })
+    public ResponseEntity<? extends BaseResponseBody> deleteRoomUser(@RequestParam Long userId){
+        RoomDto.RoomUserDeleteDelReq roomUserDeleteDelReq = new RoomDto.RoomUserDeleteDelReq();
+        roomUserDeleteDelReq.setUserId(userId);
+        roomService.deleteRoomUserByUserId(roomUserDeleteDelReq);
+        return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
     }
 }
