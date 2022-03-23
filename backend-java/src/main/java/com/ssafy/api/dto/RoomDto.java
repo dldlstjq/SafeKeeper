@@ -79,4 +79,28 @@ public class RoomDto {
         @ApiModelProperty(name="유저", required = true)
         User user;
     }
+
+    /**
+     * 방 삭제 API ([del] /api/v1/room) 요청에 대한 응답값 정의.
+     */
+
+    @Getter
+    @Setter
+    @ApiModel("RoomDeleteDelReq")
+    public static class RoomDeleteDelReq{
+        @ApiModelProperty(name="방", required = true)
+        Long roomId;
+    }
+
+    /**
+     * 방 참여 유저 삭제 API ([del] /api/v1/room/user) 요청에 대한 응답값 정의.
+     */
+
+    @Getter
+    @Setter
+    @ApiModel("RoomUserDeleteDelReq")
+    public static class RoomUserDeleteDelReq{
+        @ApiModelProperty(name="방", required = true)
+        Long userId;
+    }
 }
