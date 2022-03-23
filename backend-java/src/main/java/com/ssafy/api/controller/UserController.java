@@ -1,14 +1,11 @@
 package com.ssafy.api.controller;
 
+import com.ssafy.api.dto.UserDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.ssafy.api.dto.UserDto.UserLoginPostReq;
 import com.ssafy.api.dto.UserDto.UserRegisterPostReq;
@@ -27,6 +24,8 @@ import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import springfox.documentation.annotations.ApiIgnore;
+
+import javax.validation.Valid;
 
 /**
  * 유저 관련 API 요청 처리를 위한 컨트롤러 정의.
@@ -48,12 +47,29 @@ public class UserController {
         @ApiResponse(code = 500, message = "서버 오류")
     })
 	public ResponseEntity<? extends BaseResponseBody> register(
-			@RequestBody @ApiParam(value="회원가입 정보", required = true) UserRegisterPostReq registerInfo) {
-		
+			 @RequestBody @ApiParam(value="회원가입 정보", required = true) @Valid UserRegisterPostReq registerInfo) {
+
 		//임의로 리턴된 User 인스턴스. 현재 코드는 회원 가입 성공 여부만 판단하기 때문에 굳이 Insert 된 유저 정보를 응답하지 않음.
 		User user = userService.createUser(registerInfo);
 		
 		return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
+	}
+
+	@GetMapping("/checkId")
+	@ApiOperation(value = "아이디 중복 조회", notes = "회원가입을 위해 아이디가 중복되는지 확인한다.")
+	@ApiResponses({
+			@ApiResponse(code = 200, message = "성공"),
+			@ApiResponse(code = 401, message = "인증 실패"),
+			@ApiResponse(code = 404, message = "사용자 없음"),
+			@ApiResponse(code = 500, message = "서버 오류")
+	})
+	public ResponseEntity<? extends BaseResponseBody> checkUserIdDuplicate(@ApiParam(value="입력 id 정보", required = true) @RequestParam String userId) {
+
+		Boolean check = userService.checkIdDuplicate(userId);
+		if(!check)
+			return ResponseEntity.status(200).body(BaseResponseBody.of(200, "이미 존재하는 아이디입니다."));
+		return ResponseEntity.status(200).body(BaseResponseBody.of(200, "사용가능한 아이디입니다."));
+
 	}
 	
 	@GetMapping("/me")
