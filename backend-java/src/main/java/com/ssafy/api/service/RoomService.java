@@ -16,4 +16,6 @@ public interface RoomService {
     RoomUser createRoomUser(RoomDto.RoomUserRegisterPostRequest roomUserRegisterPostRequest);
     List<RoomDto.RoomRes> getAllRoomList();
     List<RoomDto.RoomRes> getRoomListByUser(Long userId);
+    void deleteRoomByRoomId(RoomDto.RoomDeleteDelReq roomDeleteDelReq);
+    void deleteRoomUserByUserId(RoomDto.RoomUserDeleteDelReq roomUserDeleteDelReq);
 }
