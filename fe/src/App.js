@@ -1,14 +1,16 @@
 import { Routes, Route, BrowserRouter } from 'react-router-dom'
 import { SignupForm, LoginForm } from './Forms'
 import Mainpage from './Mainpage'
-import { ComboBox } from './Test'
 import { injectGlobal } from '@emotion/css'
-import Test from './Test'
 import { Appbar } from './Appbar'
 import { useState } from 'react'
 import Usermain from './Usermain'
 import { Room } from './Room'
 import { Box } from '@mui/material'
+// import Test from './room/Test'
+// import Test2 from './Test2'
+
+
 
 injectGlobal`
   body{
@@ -19,19 +21,20 @@ injectGlobal`
 `
 
 function App() {
-  const [jwt, setjwt] = useState(localStorage.getItem('jwt'))
+  const [user, setuser] = useState(localStorage.getItem('user'))
 
   return (
     <BrowserRouter>
       <Box minHeight="100vh">
         {/* <Appbar jwt={jwt} setjwt={setjwt} /> */}
         <Routes>
-          <Route path="/" element={<Mainpage />} />
+          <Route path="/" element={<Mainpage user={user} />} />
           <Route path="signup" element={<SignupForm />} />
-          <Route path="login" element={<LoginForm />} />
-          <Route path="test" element={<Test />} />
-          <Route path="usermain" element={<Usermain />} />
+          <Route path="login" element={<LoginForm setuser={setuser} />} />
+          <Route path="usermain" element={<Usermain user={user} />} />
           <Route path="room/:roomId" element={<Room />} />
+          {/* <Route path="test" element={<Test />} />
+          <Route path="test2" element={<Test2 />} /> */}
         </Routes>
       </Box>
     </BrowserRouter>

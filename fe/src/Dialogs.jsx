@@ -4,8 +4,8 @@ import TextField from '@mui/material/TextField'
 import Dialog from '@mui/material/Dialog'
 import DialogActions from '@mui/material/DialogActions'
 import DialogContent from '@mui/material/DialogContent'
-import DialogContentText from '@mui/material/DialogContentText'
 import DialogTitle from '@mui/material/DialogTitle'
+// import DialogContentText from '@mui/material/DialogContentText'
 
 export function RoomDialog({ btn, addRoom }) {
   const [open, setOpen] = useState(false)
@@ -16,8 +16,6 @@ export function RoomDialog({ btn, addRoom }) {
   }
 
   const handleClose = (e) => {
-    if (e.target.innerText === '추가') {
-    }
     setOpen(false)
   }
 
@@ -40,21 +38,27 @@ export function RoomDialog({ btn, addRoom }) {
             label="방 제목"
             fullWidth
             variant="standard"
-            onChange={setdata({ ...data })}
+            onChange={(e) => setdata({ ...data, roomName: e.target.value })}
           />
           <TextField
-            autoFocus
             margin="dense"
             id="pw"
             label="비밀번호"
             fullWidth
-            type="password"
             variant="standard"
+            onChange={(e) => setdata({ ...data, roomPassword: e.target.value })}
           />
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>취소</Button>
-          <Button onClick={addRoom()}>추가</Button>
+          <Button
+            onClick={() => {
+              addRoom(data)
+              handleClose()
+            }}
+          >
+            추가
+          </Button>
         </DialogActions>
       </Dialog>
     </div>

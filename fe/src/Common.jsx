@@ -1,6 +1,7 @@
 import styled from '@emotion/styled'
 import { Button, Grid, TextField } from '@mui/material'
 
+// console.log('common')
 export const BASE_URL = 'http://j6d101.p.ssafy.io:8080'
 
 export const Div = styled.div`
@@ -20,7 +21,7 @@ export const Bigbtn = styled(Button)`
   // border: 1mm solid black;
 `
 export const Gridd = styled(Grid)`
-  // border: 2px solid black;
+  border: 2px solid black;
 `
 export const TextFieldPadding = styled(TextField)`
   // padding: 0 8px;

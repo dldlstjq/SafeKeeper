@@ -5,17 +5,13 @@ import { useNavigate } from 'react-router'
 import axios from 'axios'
 import { BASE_URL } from './Common'
 
-export default function Usermain() {
+export default function Usermain({ user }) {
   const [rooms, setrooms] = useState([])
   const navigate = useNavigate()
 
   useEffect(() => {
-    setrooms([
-      { name: 'hi1', info: 'xxx', id: 1 },
-      { name: 'hi2', info: 'xxx', id: 2 },
-      { name: 'hi3', info: 'xxx', id: 3 },
-    ])
-  }, []) //방리스트 요청
+    updateRooms()
+  }, [])
 
   function addRoom(data) {
     axios
@@ -33,6 +29,14 @@ export default function Usermain() {
   function enter(id) {
     //axios
     navigate('/room/' + id)
+  }
+  function updateRooms() {
+    axios
+      .get(BASE_URL + '/api/v1/room/user', {
+        params: { userId: user?.userId },
+      })
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err))
   }
 
   return (

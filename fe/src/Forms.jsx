@@ -247,7 +247,7 @@ export function SignupForm() {
   )
 }
 
-export function LoginForm() {
+export function LoginForm({ setuser }) {
   const navigate = useNavigate()
   function submit(e) {
     e.preventDefault()
@@ -258,7 +258,20 @@ export function LoginForm() {
         password: data.get('pw'),
       })
       .then((res) => {
-        localStorage.setItem('jwt', res.data.accessToken)
+        const accessToken = res.data.accessToken
+        axios
+          .get(BASE_URL + '/api/v1/users/me')
+          .then((res) => {
+            localStorage.setItem('user', {
+              accessToken: accessToken,
+              userId: res.data.userId,
+            })
+            setuser({
+              accessToken: accessToken,
+              userId: res.data.userId,
+            })
+          })
+          .catch((err) => console.log(err))
         navigate('/usermain')
       })
       .catch((err) => console.log(err))
