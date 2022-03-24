@@ -1,6 +1,8 @@
 import { Bigbtn } from './Common'
 import { Box } from '@mui/system'
 import { useNavigate } from 'react-router-dom'
+import { DialogComponent } from './Dialogs'
+import { SignupForm, LoginForm } from './Forms'
 
 export default function Mainpage({ user }) {
   const navigate = useNavigate()
@@ -9,17 +11,18 @@ export default function Mainpage({ user }) {
     <Box
       sx={{
         display: 'flex',
-        flexDirection: 'row',
-        justifyContent: 'space-evenly',
+        // flexDirection: 'row',
+        // justifyContent: 'space-evenly',
       }}
     >
-      <Bigbtn variant="contained" onClick={() => navigate('signup')}>
-        회원가입
-      </Bigbtn>
+      <DialogComponent title={'회원가입'}>
+        <SignupForm />
+      </DialogComponent>
+
       {!user && (
-        <Bigbtn variant="contained" onClick={() => navigate('login')}>
-          로그인
-        </Bigbtn>
+        <DialogComponent title={'로그인'}>
+          <LoginForm />
+        </DialogComponent>
       )}
       <Bigbtn variant="contained">참가</Bigbtn>
     </Box>

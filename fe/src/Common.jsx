@@ -5,23 +5,25 @@ import { Button, Grid, TextField } from '@mui/material'
 export const BASE_URL = 'http://j6d101.p.ssafy.io:8080'
 
 export const Div = styled.div`
-  background-color: gold;
+  // background-color: gold;
   // border: 1px solid white;
   height: 80px;
   display: inline-block;
   width: 49%;
 `
-export const Bigbtn = styled(Button)`
-  height: 75px;
-  background-color: silver;
+export const Bigbtn = styled.button`
   font-size: 16px;
-  color: black;
   font-weight: bold;
-  border-radius: 10%;
+  margin: 5px;
+  background-color: pink;
+  width: 30vw;
+  // color: black;
+  // height: 50vh;
+  // border-radius: 10%;
   // border: 1mm solid black;
 `
 export const Gridd = styled(Grid)`
-  border: 2px solid black;
+  // border: 2px solid black;
 `
 export const TextFieldPadding = styled(TextField)`
   // padding: 0 8px;

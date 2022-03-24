@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, Fragment } from 'react'
 import {
   Button,
   Autocomplete,
@@ -10,8 +10,7 @@ import {
 import Brightness3Icon from '@mui/icons-material/Brightness3'
 import axios from 'axios'
 import { useNavigate } from 'react-router'
-import { Bigbtn, BASE_URL, Gridd, TextFieldPadding, Div } from './Common'
-import { width } from '@mui/system'
+import { Bigbtn, BASE_URL, Gridd, input, Div } from './Common'
 
 export function SignupForm() {
   const navigate = new useNavigate()
@@ -25,7 +24,7 @@ export function SignupForm() {
   })
   const [companies, setCompanies] = useState([])
   const [company, setCompany] = useState('')
-  const [exist, setexist] = useState(true)
+  const [exist, setExist] = useState(true)
 
   const { pw, pw2 } = inputs
   const updateFlag = Boolean(company)
@@ -107,143 +106,103 @@ export function SignupForm() {
   }
 
   return (
-    <Gridd container>
-      <Gridd item xs={2} />
+    <Fragment>
+      <input
+        name="id"
+        label="id"
+        required
+        autoFocus
+        size="small"
+        onChange={handleChange}
+        // error={Boolean(inputs.id[0]) && !inputs.id[1] ? 'false' : 'true'}
+        // helperText={inputs.id[0] && !inputs.id[1] && '10자 이내'}
+      />
 
-      <Gridd item container xs={6} columnSpacing={1}>
-        <Gridd item container xs={12} marginY={4}>
-          <Brightness3Icon sx={{ color: 'silver', fontSize: 100, mx: '35%' }} />
-        </Gridd>
+      <input
+        name="name"
+        label="이름"
+        required
+        size="small"
+        onChange={handleChange}
+        // error={Boolean(inputs.name[0]) && !inputs.name[1]}
+        // helperText={
+        //   inputs.name[0] && !inputs.name[1] && '10자 이내 | 문자 허용'
+        // }
+      />
 
-        <Gridd item xs={12}>
-          <Div>
-            <TextFieldPadding
-              name="id"
-              label="id"
-              required
-              autoFocus
-              size="small"
-              onChange={handleChange}
-              error={Boolean(inputs.id[0]) && !inputs.id[1]}
-              helperText={inputs.id[0] && !inputs.id[1] && '10자 이내'}
-            />
-          </Div>
-          <Div>
-            <TextFieldPadding
-              name="name"
-              label="이름"
-              required
-              size="small"
-              onChange={handleChange}
-              error={Boolean(inputs.name[0]) && !inputs.name[1]}
-              helperText={
-                inputs.name[0] && !inputs.name[1] && '10자 이내 | 문자 허용'
-              }
-            />
-          </Div>
-          <Div>
-            <TextFieldPadding
-              name="pw"
-              label="비밀번호"
-              required
-              type="password"
-              size="small"
-              onChange={handleChange}
-              error={Boolean(inputs.pw[0]) && !inputs.pw[1]}
-              helperText={
-                inputs.pw[0] &&
-                !inputs.pw[1] &&
-                '8~16자 | 문자,숫자,특수기호 포함'
-              }
-            />
-          </Div>
-          <Div>
-            <TextFieldPadding
-              name="pw2"
-              label="비밀번호확인"
-              required
-              type="password"
-              size="small"
-              onChange={handleChange}
-              error={Boolean(inputs.pw2[0]) && !inputs.pw2[1]}
-              helperText={
-                inputs.pw2[0] && !inputs.pw2[1] && '일치하지 않습니다'
-              }
-            />
-          </Div>
-          <Div>
-            <Autocomplete
-              onChange={(event, newValue) => {
-                console.log(newValue)
-                setInputs({
-                  ...inputs,
-                  company: [newValue, Boolean(newValue)],
-                })
-              }}
-              size="small"
-              disablePortal
-              id="company"
-              options={companies}
-              renderInput={(params) => (
-                <TextFieldPadding
-                  {...params}
-                  sx={{ width: '75%' }}
-                  label="회사선택"
-                />
-              )}
-              isOptionEqualToValue={(o, v) => o.id === v.id}
-              getOptionLabel={(o) => o.constructionName}
-            />
-          </Div>
-          <Div>
-            <TextFieldPadding
-              name="role"
-              label="직책"
-              required
-              size="small"
-              onChange={handleChange}
-            />
-          </Div>
-          {exist ? (
-            <button onClick={() => setexist(false)} sx={{ pl: 1 }}>
-              회사목록에 없나요?
-            </button>
-          ) : (
-            <Div>
-              <FormControl size="small" sx={{ width: '75%' }}>
-                <InputLabel htmlFor="outlined-adornment-password">
-                  회사등록
-                </InputLabel>
-                <OutlinedInput
-                  id="addCompany"
-                  value={company}
-                  onChange={(e) => setCompany(e.target.value)}
-                  endAdornment={
-                    <InputAdornment position="end">
-                      <Button variant="contained" size="small" onClick={add}>
-                        등록
-                      </Button>
-                    </InputAdornment>
-                  }
-                  label="x"
-                />
-              </FormControl>
-            </Div>
-          )}
-        </Gridd>
-        <Bigbtn
-          onClick={submit}
-          variant="contained"
-          disabled={!allClear()}
-          sx={{ ml: '60%' }}
-        >
-          회원 등록
-        </Bigbtn>
-      </Gridd>
-      {/* <Gridd item xs={4} display="flex" alignItems="end">
-        
-      </Gridd> */}
-    </Gridd>
+      <input
+        name="pw"
+        label="비밀번호"
+        required
+        type="password"
+        size="small"
+        onChange={handleChange}
+        // error={Boolean(inputs.pw[0]) && !inputs.pw[1]}
+        // helperText={
+        //   inputs.pw[0] && !inputs.pw[1] && '8~16자 | 문자,숫자,특수기호 포함'
+        // }
+      />
+
+      <input
+        name="pw2"
+        label="비밀번호확인"
+        required
+        type="password"
+        size="small"
+        onChange={handleChange}
+        // error={Boolean(inputs.pw2[0]) && !inputs.pw2[1]}
+        // helperText={inputs.pw2[0] && !inputs.pw2[1] && '일치하지 않습니다'}
+      />
+
+      <select name="company">
+        <option value="">회사를 선택해주세요</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+      </select>
+
+      <input
+        name="role"
+        label="직책"
+        required
+        size="small"
+        onChange={handleChange}
+      />
+
+      {exist ? (
+        <button onClick={() => setExist(false)} sx={{ pl: 1 }}>
+          회사목록에 없나요?
+        </button>
+      ) : (
+        <FormControl size="small" sx={{ width: '75%' }}>
+          <InputLabel htmlFor="outlined-adornment-password">
+            회사등록
+          </InputLabel>
+          <OutlinedInput
+            id="addCompany"
+            value={company}
+            onChange={(e) => setCompany(e.target.value)}
+            endAdornment={
+              <InputAdornment position="end">
+                <Button variant="contained" size="small" onClick={add}>
+                  등록
+                </Button>
+              </InputAdornment>
+            }
+            label="x"
+          />
+        </FormControl>
+      )}
+
+      <Bigbtn
+        onClick={submit}
+        variant="contained"
+        disabled={!allClear()}
+        sx={{ ml: '60%' }}
+      >
+        회원 등록
+      </Bigbtn>
+    </Fragment>
   )
 }
 
@@ -278,24 +237,25 @@ export function LoginForm({ setuser }) {
   }
 
   return (
-    <Div>
+    <Fragment>
       <form onSubmit={submit}>
-        <Div>
-          <TextFieldPadding name="id" label="아이디" required size="small" />
-        </Div>
-        <Div>
-          <TextFieldPadding
-            name="pw"
-            label="비밀번호"
-            required
-            size="small"
-            type="password"
-          />
-        </Div>
-        <Button type="submit" variant="contained">
+        <input name="id" label="아이디" required size="small" />
+
+        <input
+          name="pw"
+          label="비밀번호"
+          required
+          size="small"
+          type="password"
+        />
+
+        <button
+          type="submit"
+          //  variant="contained"
+        >
           로그인
-        </Button>
+        </button>
       </form>
-    </Div>
+    </Fragment>
   )
 }

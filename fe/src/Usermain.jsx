@@ -1,6 +1,6 @@
 import { Fragment, useEffect, useState } from 'react'
 import styled from '@emotion/styled'
-import { RoomDialog } from './Dialogs'
+import { DialogComponent, RoomDialog } from './Dialogs'
 import { useNavigate } from 'react-router'
 import axios from 'axios'
 import { BASE_URL } from './Common'
@@ -51,7 +51,7 @@ export default function Usermain({ user }) {
           enter={enter}
         />
       ))}
-      <RoomDialog btn={'방 추가'} addRoom={addRoom} />
+      <DialogComponent addRoom={addRoom} />
     </>
   )
 }
