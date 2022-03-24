@@ -1,4 +1,4 @@
-FROM node:14.15.4
+FROM node:alpine
 RUN npm install -g serve
 RUN ls -al
 RUN npm run build
