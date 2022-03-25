@@ -2,11 +2,11 @@ import { Routes, Route, BrowserRouter } from 'react-router-dom'
 import { SignupForm, LoginForm } from './Forms'
 import Mainpage from './Mainpage'
 import { injectGlobal } from '@emotion/css'
-import { Appbar } from './Appbar'
 import { useState } from 'react'
 import Usermain from './Usermain'
 import { Room } from './Room'
 import { Box } from '@mui/material'
+// import { Appbar } from './component/Appbar'
 // import Test from './room/Test'
 // import Test2 from './Test2'
 
@@ -16,7 +16,7 @@ injectGlobal`
   body{
     margin:0;
     padding:0;
-    background-color:green;
+    background-color:black;
   }
 `
 

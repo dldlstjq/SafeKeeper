@@ -1,7 +1,7 @@
 import { Bigbtn } from './Common'
 import { Box } from '@mui/system'
 import { useNavigate } from 'react-router-dom'
-import { DialogComponent } from './Dialogs'
+import { DialogComponent } from './component/Dialogs'
 import { SignupForm, LoginForm } from './Forms'
 
 export default function Mainpage({ user }) {
@@ -9,11 +9,13 @@ export default function Mainpage({ user }) {
 
   return (
     <Box
-      sx={{
-        display: 'flex',
-        // flexDirection: 'row',
-        // justifyContent: 'space-evenly',
-      }}
+      sx={
+        {
+          // display: 'flex',
+          // flexDirection: 'row',
+          // justifyContent: 'center',
+        }
+      }
     >
       <DialogComponent title={'회원가입'}>
         <SignupForm />

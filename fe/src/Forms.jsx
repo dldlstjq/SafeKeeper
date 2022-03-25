@@ -10,7 +10,7 @@ import {
 import Brightness3Icon from '@mui/icons-material/Brightness3'
 import axios from 'axios'
 import { useNavigate } from 'react-router'
-import { Bigbtn, BASE_URL, Gridd, input, Div } from './Common'
+import { Bigbtn, BASE_URL, Gridd, MarginInput, Div } from './Common'
 
 export function SignupForm() {
   const navigate = new useNavigate()
@@ -27,7 +27,7 @@ export function SignupForm() {
   const [exist, setExist] = useState(true)
 
   const { pw, pw2 } = inputs
-  const updateFlag = Boolean(company)
+  // const updateFlag = Boolean(company)
 
   useEffect(() => {
     if (pw[0] !== pw2[0]) {
@@ -37,12 +37,14 @@ export function SignupForm() {
     }
   }, [pw])
 
-  useEffect(() => {
-    axios
-      .get(BASE_URL + '/api/v1/construction/getConstruction')
-      .then((res) => setCompanies(res.data))
-      .catch((err) => console.log(err))
-  }, [updateFlag])
+  useEffect(
+    () =>
+      axios
+        .get(BASE_URL + '/api/v1/construction/getConstruction')
+        .then((res) => setCompanies(res.data))
+        .catch((err) => console.log(err)),
+    []
+  )
 
   function allClear() {
     for (const key in inputs) {
@@ -51,13 +53,21 @@ export function SignupForm() {
     return true
   }
   function submit(e) {
+    const construction = companies.find(
+      (construction) => construction.constructionName === inputs.company[0]
+    )
+    if (!construction) {
+      alert('회사를 확인해주세요')
+      return
+    }
     const data = {
-      construction: inputs.company[0],
+      construction: construction,
       id: inputs.id[0],
       name: inputs.name[0],
       password: inputs.pw[0],
       role: inputs.role[0],
     }
+    console.log(data)
     axios
       .post(BASE_URL + '/api/v1/users', data)
       .then(() => navigate('/login'))
@@ -101,107 +111,107 @@ export function SignupForm() {
   function add() {
     axios
       .post(BASE_URL + '/api/v1/construction', { constructName: company })
-      .then(setCompany(''))
+      .then((res) => {
+        document.getElementById('company-to-add').value = ''
+        axios
+          .get(BASE_URL + '/api/v1/construction/getConstruction')
+          .then((res) => setCompanies(res.data))
+          .catch((err) => console.log(err))
+      })
       .catch((err) => console.log(err))
   }
 
   return (
     <Fragment>
-      <input
+      <MarginInput
         name="id"
-        label="id"
         required
         autoFocus
-        size="small"
+        placeholder="아이디(10자 이내)"
         onChange={handleChange}
-        // error={Boolean(inputs.id[0]) && !inputs.id[1] ? 'false' : 'true'}
-        // helperText={inputs.id[0] && !inputs.id[1] && '10자 이내'}
       />
 
-      <input
+      <MarginInput
         name="name"
-        label="이름"
         required
-        size="small"
         onChange={handleChange}
-        // error={Boolean(inputs.name[0]) && !inputs.name[1]}
-        // helperText={
-        //   inputs.name[0] && !inputs.name[1] && '10자 이내 | 문자 허용'
-        // }
+        placeholder="이름"
       />
 
-      <input
+      <MarginInput
         name="pw"
-        label="비밀번호"
         required
         type="password"
-        size="small"
         onChange={handleChange}
-        // error={Boolean(inputs.pw[0]) && !inputs.pw[1]}
-        // helperText={
-        //   inputs.pw[0] && !inputs.pw[1] && '8~16자 | 문자,숫자,특수기호 포함'
-        // }
+        placeholder="비밀번호(8~16자, 숫자,문자,특수기호)"
       />
 
-      <input
+      <MarginInput
         name="pw2"
-        label="비밀번호확인"
+        placeholder="비밀번호확인"
         required
         type="password"
-        size="small"
         onChange={handleChange}
-        // error={Boolean(inputs.pw2[0]) && !inputs.pw2[1]}
-        // helperText={inputs.pw2[0] && !inputs.pw2[1] && '일치하지 않습니다'}
       />
-
-      <select name="company">
-        <option value="">회사를 선택해주세요</option>
-        <option value="1">1</option>
-        <option value="2">2</option>
-        <option value="3">3</option>
-      </select>
 
       <input
-        name="role"
-        label="직책"
+        type="search"
+        name="company"
+        style={{ margin: '15px 0 0', height: 22 }}
         required
-        size="small"
-        onChange={handleChange}
+        placeholder="회사"
+        list="list-of-companies"
+        onChange={(e) => {
+          setInputs({ ...inputs, company: [e.target.value, true] })
+        }}
       />
+      <datalist id="list-of-companies">
+        {companies.map((company) => (
+          <option
+            value={company.constructionName}
+            key={company.constructionId}
+          />
+        ))}
+      </datalist>
 
       {exist ? (
-        <button onClick={() => setExist(false)} sx={{ pl: 1 }}>
+        <button
+          onClick={() => setExist(false)}
+          style={{ margin: '0 0 15px 0' }}
+        >
           회사목록에 없나요?
         </button>
       ) : (
-        <FormControl size="small" sx={{ width: '75%' }}>
-          <InputLabel htmlFor="outlined-adornment-password">
-            회사등록
-          </InputLabel>
-          <OutlinedInput
-            id="addCompany"
-            value={company}
+        <div style={{ display: 'flex', marginBottom: '20px' }}>
+          <input
+            id="company-to-add"
             onChange={(e) => setCompany(e.target.value)}
-            endAdornment={
-              <InputAdornment position="end">
-                <Button variant="contained" size="small" onClick={add}>
-                  등록
-                </Button>
-              </InputAdornment>
-            }
-            label="x"
+            placeholder="등록할 회사를 입력해주세요"
+            style={{ width: '68%', height: '18px', display: 'inline' }}
           />
-        </FormControl>
+          <button
+            style={{ width: '28%', height: '100%', display: 'inline' }}
+            onClick={() => add()}
+          >
+            등록
+          </button>
+        </div>
       )}
+      <MarginInput
+        name="role"
+        placeholder="직책"
+        required
+        onChange={handleChange}
+      />
 
-      <Bigbtn
+      <button
         onClick={submit}
         variant="contained"
         disabled={!allClear()}
-        sx={{ ml: '60%' }}
+        style={{ marginTop: '15px' }}
       >
         회원 등록
-      </Bigbtn>
+      </button>
     </Fragment>
   )
 }
@@ -238,10 +248,13 @@ export function LoginForm({ setuser }) {
 
   return (
     <Fragment>
-      <form onSubmit={submit}>
-        <input name="id" label="아이디" required size="small" />
+      <form
+        onSubmit={submit}
+        style={{ display: 'flex', flexDirection: 'column' }}
+      >
+        <MarginInput name="id" label="아이디" required size="small" />
 
-        <input
+        <MarginInput
           name="pw"
           label="비밀번호"
           required
@@ -249,10 +262,7 @@ export function LoginForm({ setuser }) {
           type="password"
         />
 
-        <button
-          type="submit"
-          //  variant="contained"
-        >
+        <button type="submit" style={{ marginTop: 20 }}>
           로그인
         </button>
       </form>

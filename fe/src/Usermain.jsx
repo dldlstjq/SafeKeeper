@@ -1,6 +1,6 @@
 import { Fragment, useEffect, useState } from 'react'
 import styled from '@emotion/styled'
-import { DialogComponent, RoomDialog } from './Dialogs'
+import { DialogComponent } from './component/Dialogs'
 import { useNavigate } from 'react-router'
 import axios from 'axios'
 import { BASE_URL } from './Common'

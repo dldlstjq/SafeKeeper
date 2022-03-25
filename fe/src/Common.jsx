@@ -16,7 +16,7 @@ export const Bigbtn = styled.button`
   font-weight: bold;
   margin: 5px;
   background-color: pink;
-  width: 30vw;
+  width: 20%;
   // color: black;
   // height: 50vh;
   // border-radius: 10%;
@@ -29,4 +29,7 @@ export const TextFieldPadding = styled(TextField)`
   // padding: 0 8px;
   width: 75%;
   background-color: white;
+`
+export const MarginInput = styled.input`
+  margin: 0 0 5px;
 `
