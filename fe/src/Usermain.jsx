@@ -33,7 +33,8 @@ export default function Usermain({ user }) {
   function updateRooms() {
     axios
       .get(BASE_URL + '/api/v1/room/user', {
-        params: { userId: user?.userId },
+        // userId: user.userId
+        params: { userId: user },
       })
       .then((res) => console.log(res))
       .catch((err) => console.log(err))

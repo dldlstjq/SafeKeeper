@@ -27,6 +27,9 @@ export default function Mainpage({ user }) {
         </DialogComponent>
       )}
       <Bigbtn variant="contained">참가</Bigbtn>
+      <Bigbtn variant="contained" onClick={() => navigate('openvidu')}>
+        OpenVidu
+      </Bigbtn>
     </Box>
   )
 }
