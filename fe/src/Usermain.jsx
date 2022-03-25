@@ -6,17 +6,44 @@ import axios from 'axios'
 import { BASE_URL } from './Common'
 
 export default function Usermain({ user }) {
-  const [rooms, setrooms] = useState([])
+  const [rooms, setRooms] = useState([])
+  const [roomname, setRoomname] = useState('')
+
   const navigate = useNavigate()
 
   useEffect(() => {
     updateRooms()
   }, [])
 
-  function addRoom(data) {
+  function addRoom() {
     axios
-      .post(BASE_URL + '/api/v1/room', data)
-      .then((res) => console.log(res))
+      .post(BASE_URL + '/api/v1/room', { roomName: roomname, roomPassword: '' })
+      .then((res) => {
+        const data = {
+          room: {
+            roomId: res.data.roomId,
+            roomName: res.data.roomName,
+          },
+          user: {
+            construction: {
+              constructName: 'string',
+              constructionId: 0,
+            },
+            id: 0,
+            userId: 'string',
+            userName: 'string',
+            userRole: 'string',
+          },
+        }
+        axios
+          .post(BASE_URL + '/api/v1/room/user', data)
+          .then((res) => {
+            console.log(res)
+          })
+          .catch((err) => {
+            console.log(err)
+          })
+      })
       .catch((err) => console.log(err))
   }
 
@@ -24,7 +51,7 @@ export default function Usermain({ user }) {
     // axios.get(BASE_URL+'/api/v1/construction/getConstruction')
     //     .then(res=>console.log(res))
     //     .catch(err=>console.log(err))
-    setrooms(rooms.filter((room) => room.id !== id))
+    setRooms(rooms.filter((room) => room.id !== id))
   }
   function enter(id) {
     //axios
@@ -42,7 +69,12 @@ export default function Usermain({ user }) {
 
   return (
     <>
-      {/* <button onClick={}>방 추가</button> */}
+      <input
+        type="text"
+        onChange={(e) => setRoomname(e.target.value)}
+        placeholder="방 이름"
+      />
+      <button onClick={addRoom}>방 생성</button>
       {rooms.map((room) => (
         <Room
           key={room.id}
@@ -52,7 +84,6 @@ export default function Usermain({ user }) {
           enter={enter}
         />
       ))}
-      <DialogComponent addRoom={addRoom} />
     </>
   )
 }

@@ -9,13 +9,13 @@ export default function Mainpage({ user }) {
 
   return (
     <Box
-      sx={
-        {
-          // display: 'flex',
-          // flexDirection: 'row',
-          // justifyContent: 'center',
-        }
-      }
+      sx={{
+        display: 'flex',
+        height: '100vh',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+      }}
     >
       <DialogComponent title={'회원가입'}>
         <SignupForm />

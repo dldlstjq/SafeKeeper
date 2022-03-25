@@ -6,7 +6,7 @@ import { useState } from 'react'
 import Usermain from './Usermain'
 import { Room } from './Room'
 import { Box } from '@mui/material'
-// import OpenVidu from './OpenVidu'
+import OpenVidu from './OpenVidu'
 // import Test from './room/Test'
 // import Test2 from './Test2'
 
@@ -27,8 +27,6 @@ function App() {
         {/* <Appbar jwt={jwt} setjwt={setjwt} /> */}
         <Routes>
           <Route path="/" element={<Mainpage user={user} />} />
-          <Route path="signup" element={<SignupForm />} />
-          <Route path="login" element={<LoginForm setuser={setuser} />} />
           <Route path="usermain" element={<Usermain user={user} />} />
           <Route path="room/:roomId" element={<Room />} />
           <Route path="openvidu" element={<OpenVidu />} />

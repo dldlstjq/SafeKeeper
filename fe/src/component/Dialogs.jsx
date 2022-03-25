@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, Fragment } from 'react'
 import Button from '@mui/material/Button'
 import Dialog from '@mui/material/Dialog'
 import DialogActions from '@mui/material/DialogActions'
@@ -21,7 +21,7 @@ export function DialogComponent({ title, children }) {
   }
 
   return (
-    <div>
+    <Fragment>
       <Bigbtn onClick={handleClickOpen}>{title}</Bigbtn>
       <Dialog open={open} onClose={() => handleClose}>
         <DialogTitle sx={{ display: 'flex', justifyContent: 'center' }}>
@@ -43,6 +43,6 @@ export function DialogComponent({ title, children }) {
           </Button>
         </DialogActions>
       </Dialog>
-    </div>
+    </Fragment>
   )
 }

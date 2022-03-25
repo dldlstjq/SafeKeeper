@@ -240,10 +240,6 @@ export function LoginForm({ setuser }) {
             localStorage.setItem('user', res.data.id)
             localStorage.setItem('accessToken', accessToken)
 
-            // localStorage.setItem('user', {
-            //   accessToken: accessToken,
-            //   userId: res.data.userId,
-            // })
             setuser({
               accessToken: accessToken,
               userId: res.data.userId,
