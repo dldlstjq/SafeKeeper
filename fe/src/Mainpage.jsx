@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import { DialogComponent } from './component/Dialogs'
 import { SignupForm, LoginForm } from './Forms'
 
-export default function Mainpage({ user }) {
+export default function Mainpage({ user, setUser }) {
   const navigate = useNavigate()
 
   return (
@@ -23,7 +23,7 @@ export default function Mainpage({ user }) {
 
       {!user && (
         <DialogComponent title={'로그인'}>
-          <LoginForm />
+          <LoginForm setUser={setUser} />
         </DialogComponent>
       )}
       <Bigbtn variant="contained">참가</Bigbtn>

@@ -19,19 +19,16 @@ injectGlobal`
 `
 
 function App() {
-  const [user, setuser] = useState(Number(localStorage.getItem('user')))
+  const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')))
 
   return (
     <BrowserRouter>
       <Box minHeight="100vh">
-        {/* <Appbar jwt={jwt} setjwt={setjwt} /> */}
         <Routes>
-          <Route path="/" element={<Mainpage user={user} />} />
+          <Route path="/" element={<Mainpage user={user} setUser={setUser} />} />
           <Route path="usermain" element={<Usermain user={user} />} />
           <Route path="room/:roomId" element={<Room />} />
           <Route path="openvidu" element={<OpenVidu />} />
-          {/* <Route path="test" element={<Test />} />
-          <Route path="test2" element={<Test2 />} /> */}
         </Routes>
       </Box>
     </BrowserRouter>

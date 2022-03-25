@@ -1,15 +1,17 @@
 import styled from '@emotion/styled'
 import { Button, Grid, TextField } from '@mui/material'
 
-// console.log('common')
 export const BASE_URL = 'http://j6d101.p.ssafy.io:8080'
 
 export const Div = styled.div`
   // background-color: gold;
   // border: 1px solid white;
-  height: 80px;
-  display: inline-block;
-  width: 49%;
+  height: 100vh;
+  // width: 49%;
+  // display: inline-block;
+  display: flex;
+  flex-flow: column wrap;
+  align-items: center;
 `
 export const Bigbtn = styled.button`
   font-size: 16px;

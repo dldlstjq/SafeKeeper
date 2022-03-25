@@ -216,7 +216,7 @@ export function SignupForm() {
   )
 }
 
-export function LoginForm({ setuser }) {
+export function LoginForm({ setUser }) {
   const navigate = useNavigate()
   function submit(e) {
     e.preventDefault()
@@ -228,25 +228,16 @@ export function LoginForm({ setuser }) {
       })
       .then((res) => {
         const accessToken = res.data.accessToken
+        localStorage.setItem('accessToken', accessToken)
+        axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`
         axios
-          .get(BASE_URL + '/api/v1/users/me', {
-            headers: {
-              Authorization: `Bearer ${accessToken}`,
-            },
-          })
+          .get(BASE_URL + '/api/v1/users/me')
           .then((res) => {
-            console.log(res.data.id)
-            // 진짜 userId가 아니라 db 기본키인 id를 넘겨야 한다 -> 호진님 부탁
-            localStorage.setItem('user', res.data.id)
-            localStorage.setItem('accessToken', accessToken)
-
-            setuser({
-              accessToken: accessToken,
-              userId: res.data.userId,
-            })
+            setUser(res.data.user)
+            localStorage.setItem('user', JSON.stringify(res.data.user))
+            navigate('/usermain')
           })
           .catch((err) => console.log(err))
-        navigate('/usermain')
       })
       .catch((err) => console.log(err))
   }
