@@ -260,12 +260,21 @@ export function LoginForm({ setuser }) {
       .then((res) => {
         const accessToken = res.data.accessToken
         axios
-          .get(BASE_URL + '/api/v1/users/me')
+          .get(BASE_URL + '/api/v1/users/me', {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
+          })
           .then((res) => {
-            localStorage.setItem('user', {
-              accessToken: accessToken,
-              userId: res.data.userId,
-            })
+            console.log(res.data.id)
+            // 진짜 userId가 아니라 db 기본키인 id를 넘겨야 한다 -> 호진님 부탁
+            localStorage.setItem('user', res.data.id)
+            localStorage.setItem('accessToken', accessToken)
+
+            // localStorage.setItem('user', {
+            //   accessToken: accessToken,
+            //   userId: res.data.userId,
+            // })
             setuser({
               accessToken: accessToken,
               userId: res.data.userId,
