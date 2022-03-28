@@ -1,4 +1,4 @@
-import { Gridd } from './Common'
+import { GRID } from './Common'
 import Camera from './component/Camera'
 import { useParams } from 'react-router-dom'
 import { useState, useEffect } from 'react'
@@ -28,13 +28,13 @@ export function Room() {
   }
 
   return (
-    <Gridd container height="100vh">
-      <Gridd item xs={1.5}>
+    <GRID container height="100vh">
+      <GRID item xs={1.5}>
         방 식별자:{roomId}
         <button onClick={add}>카메라추가</button>
         <button>메뉴로</button>
-      </Gridd>
-      <Gridd item xs={10.5}>
+      </GRID>
+      <GRID item xs={10.5}>
         {cams.map((cam) => (
           <Camera
             key={cam.id}
@@ -43,7 +43,7 @@ export function Room() {
             removeCam={removeCam}
           />
         ))}
-      </Gridd>
-    </Gridd>
+      </GRID>
+    </GRID>
   )
 }

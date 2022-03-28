@@ -4,6 +4,7 @@ import { SignupForm, LoginForm, JoinRoomForm } from './Forms'
 import logo from './images/logo-removebg.png'
 import crane from './images/crane.jpg'
 import { Fragment } from 'react'
+import { P } from './Common'
 
 export default function Mainpage({ user, setUser }) {
   const navigate = useNavigate()
@@ -15,25 +16,33 @@ export default function Mainpage({ user, setUser }) {
         <div style={{ display: 'flex' }}>
           {!user && (
             <Fragment>
-              <DialogComponent title={'회원가입'}>
+              <DialogComponent
+                title={'회원가입'}
+                color="sandybrown"
+                margin="10px 20px 0 0"
+                size="18px"
+              >
                 <SignupForm />
               </DialogComponent>
-              <DialogComponent title={'로그인'}>
+              <DialogComponent
+                title={'로그인'}
+                color="sandybrown"
+                margin="10px 20px 0 0"
+                size="18px"
+              >
                 <LoginForm setUser={setUser} />
               </DialogComponent>
             </Fragment>
           )}
           {user && (
-            <p
+            <P
               onClick={() => navigate('/usermain')}
-              style={{
-                fontSize: '1.5em',
-                color: 'sandybrown',
-                margin: '15px 20px 0 0',
-              }}
+              color="sandybrown"
+              margin="10px 20px 0 0"
+              size="18px"
             >
               방 참가
-            </p>
+            </P>
           )}
           {/* <Bigbtn variant="contained" onClick={() => navigate('openvidu')}>
           OpenVidu

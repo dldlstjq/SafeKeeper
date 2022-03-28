@@ -1,16 +1,7 @@
 import { useState, useEffect, Fragment } from 'react'
-import {
-  Button,
-  Autocomplete,
-  FormControl,
-  InputLabel,
-  OutlinedInput,
-  InputAdornment,
-} from '@mui/material'
-import Brightness3Icon from '@mui/icons-material/Brightness3'
 import axios from 'axios'
 import { useNavigate } from 'react-router'
-import { Bigbtn, BASE_URL, Gridd, MarginInput, Div } from './Common'
+import { Button, BASE_URL, GRID, Input, Div, Form } from './Common'
 
 export function SignupForm() {
   const navigate = new useNavigate()
@@ -123,7 +114,7 @@ export function SignupForm() {
 
   return (
     <Fragment>
-      <MarginInput
+      <Input
         name="id"
         required
         autoFocus
@@ -131,14 +122,9 @@ export function SignupForm() {
         onChange={handleChange}
       />
 
-      <MarginInput
-        name="name"
-        required
-        onChange={handleChange}
-        placeholder="이름"
-      />
+      <Input name="name" required onChange={handleChange} placeholder="이름" />
 
-      <MarginInput
+      <Input
         name="pw"
         required
         type="password"
@@ -146,7 +132,7 @@ export function SignupForm() {
         placeholder="비밀번호(8~16자, 숫자,문자,특수기호)"
       />
 
-      <MarginInput
+      <Input
         name="pw2"
         placeholder="비밀번호확인"
         required
@@ -197,12 +183,7 @@ export function SignupForm() {
           </button>
         </div>
       )}
-      <MarginInput
-        name="role"
-        placeholder="직책"
-        required
-        onChange={handleChange}
-      />
+      <Input name="role" placeholder="직책" required onChange={handleChange} />
 
       <button
         onClick={submit}
@@ -248,9 +229,9 @@ export function LoginForm({ setUser }) {
         onSubmit={submit}
         style={{ display: 'flex', flexDirection: 'column' }}
       >
-        <MarginInput name="id" label="아이디" required size="small" />
+        <Input name="id" label="아이디" required size="small" />
 
-        <MarginInput
+        <Input
           name="pw"
           label="비밀번호"
           required
@@ -280,17 +261,19 @@ export function JoinRoomForm({ user }) {
   }
 
   return (
-    <form onSubmit={() => submit()}>
-      <input
+    <Form onSubmit={() => submit()}>
+      <Input
         name="roomId"
         onChange={(e) => setInputs({ ...inputs, roomId: e.target.value })}
+        placeholder="방 아이디"
         autoFocus
       />
-      <input
+      <Input
+        placeholder="방 이름"
         name="roomName"
         onChange={(e) => setInputs({ ...inputs, roomName: e.target.value })}
       />
       <button type="submit">참가</button>
-    </form>
+    </Form>
   )
 }

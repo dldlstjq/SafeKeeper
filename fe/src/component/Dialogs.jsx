@@ -6,9 +6,9 @@ import DialogContent from '@mui/material/DialogContent'
 import DialogTitle from '@mui/material/DialogTitle'
 // import DialogContentText from '@mui/material/DialogContentText'
 import { SignupForm, LoginForm } from '../Forms'
-import { Bigbtn } from '../Common'
+import { Bigbtn, P } from '../Common'
 
-export function DialogComponent({ title, children }) {
+export function DialogComponent({ title, children, ...props }) {
   const [open, setOpen] = useState(false)
   const [data, setdata] = useState(null)
 
@@ -23,16 +23,14 @@ export function DialogComponent({ title, children }) {
   return (
     <Fragment>
       {/* <Bigbtn onClick={handleClickOpen}>{title}</Bigbtn> */}
-      <p
-        style={{
-          fontSize: '1.5em',
-          color: 'sandybrown',
-          margin: '15px 20px 0 0',
-        }}
+      <P
+        color={props.color}
+        margin={props.margin}
+        size={props.size}
         onClick={handleClickOpen}
       >
         {title}
-      </p>
+      </P>
       <Dialog open={open} onClose={() => handleClose}>
         <DialogTitle sx={{ display: 'flex', justifyContent: 'center' }}>
           {title}
@@ -41,8 +39,7 @@ export function DialogComponent({ title, children }) {
           sx={{
             display: 'flex',
             flexDirection: 'column',
-            // height: '50vh',
-            width: '25vw',
+            //여기서 dialog 크기 조정. 왠만하면 건들지 말것.
           }}
         >
           {children}

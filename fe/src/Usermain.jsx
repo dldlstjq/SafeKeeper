@@ -2,7 +2,7 @@ import { Fragment, useEffect, useMemo, useState } from 'react'
 import { DialogComponent } from './component/Dialogs'
 import { useNavigate } from 'react-router'
 import axios from 'axios'
-import { BASE_URL, Div } from './Common'
+import { BASE_URL, Div, P } from './Common'
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
 import { JoinRoomForm } from './Forms'
 
@@ -91,7 +91,15 @@ export default function Usermain({ user }) {
         onKeyUp={(e) => onkeyup(e)}
         style={{ width: '40%', marginTop: '10%' }}
       />
-      <DialogComponent title={'참가'}>
+      <P color="aliceblue" size="150%" margin="0">
+        또는
+      </P>
+      <DialogComponent
+        title={'다른 방에 참가하기'}
+        color="sandybrown"
+        margin="0"
+        size="18px"
+      >
         <JoinRoomForm user={user} />
       </DialogComponent>
       <div
