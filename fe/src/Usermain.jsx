@@ -1,9 +1,11 @@
-import { Fragment, useEffect, useState } from 'react'
+import { Fragment, useEffect, useMemo, useState } from 'react'
 import styled from '@emotion/styled'
 import { DialogComponent } from './component/Dialogs'
 import { useNavigate } from 'react-router'
 import axios from 'axios'
 import { BASE_URL, Div } from './Common'
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
+import { Api } from '@mui/icons-material'
 
 export default function Usermain({ user }) {
   const [rooms, setRooms] = useState([])
@@ -40,12 +42,23 @@ export default function Usermain({ user }) {
       .catch((err) => console.log(err))
   }
 
-  function deleteRoom(id) {
-    setRooms(rooms.filter((room) => room.id !== id))
+  // addRoom2(){
+  //   return new Promise((resolve,reject)=>{
+
+  //   })
+  // }
+
+  function deleteRoom(roomId) {
+    axios
+      .delete(BASE_URL + '/api/v1/room', { roomId })
+      .then((res) => {
+        console.log(res)
+        setRooms(rooms.filter((room) => room.roomId !== roomId))
+      })
+      .catch((err) => console.log(err))
   }
 
   function enter(id) {
-    //axios
     navigate('/room/' + id)
   }
 
@@ -61,7 +74,12 @@ export default function Usermain({ user }) {
   function onkeyup(e) {
     if (e.keyCode === 13) {
       addRoom(e)
+      e.target.value = ''
       e.target.disabled = true
+      setTimeout(() => {
+        e.target.disabled = false
+      }, 4000)
+      console.log(rooms)
     }
   }
 
@@ -80,6 +98,7 @@ export default function Usermain({ user }) {
           flexFlow: 'column wrap',
           width: '90%',
           margin: '20% 0 5%',
+          maxHeight: '60%',
         }}
       >
         {rooms.map((room) => (
@@ -98,11 +117,16 @@ export default function Usermain({ user }) {
 
 function Room({ roomName, roomId, deleteRoom, enter }) {
   return (
-    <div style={{ width: '33%', marginBottom: 5 }}>
-      <button onClick={() => enter(roomId)} style={{ width: '60%' }}>
+    <div style={{ maxWidth: '50%', marginBottom: 5, display: 'flex' }}>
+      <button
+        onClick={() => enter(roomId)}
+        style={{ width: '70%', height: 30 }}
+      >
         {roomName}
       </button>
-      <button onClick={() => deleteRoom(roomId)}>삭제</button>
+      <button name="favorite" onClick={() => deleteRoom(roomId)}>
+        <DeleteForeverIcon fontSize="small" />
+      </button>
     </div>
   )
 }

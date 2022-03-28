@@ -8,7 +8,7 @@ import { Room } from './Room'
 import { Box } from '@mui/material'
 import OpenVidu from './OpenVidu'
 // import Test from './room/Test'
-// import Test2 from './Test2'
+import Test2 from './test/Test2' //비디오 켜기
 
 injectGlobal`
   body{
@@ -29,6 +29,7 @@ function App() {
           <Route path="usermain" element={<Usermain user={user} />} />
           <Route path="room/:roomId" element={<Room />} />
           <Route path="openvidu" element={<OpenVidu />} />
+          <Route path='test' element={<Test2 />} />
         </Routes>
       </Box>
     </BrowserRouter>
