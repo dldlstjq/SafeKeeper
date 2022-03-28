@@ -225,7 +225,7 @@ class OpenVideo extends Component {
   constructor(props) {
     super(props)
     this.OPENVIDU_SERVER_URL = 'https://' + window.location.hostname + ':5443'
-    this.OPENVIDU_SERVER_SECRET = 'MY_SECRET'
+    this.OPENVIDU_SERVER_SECRET = 'vonovono'
     this.state = {
       mySessionId: 'SessionA',
       myUserName: 'OpenVidu_User_' + Math.floor(Math.random() * 100),
