@@ -224,7 +224,7 @@ import OpenViduSession from 'openvidu-react'
 class OpenVideo extends Component {
   constructor(props) {
     super(props)
-    this.OPENVIDU_SERVER_URL = 'https://' + window.location.hostname + ':5443'
+    this.OPENVIDU_SERVER_URL = 'http://' + window.location.hostname + ':5443'
     this.OPENVIDU_SERVER_SECRET = 'MY_SECRET'
     this.state = {
       mySessionId: 'SessionA',
