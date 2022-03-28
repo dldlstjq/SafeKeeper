@@ -83,11 +83,12 @@ public class RoomServiceImpl implements RoomService{
     @Override
     public void deleteRoomByRoomId(RoomDto.RoomDeleteDelReq roomDeleteDelReq){
         Long roomId = roomDeleteDelReq.getRoomId();
+        roomUserRepository.deleteRoomUserByRoomId(roomId);
         roomRepository.deledeRoomByRoomname(roomId);
     }
 
     public void deleteRoomUserByUserId(RoomDto.RoomUserDeleteDelReq roomUserDeleteDelReq){
         Long userId = roomUserDeleteDelReq.getUserId();
-        roomUserRepository.deleteRoomUserByByUser(userId);
+        roomUserRepository.deleteRoomUserByRoomId(userId);
     }
 }
