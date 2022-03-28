@@ -8,7 +8,7 @@ import { Room } from './Room'
 import { Box } from '@mui/material'
 import OpenVidu from './OpenVidu'
 // import Test from './room/Test'
-import Test2 from './test/Test2' //비디오 켜기
+import Test2 from './component/Test2' //비디오 켜기
 
 injectGlobal`
   body{
