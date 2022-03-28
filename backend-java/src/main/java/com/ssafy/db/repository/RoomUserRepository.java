@@ -20,7 +20,7 @@ public interface RoomUserRepository extends JpaRepository<RoomUser, Long> {
 
     @Transactional
     @Modifying(clearAutomatically = true)
-    @Query(value = "delete from room_user where user_id=:userId", nativeQuery = true)
-    void deleteRoomUserByByUser(Long userId);
+    @Query(value = "delete from room_user where room_id=:roomId", nativeQuery = true)
+    void deleteRoomUserByRoomId(Long roomId);
 
 }
