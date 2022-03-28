@@ -1,11 +1,10 @@
 import { Fragment, useEffect, useMemo, useState } from 'react'
-import styled from '@emotion/styled'
 import { DialogComponent } from './component/Dialogs'
 import { useNavigate } from 'react-router'
 import axios from 'axios'
 import { BASE_URL, Div } from './Common'
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
-import { Api } from '@mui/icons-material'
+import { JoinRoomForm } from './Forms'
 
 export default function Usermain({ user }) {
   const [rooms, setRooms] = useState([])
@@ -92,6 +91,9 @@ export default function Usermain({ user }) {
         onKeyUp={(e) => onkeyup(e)}
         style={{ width: '40%', marginTop: '10%' }}
       />
+      <DialogComponent title={'참가'}>
+        <JoinRoomForm user={user} />
+      </DialogComponent>
       <div
         style={{
           display: 'flex',

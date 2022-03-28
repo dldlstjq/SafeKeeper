@@ -265,3 +265,32 @@ export function LoginForm({ setUser }) {
     </Fragment>
   )
 }
+
+export function JoinRoomForm({ user }) {
+  const [inputs, setInputs] = useState({})
+  function submit() {
+    const data = {
+      room: inputs,
+      user,
+    }
+    axios
+      .post(BASE_URL + '/api/v1/room/user', data)
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err))
+  }
+
+  return (
+    <form onSubmit={() => submit()}>
+      <input
+        name="roomId"
+        onChange={(e) => setInputs({ ...inputs, roomId: e.target.value })}
+        autoFocus
+      />
+      <input
+        name="roomName"
+        onChange={(e) => setInputs({ ...inputs, roomName: e.target.value })}
+      />
+      <button type="submit">참가</button>
+    </form>
+  )
+}

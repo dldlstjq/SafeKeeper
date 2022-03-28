@@ -15,6 +15,7 @@ export const Bigbtn = styled.button`
   margin: 5px;
   background-color: silver;
   width: 30%;
+  max-height: 50%;
   // color: black;
   // height: 50vh;
   // border-radius: 10%;

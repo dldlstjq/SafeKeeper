@@ -22,7 +22,17 @@ export function DialogComponent({ title, children }) {
 
   return (
     <Fragment>
-      <Bigbtn onClick={handleClickOpen}>{title}</Bigbtn>
+      {/* <Bigbtn onClick={handleClickOpen}>{title}</Bigbtn> */}
+      <p
+        style={{
+          fontSize: '1.5em',
+          color: 'sandybrown',
+          margin: '15px 20px 0 0',
+        }}
+        onClick={handleClickOpen}
+      >
+        {title}
+      </p>
       <Dialog open={open} onClose={() => handleClose}>
         <DialogTitle sx={{ display: 'flex', justifyContent: 'center' }}>
           {title}
