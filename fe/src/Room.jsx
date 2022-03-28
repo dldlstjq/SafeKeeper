@@ -1,5 +1,5 @@
 import { Gridd } from './Common'
-import Camera from './Camera'
+import Camera from './component/Camera'
 import { useParams } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 

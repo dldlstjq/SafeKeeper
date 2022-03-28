@@ -1,77 +1,132 @@
-import { Fragment, useEffect, useState } from 'react'
+import { Fragment, useEffect, useMemo, useState } from 'react'
 import styled from '@emotion/styled'
-import { RoomDialog } from './Dialogs'
+import { DialogComponent } from './component/Dialogs'
 import { useNavigate } from 'react-router'
 import axios from 'axios'
-import { BASE_URL } from './Common'
+import { BASE_URL, Div } from './Common'
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
+import { Api } from '@mui/icons-material'
 
 export default function Usermain({ user }) {
-  const [rooms, setrooms] = useState([])
+  const [rooms, setRooms] = useState([])
+  const [roomName, setRoomName] = useState('')
+
   const navigate = useNavigate()
 
   useEffect(() => {
     updateRooms()
   }, [])
 
-  function addRoom(data) {
+  function addRoom() {
     axios
-      .post(BASE_URL + '/api/v1/room', data)
-      .then((res) => console.log(res))
+      .post(BASE_URL + '/api/v1/room', { roomName, roomPassword: '' })
+      .then((res) => {
+        const temp_user = { ...user }
+        delete temp_user.userPassword
+        const data = {
+          room: {
+            roomId: res.data.roomId,
+            roomName: res.data.roomName,
+          },
+          user: temp_user,
+        }
+        axios
+          .post(BASE_URL + '/api/v1/room/user', data)
+          .then((res) => {
+            updateRooms()
+          })
+          .catch((err) => {
+            console.log(err)
+          })
+      })
       .catch((err) => console.log(err))
   }
 
-  function deleteRoom(id) {
-    // axios.get(BASE_URL+'/api/v1/construction/getConstruction')
-    //     .then(res=>console.log(res))
-    //     .catch(err=>console.log(err))
-    setrooms(rooms.filter((room) => room.id !== id))
+  // addRoom2(){
+  //   return new Promise((resolve,reject)=>{
+
+  //   })
+  // }
+
+  function deleteRoom(roomId) {
+    axios
+      .delete(BASE_URL + '/api/v1/room', { roomId })
+      .then((res) => {
+        console.log(res)
+        setRooms(rooms.filter((room) => room.roomId !== roomId))
+      })
+      .catch((err) => console.log(err))
   }
+
   function enter(id) {
-    //axios
     navigate('/room/' + id)
   }
+
   function updateRooms() {
     axios
-      .get(BASE_URL + '/api/v1/room/user', {
-        // userId: user.userId
-        params: { userId: user },
+      .get(BASE_URL + '/api/v1/room/user', { params: { userId: user.id } })
+      .then((res) => {
+        setRooms(res.data)
       })
-      .then((res) => console.log(res))
       .catch((err) => console.log(err))
+  }
+
+  function onkeyup(e) {
+    if (e.keyCode === 13) {
+      addRoom(e)
+      e.target.value = ''
+      e.target.disabled = true
+      setTimeout(() => {
+        e.target.disabled = false
+      }, 4000)
+      console.log(rooms)
+    }
   }
 
   return (
-    <>
-      {/* <button onClick={}>방 추가</button> */}
-      {rooms.map((room) => (
-        <Room
-          key={room.id}
-          roomName={room.name}
-          roomId={room.id}
-          deleteRoom={deleteRoom}
-          enter={enter}
-        />
-      ))}
-      <RoomDialog btn={'방 추가'} addRoom={addRoom} />
-    </>
+    <Div>
+      <input
+        type="text"
+        onChange={(e) => setRoomName(e.target.value)}
+        placeholder="방 이름을 입력하고 추가해주세요"
+        onKeyUp={(e) => onkeyup(e)}
+        style={{ width: '40%', marginTop: '10%' }}
+      />
+      <div
+        style={{
+          display: 'flex',
+          flexFlow: 'column wrap',
+          width: '90%',
+          margin: '20% 0 5%',
+          maxHeight: '60%',
+        }}
+      >
+        {rooms.map((room) => (
+          <Room
+            key={room.roomId}
+            roomName={room.roomName}
+            roomId={room.roomId}
+            deleteRoom={deleteRoom}
+            enter={enter}
+          />
+        ))}
+      </div>
+    </Div>
   )
 }
 
-const ThinDiv = styled.div`
-  width: 30%;
-  background-color: silver;
-  // border: solid black;
-  border-radius: 5px;
-  display: inline-block;
-  margin: 10px 20px;
-`
-
 function Room({ roomName, roomId, deleteRoom, enter }) {
   return (
-    <ThinDiv>
-      {roomName}
-      <button onClick={() => deleteRoom(roomId)}>x</button>
-      <button onClick={() => enter(roomId)}>입장</button>
-    </ThinDiv>
+    <div style={{ maxWidth: '50%', marginBottom: 5, display: 'flex' }}>
+      <button
+        onClick={() => enter(roomId)}
+        style={{ width: '70%', height: 30 }}
+      >
+        {roomName}
+      </button>
+      <button name="favorite" onClick={() => deleteRoom(roomId)}>
+        <DeleteForeverIcon fontSize="small" />
+      </button>
+    </div>
   )
 }
