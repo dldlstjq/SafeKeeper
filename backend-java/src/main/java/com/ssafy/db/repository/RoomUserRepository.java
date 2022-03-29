@@ -13,10 +13,6 @@ import java.util.Optional;
 
 @Repository
 public interface RoomUserRepository extends JpaRepository<RoomUser, Long> {
-    @Query(value = "select * from room_user as ru where ru.user_id=:userId"
-              , nativeQuery = true
-    )
-    List<RoomUser> selectRoomByUser(Long userId);
 
     @Transactional
     @Modifying(clearAutomatically = true)

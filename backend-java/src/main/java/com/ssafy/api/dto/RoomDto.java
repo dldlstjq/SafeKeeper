@@ -44,8 +44,6 @@ public class RoomDto {
         String roomName;
         @ApiModelProperty(name="방 비밀번호", required = true)
         String roomPassword;
-        @ApiModelProperty(name="유저", required = true)
-        User user;
 
         public static RoomRes of(Room room) {
             RoomRes res = new RoomRes();
@@ -59,7 +57,6 @@ public class RoomDto {
             RoomRes res = new RoomRes();
             res.setRoomId(room.getRoomId());
             res.setRoomName(room.getRoomName());
-            res.setUser(user);
             // 비밀번호는 나중에 논의
             return res;
         }
