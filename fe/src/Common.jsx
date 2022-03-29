@@ -22,11 +22,6 @@ export const Button = styled.button`
 export const GRID = styled(Grid)`
   // border: 1px solid black;
 `
-// export const TextFieldPadding = styled(TextField)`
-//   padding: 0 8px;
-//   width: 75%;
-//   background-color: white;
-// `
 export const Input = styled.input`
   margin: 0 0 5px;
 `
