@@ -4,6 +4,7 @@ import React, { Component } from 'react'
 import './OpenVidu.css'
 import UserVideoComponent from './UserVideoComponent'
 import logo from './images/logo-removebg.png'
+import ExitToAppIcon from '@mui/icons-material/ExitToApp'
 
 const OPENVIDU_SERVER_URL = 'https://j6d101.p.ssafy.io:8443'
 const OPENVIDU_SERVER_SECRET = 'vonovono'
@@ -254,7 +255,7 @@ class CCTV extends Component {
               {/* <h1> Join a video session </h1> */}
               <form className="form-group" onSubmit={this.joinSession}>
                 <p>
-                  <label>Participant: </label>
+                  <label>닉네임: </label>
                   <input
                     className="form-control"
                     type="text"
@@ -291,13 +292,26 @@ class CCTV extends Component {
         {this.state.session !== undefined ? (
           <div id="session">
             <div id="session-header">
-              <h1 id="session-title">{mySessionId}</h1>
-              <input
+              <img
+                src={logo}
+                alt="OpenVidu logo"
+                style={{
+                  width: '250px',
+                  height: '150px',
+                }}
+              />
+              {/* <h1 id="session-title">{mySessionId}</h1> */}
+
+              {/* <input
                 className="btn btn-large btn-danger"
                 type="button"
                 id="buttonLeaveSession"
                 onClick={this.leaveSession}
-                value="Leave session"
+                value="나가기"
+              /> */}
+              <ExitToAppIcon
+                id="buttonLeaveSession"
+                onClick={this.leaveSession}
               />
             </div>
 
@@ -315,10 +329,10 @@ class CCTV extends Component {
                 />
               </div>
             ) : null} */}
-            <div id="video-container" className="col-md-6">
+            <div id="video-container" className="video-container">
               {this.state.publisher !== undefined ? (
                 <div
-                  className="stream-container col-md-6 col-xs-6"
+                  className="stream-container"
                   onClick={() =>
                     this.handleMainVideoStream(this.state.publisher)
                   }
@@ -329,7 +343,7 @@ class CCTV extends Component {
               {this.state.subscribers.map((sub, i) => (
                 <div
                   key={i}
-                  className="stream-container col-md-6 col-xs-6"
+                  className="stream-container "
                   onClick={() => this.handleMainVideoStream(sub)}
                 >
                   <UserVideoComponent streamManager={sub} />
