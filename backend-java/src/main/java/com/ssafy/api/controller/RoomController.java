@@ -29,7 +29,7 @@ public class RoomController {
 
 
     @PostMapping()
-    @ApiOperation(value = "방 등록", notes = "방을 등록한다")
+    @ApiOperation(value = "방 등록", notes = "방을 생성한다.")
     @ApiResponses({
             @ApiResponse(code = 200, message = "성공"),
             @ApiResponse(code = 401, message = "인증 실패"),
@@ -47,7 +47,7 @@ public class RoomController {
     }
 
     @GetMapping("")
-    @ApiOperation(value = "회사 정보 조회", notes = "db에 등록된 회사 정보를 조회한다.")
+    @ApiOperation(value = "방 정보 조회", notes = "db에 등록된 전체 방 정보를 조회한다.")
     @ApiResponses({
             @ApiResponse(code = 200, message = "성공"),
             @ApiResponse(code = 401, message = "인증 실패"),
@@ -55,7 +55,6 @@ public class RoomController {
             @ApiResponse(code = 500, message = "서버 오류")
     })
     public ResponseEntity<List<RoomDto.RoomRes>> getAllRoomList() {
-
         List<RoomDto.RoomRes> list = roomService.getAllRoomList();
         return ResponseEntity.status(200).body(list);
     }

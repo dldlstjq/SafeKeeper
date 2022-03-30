@@ -58,7 +58,8 @@ export default function Usermain({ user }) {
   }
 
   function enter(id) {
-    navigate('/room/' + id)
+    // navigate('/room/' + id)
+    navigate('/openvidu')
   }
 
   function updateRooms() {
