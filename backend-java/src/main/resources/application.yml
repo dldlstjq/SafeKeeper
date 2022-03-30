@@ -1,0 +1,88 @@
+build:
+  date: '@build.date@'
+server:
+  ssl:
+    enabled: true
+    #key-store: keystore.p12
+    key-store: classpath:keystore.p12
+    key-store-password: vonovono
+    key-store-type: PKCS12
+    key-alias: bns-ssl
+  port: '8080'
+  address: 0.0.0.0
+  servlet:
+    contextPath: /
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+  compression:
+    enabled: true
+    mime-types: >-
+      application/json,application/xml,text/html,text/xml,text/plain,application/javascript,text/css
+spring:
+  resources:
+    static-locations: 'classpath:/dist/'
+    add-mappings: false
+  mvc:
+    throw-exception-if-no-handler-found: true
+  jpa:
+    hibernate:
+      naming:
+        implicit-strategy: >-
+          org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy
+        physical-strategy: >-
+          org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL57Dialect
+  data:
+    web:
+      pageable:
+        one-indexed-parameters: true
+  datasource:
+    url: >-
+      jdbc:mysql://database-1.cegouvbq3wxp.us-east-2.rds.amazonaws.com:3306/safetykeeper?useUnicode
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      username: vonovono
+      password: vonovono
+  devtools:
+    livereload:
+      enabled: true
+spa:
+  default-file: /dist/index.html
+springfox:
+  documentation:
+    swagger:
+      use-model-v3: false
+jwt:
+  secret: dyAeHubOOc8KaOfYB6XEQoEj1QzRlVgtjNL8PYs1A1tymZvvqkcEU7L1imkKHeDa
+  expiration: '1296000000'
+logging:
+  file:
+    name: ./ssafy-web.log
+  level:
+    root: INFO
+    com:
+      samsung:
+        security: DEBUG
+    org:
+      springframework:
+        web: DEBUG
+      apache:
+        tiles: INFO
+      sringframework:
+        boot: DEBUG
+        security: DEBUG
+management:
+  servlet:
+    context-path: /manage
+  health:
+    db:
+      enabled: true
+    default:
+      enabled: true
+    diskspace:
+      enabled: true
