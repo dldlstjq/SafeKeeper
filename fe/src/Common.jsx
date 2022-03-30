@@ -3,7 +3,7 @@ import styled from '@emotion/styled'
 import { css } from '@emotion/css'
 import { Grid, TextField } from '@mui/material'
 
-export const BASE_URL = 'http://j6d101.p.ssafy.io:8080'
+export const BASE_URL = 'https://j6d101.p.ssafy.io:8080'
 
 export const Div = styled.div`
   height: 100vh;
