@@ -14,7 +14,7 @@ injectGlobal`
   body{
     margin:0;
     padding:0;
-    background-color:black;
+    /* background-color:black; */
   }
 `
 
@@ -25,11 +25,14 @@ function App() {
     <BrowserRouter>
       <Box minHeight="100vh">
         <Routes>
-          <Route path="/" element={<Mainpage user={user} setUser={setUser} />} />
+          <Route
+            path="/"
+            element={<Mainpage user={user} setUser={setUser} />}
+          />
           <Route path="usermain" element={<Usermain user={user} />} />
           <Route path="room/:roomId" element={<Room />} />
           <Route path="openvidu" element={<OpenVidu />} />
-          <Route path='test' element={<Test2 />} />
+          <Route path="test" element={<Test2 />} />
         </Routes>
       </Box>
     </BrowserRouter>
