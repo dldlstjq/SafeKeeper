@@ -25,6 +25,11 @@ import SuiBox from "components/SuiBox";
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Footer from "examples/Footer";
+import MiniStatisticsCard from "examples/Cards/StatisticsCards/MiniStatisticsCard";
+import samsung from "assets/images/samsung.jpg";
+import naver from "assets/images/naver.png";
+import doosan from "assets/images/doosan.jpg";
+import hyundai from "assets/images/hyundai.jpg";
 // import ReportsBarChart from "examples/Charts/BarCharts/ReportsBarChart";
 // import GradientLineChart from "examples/Charts/LineCharts/GradientLineChart";
 
@@ -48,6 +53,49 @@ function Room() {
   return (
     <DashboardLayout>
       <DashboardNavbar />
+      <SuiBox mb={3}>
+        <Grid container spacing={3}>
+          <Grid item xs={12} sm={6} xl={3}>
+            <MiniStatisticsCard
+              title={{ text: "Samsung" }}
+              count="$53,000"
+              image={{ src: samsung, name: "samsung" }}
+              // percentage={{ color: "success", text: "+55%" }}
+              // icon={{ color: "info", component: "paid" }}
+            />
+          </Grid>
+          <Grid item xs={12} sm={6} xl={3}>
+            <MiniStatisticsCard
+              title={{ text: "Naver" }}
+              count="2,300"
+              image={{ src: naver, name: "naver" }}
+              // percentage={{ color: "success", text: "+3%" }}
+              // icon={{ color: "info", component: "public" }}
+            />
+          </Grid>
+          <Grid item xs={12} sm={6} xl={3}>
+            <MiniStatisticsCard
+              title={{ text: "Hyundai" }}
+              count="+3,462"
+              image={{ src: hyundai, name: "hyundai" }}
+              // percentage={{ color: "error", text: "-2%" }}
+              // icon={{ color: "info", component: "emoji_events" }}
+            />
+          </Grid>
+          <Grid item xs={12} sm={6} xl={3}>
+            <MiniStatisticsCard
+              title={{ text: "Doosan" }}
+              count="$103,430"
+              image={{ src: doosan, name: "doosan" }}
+              // percentage={{ color: "success", text: "+5%" }}
+              // icon={{
+              //   color: "info",
+              //   component: "shopping_cart",
+              // }}
+            />
+          </Grid>
+        </Grid>
+      </SuiBox>
       <SuiBox py={3}>
         {/* <SuiBox mb={3}>
           <Grid container spacing={3}>
