@@ -42,6 +42,7 @@ import Billing from "layouts/billing";
 import Profile from "layouts/profile";
 import SignIn from "layouts/authentication/sign-in";
 import SignUp from "layouts/authentication/sign-up";
+import Room from "layouts/room";
 
 // Soft UI Dashboard React icons
 import Shop from "examples/Icons/Shop";
@@ -52,13 +53,22 @@ import CustomerSupport from "examples/Icons/CustomerSupport";
 import CreditCard from "examples/Icons/CreditCard";
 
 const routes = [
+  // {
+  //   type: "collapse",
+  //   name: "대시보드",
+  //   key: "dashboard",
+  //   route: "/dashboard",
+  //   icon: <Shop size="12px" />,
+  //   component: <Dashboard />,
+  //   noCollapse: true,
+  // },
   {
     type: "collapse",
-    name: "대시보드",
-    key: "dashboard",
-    route: "/dashboard",
-    icon: <Shop size="12px" />,
-    component: <Dashboard />,
+    name: "방 참가",
+    key: "room",
+    route: "/room",
+    icon: <CustomerSupport size="12px" />,
+    component: <Room />,
     noCollapse: true,
   },
   {
