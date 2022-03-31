@@ -20,13 +20,12 @@ import { Link, useNavigate } from "react-router-dom";
 
 // @mui material components
 import Card from "@mui/material/Card";
-import Checkbox from "@mui/material/Checkbox";
 import Autocomplete from "@mui/material/Autocomplete";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
+import { TextField } from "@mui/material";
 
 // Soft UI Dashboard React components
 import SuiBox from "components/SuiBox";
@@ -42,7 +41,6 @@ import curved6 from "assets/images/crane.jpg";
 
 import axios from "axios";
 import { BASE_URL } from "index";
-import { TextField } from "@mui/material";
 
 function SignUp() {
   const [company, setCompany] = useState();
@@ -82,7 +80,7 @@ function SignUp() {
       .get(BASE_URL + "/api/v1/construction/getConstruction")
       .then((res) => setCompanies(res.data))
       .catch((err) => console.log(err));
-  });
+  }, []);
 
   function allClear() {
     for (const key in inputs) {

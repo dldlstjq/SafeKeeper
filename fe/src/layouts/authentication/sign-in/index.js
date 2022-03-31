@@ -44,11 +44,13 @@ function SignIn() {
   function submit(e) {
     e.preventDefault();
     const data = new FormData(e.currentTarget);
+    const cred = {
+      id: data.get("id"),
+      password: data.get("pw"),
+    };
+    console.log(cred);
     axios
-      .post(BASE_URL + "/api/v1/auth/login", {
-        id: data.get("id"),
-        password: data.get("pw"),
-      })
+      .post(BASE_URL + "/api/v1/auth/login", cred)
       .then((res) => {
         localStorage.setItem("jwt", res.data.accessToken);
         navigate("/");
