@@ -16,7 +16,7 @@ Coded by www.creative-tim.com
 import { useState } from "react";
 
 // react-router-dom components
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 // @mui material components
 import Switch from "@mui/material/Switch";
@@ -33,10 +33,28 @@ import CoverLayout from "layouts/authentication/components/CoverLayout";
 // Images
 import curved9 from "assets/images/construction.jpg";
 
+import axios from "axios";
+import { BASE_URL } from "index";
+
 function SignIn() {
   const [rememberMe, setRememberMe] = useState(true);
-
+  const navigate = useNavigate();
   const handleSetRememberMe = () => setRememberMe(!rememberMe);
+
+  function submit(e) {
+    e.preventDefault();
+    const data = new FormData(e.currentTarget);
+    axios
+      .post(BASE_URL + "/api/v1/auth/login", {
+        id: data.get("id"),
+        password: data.get("pw"),
+      })
+      .then((res) => {
+        localStorage.setItem("jwt", res.data.accessToken);
+        navigate("/");
+      })
+      .catch((err) => console.log(err));
+  }
 
   return (
     <CoverLayout
@@ -44,22 +62,22 @@ function SignIn() {
       description="Enter your email and password to sign in"
       image={curved9}
     >
-      <SuiBox component="form" role="form">
+      <SuiBox component="form" role="form" onSubmit={submit}>
         <SuiBox mb={2}>
           <SuiBox mb={1} ml={0.5}>
             <SuiTypography component="label" variant="caption" fontWeight="bold">
-              Email
+              아이디
             </SuiTypography>
           </SuiBox>
-          <SuiInput type="email" placeholder="Email" />
+          <SuiInput placeholder="아이디" name="id" />
         </SuiBox>
         <SuiBox mb={2}>
           <SuiBox mb={1} ml={0.5}>
             <SuiTypography component="label" variant="caption" fontWeight="bold">
-              Password
+              비밀번호
             </SuiTypography>
           </SuiBox>
-          <SuiInput type="password" placeholder="Password" />
+          <SuiInput type="password" placeholder="비밀번호" name="pw" />
         </SuiBox>
         <SuiBox display="flex" alignItems="center">
           <Switch checked={rememberMe} onChange={handleSetRememberMe} />
@@ -73,8 +91,8 @@ function SignIn() {
           </SuiTypography>
         </SuiBox>
         <SuiBox mt={4} mb={1}>
-          <SuiButton variant="gradient" color="info" fullWidth>
-            sign in
+          <SuiButton type="submit" variant="gradient" color="info" fullWidth>
+            로그인
           </SuiButton>
         </SuiBox>
         <SuiBox mt={3} textAlign="center">
@@ -88,7 +106,7 @@ function SignIn() {
               fontWeight="medium"
               textGradient
             >
-              Sign up
+              회원가입
             </SuiTypography>
           </SuiTypography>
         </SuiBox>

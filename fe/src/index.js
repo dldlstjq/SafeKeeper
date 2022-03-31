@@ -21,6 +21,8 @@ import App from "App";
 // Soft UI Dashboard React Context Provider
 import { SoftUIControllerProvider } from "context";
 
+export const BASE_URL = "http://j6d101.p.ssafy.io:8080";
+
 ReactDOM.render(
   <BrowserRouter>
     <SoftUIControllerProvider>
