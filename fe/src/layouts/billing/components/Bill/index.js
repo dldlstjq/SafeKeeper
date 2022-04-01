@@ -24,9 +24,7 @@ import SuiBox from "components/SuiBox";
 import SuiTypography from "components/SuiTypography";
 import SuiButton from "components/SuiButton";
 
-
 function Bill({ name, company, email, vat, noGutter }) {
-  
   return (
     <SuiBox
       component="li"
@@ -51,16 +49,16 @@ function Bill({ name, company, email, vat, noGutter }) {
             {name}
           </SuiTypography>
 
-          <SuiBox display="flex" alignItems="center" mt={{ xs: 2, sm: 0 }} ml={{ xs: -1.5, sm: 0 }}>
+          {/* <SuiBox display="flex" alignItems="center" mt={{ xs: 2, sm: 0 }} ml={{ xs: -1.5, sm: 0 }}>
             <SuiBox mr={1}>
               <SuiButton variant="text" color="error" >
                 <Icon>delete</Icon>&nbsp;delete!!!!!!!11
               </SuiButton>
             </SuiBox>
-            {/* <SuiButton variant="text" color="dark">
+            <SuiButton variant="text" color="dark">
               <Icon>edit</Icon>&nbsp;edit!!!!!!!!!!!!!
-            </SuiButton> */}
-          </SuiBox>
+            </SuiButton>
+          </SuiBox> */}
         </SuiBox>
         <SuiBox mb={1} lineHeight={0}>
           <SuiTypography variant="caption" color="text">
