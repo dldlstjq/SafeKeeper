@@ -53,7 +53,10 @@ function BillingInformation() {
   };
 
   const closeVideo = async () => {
-    navigator.mediaDevices.getUserMedia(null);
+    const s = videoRef.current.srcObject;
+    s.getTracks().forEach((track) => {
+      track.stop();
+    });
   };
 
   return (
