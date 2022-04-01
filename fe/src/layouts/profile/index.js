@@ -128,8 +128,6 @@ function Overview() {
   });
 
   function accidentConstList() {
-   
-
     if ( user!=null ) {
       console.log(user.construction.constructName);
       console.log(user.construction.constructionId);
@@ -143,35 +141,29 @@ function Overview() {
       .catch((err) => console.log(err));
     } else {
       return null;
-    }
-
-    
-  
+    }   
   }
 
   return (
-    
     <DashboardLayout>
       <div>
-      {
-        // 저장된 유저정보가 없으면 로그인 페이지로 이동
-        user!=null
-        ? 
-        <div>
-            <Header />
-              <TableInfo></TableInfo>
-              <TableAcc></TableAcc>
-            <Footer />
-        </div>
-
-        : 
-        <Routes>
-          {getRoutes(routes)}
-          <Route path="*" element={<Navigate to="/authentication/sign-in" />} />
-        </Routes>
-      }
-    </div>
-      
+        {
+          // 저장된 유저정보가 없으면 로그인 페이지로 이동
+          user!=null
+          ? 
+          <div>
+              <Header />
+                <TableInfo></TableInfo>
+                <TableAcc></TableAcc>
+              <Footer />
+          </div>
+          : 
+          <Routes>
+            {getRoutes(routes)}
+            <Route path="*" element={<Navigate to="/authentication/sign-in" />} />
+          </Routes>
+        }
+      </div>
     </DashboardLayout>
   );
 }
@@ -233,6 +225,7 @@ function TableInfo(){
       </SuiBox>
     )
 }
+
 function TableAcc(){
   const { columns: prCols, rows: prRows } = projectsTableData;
   return(
