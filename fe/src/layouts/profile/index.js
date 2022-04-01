@@ -128,10 +128,12 @@ function Overview() {
   });
 
   function accidentConstList() {
-    console.log(user.construction.constructName);
-    console.log(user.construction.constructionId);
+   
 
-    axios
+    if ( user!=null ) {
+      console.log(user.construction.constructName);
+      console.log(user.construction.constructionId);
+      axios
       .post(BASE_URL + "/api/v1/accident/getAccidentConstList", 
       { construction:{constructName: user.construction.constructName, constructionId:user.construction.constructionId}})
       .then((res) => {
@@ -139,6 +141,11 @@ function Overview() {
         
       })
       .catch((err) => console.log(err));
+    } else {
+      return null;
+    }
+
+    
   
   }
 
