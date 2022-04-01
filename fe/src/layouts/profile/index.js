@@ -50,29 +50,28 @@ import homeDecor3 from "assets/images/home-decor-3.jpg";
 // import team3 from "assets/images/team-3.jpg";
 // import team4 from "assets/images/team-4.jpg";
 
-// 
-import * as React from 'react';
+//
+import * as React from "react";
 // import Table from '@mui/material/Table';
 // import TableBody from '@mui/material/TableBody';
 // import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
+import TableContainer from "@mui/material/TableContainer";
 // import TableHead from '@mui/material/TableHead';
 // import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
+import Paper from "@mui/material/Paper";
 
-import Button from '@mui/material/Button';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
+import Button from "@mui/material/Button";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
 import SuiButton from "components/SuiButton";
 
-import TextField from '@mui/material/TextField';
-import AdapterDateFns from '@mui/lab/AdapterDateFns';
-import LocalizationProvider from '@mui/lab/LocalizationProvider';
-import StaticDatePicker from '@mui/lab/StaticDatePicker';
-
+import TextField from "@mui/material/TextField";
+import AdapterDateFns from "@mui/lab/AdapterDateFns";
+import LocalizationProvider from "@mui/lab/LocalizationProvider";
+import StaticDatePicker from "@mui/lab/StaticDatePicker";
 
 // Billing page components
 import Bill from "layouts/billing/components/Bill";
@@ -81,8 +80,8 @@ const rows = [
     name: "Frozen yoghurt",
     calories: 159,
     fat: 6.0,
-    carbs:24,
-    protein:4.0
+    carbs: 24,
+    protein: 4.0,
   },
 ];
 
@@ -103,7 +102,6 @@ function Overview() {
       <Header />
       <SuiBox mt={5} mb={3}>
         <Grid container spacing={3}>
-
           {/* 상단부 */}
           <Grid item xs={12} xl={4}>
             <TableContainer component={Paper}>
@@ -190,7 +188,6 @@ function Overview() {
               </SuiBox>
             </Card>
           </Grid>
-          
         </Grid>
       </SuiBox>
 
@@ -259,7 +256,7 @@ function Overview() {
         </Card>
       </SuiBox>
 
-      <Footer />
+      {/* <Footer /> */}
     </DashboardLayout>
   );
 }

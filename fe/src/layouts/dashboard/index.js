@@ -104,7 +104,7 @@ function Dashboard() {
           </Grid> */}
         </Grid>
       </SuiBox>
-      <Footer />
+      {/* <Footer /> */}
     </DashboardLayout>
   );
 }

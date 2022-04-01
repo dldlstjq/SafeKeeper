@@ -152,7 +152,7 @@ function Room() {
           </Grid> */}
         </Grid>
       </SuiBox>
-      <Footer />
+      {/* <Footer /> */}
     </DashboardLayout>
   );
 }
