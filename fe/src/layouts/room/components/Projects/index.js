@@ -186,21 +186,8 @@ function Projects() {
           <SuiTypography variant="h6" gutterBottom>
             방 참가
           </SuiTypography>
-          {/* <SuiBox display="flex" alignItems="center" lineHeight={0}>
-            <Icon
-              sx={{
-                fontWeight: "bold",
-                color: ({ palette: { info } }) => info.main,
-                mt: -0.5,
-              }}
-            >
-              done
-            </Icon>
-            <SuiTypography variant="button" fontWeight="regular" color="text">
-              &nbsp;<strong>30 done</strong> this month
-            </SuiTypography>
-          </SuiBox> */}
         </SuiBox>
+
         <SuiBox color="text" px={2}>
           <Icon
             sx={{ cursor: "pointer", fontWeight: "bold", color: green[500] }}
@@ -244,19 +231,8 @@ function Projects() {
         {/* {renderMenu} */}
       </SuiBox>
 
-      {/* <SuiBox
-        sx={{
-          "& .MuiTableRow-root:not(:last-child)": {
-            "& td": {
-              borderBottom: ({ borders: { borderWidth, borderColor } }) =>
-                `${borderWidth[1]} solid ${borderColor}`,
-            },
-          },
-        }}
-      >
-        
-        <Table columns={columns} rows={rows} />
-      </SuiBox> */}
+
+
       <TableContainer component={Paper}>
         <MuiTable sx={{ minWidth: 650 }} aria-label="simple table">
           <SuiBox component="thead">
@@ -286,24 +262,7 @@ function Projects() {
                 key={room.roomId}
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
               >
-                {/* <SuiBox
-                  component="th"
-                  width={"auto"}
-                  pt={1.5}
-                  pb={1.25}
-                  pl={3}
-                  // pr={align === "right" ? pr : 3}
-                  textAlign="left"
-                  fontSize={size.sm}
-                  fontWeight={fontWeightBold}
-                  // color="secondary"
-                  // opacity={0.7}
-                  borderBottom={`${borderWidth[1]} solid ${light.main}`}
-                >
-                  <TableCell component="th" scope="row">
-                    {room.roomName}
-                  </TableCell>
-                </SuiBox> */}
+                
                 <TableCell component="th" scope="row">
                   <SuiBox
                     component="th"
@@ -332,46 +291,16 @@ function Projects() {
                 </TableCell>
               </TableRow>
             ))}
-            {/* <TableRow
-                  key={room.roomId}
-                  sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                >
-{rooms.map((room) => (
-                 <TableCell component="th" scope="row">
-                 {room.roomName}
-               </TableCell>
-               <TableCell align="right">
-                 <DeleteForeverIcon
-                   fontSize="small"
-                   onClick={() => deleteRoom(room.roomId)}
-                   style={{ cursor: "pointer" }}
-                 />
-               </TableCell>
-                </TableRow>
-              
-              ))} */}
+            
+
+
           </TableBody>
         </MuiTable>
       </TableContainer>
-      {/* <div
-        style={{
-          display: "flex",
-          flexFlow: "column wrap",
-          width: "90%",
-          margin: "20% 0 5%",
-          maxHeight: "60%",
-        }}
-      >
-        {rooms.map((room) => (
-          <Room
-            key={room.roomId}
-            roomName={room.roomName}
-            roomId={room.roomId}
-            deleteRoom={deleteRoom}
-            // enter={enter}
-          />
-        ))}
-      </div> */}
+      
+
+
+      
     </Card>
   );
 }

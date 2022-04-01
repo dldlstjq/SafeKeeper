@@ -52,10 +52,10 @@ import homeDecor3 from "assets/images/home-decor-3.jpg";
 
 //
 import * as React from "react";
-// import Table from '@mui/material/Table';
 // import TableBody from '@mui/material/TableBody';
 // import TableCell from '@mui/material/TableCell';
 import TableContainer from "@mui/material/TableContainer";
+import Table from "examples/Tables/Table";
 // import TableHead from '@mui/material/TableHead';
 // import TableRow from '@mui/material/TableRow';
 import Paper from "@mui/material/Paper";
@@ -75,6 +75,18 @@ import StaticDatePicker from "@mui/lab/StaticDatePicker";
 
 // Billing page components
 import Bill from "layouts/billing/components/Bill";
+
+// Data
+import projectsTableData from "layouts/profile/data/projectsTableData";
+import axios from "axios";
+import { BASE_URL } from "index";
+import { useEffect, useState } from "react";
+
+// Soft UI Dashboard React routes
+import routes from "routes";
+import { Routes, Route, Navigate, useLocation } from "react-router-dom";
+
+
 const rows = [
   {
     name: "Frozen yoghurt",
@@ -86,8 +98,11 @@ const rows = [
 ];
 
 function Overview() {
+  const [user, setUser] = useState(JSON.parse(localStorage.getItem("user")));
+  const [construction, setConst] = useState([]);
+  const [constructionName, setConstName] = useState("");
+  const [constructionId, setConstId] = useState("");
   const [open, setOpen] = React.useState(false);
-  const [value, setValue] = React.useState(new Date());
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -97,102 +112,67 @@ function Overview() {
     setOpen(false);
   };
 
+  useEffect(() => {
+    accidentConstList();
+  }, []);
+
+  const getRoutes = (allRoutes) =>
+  allRoutes.map((route) => {
+    if (route.collapse) {
+      return getRoutes(route.collapse);
+    }
+    if (route.route) {
+      return <Route exact path={route.route} element={route.component} key={route.key} />;
+    }
+    return null;
+  });
+
+  function accidentConstList() {
+    console.log(user.construction.constructName);
+    console.log(user.construction.constructionId);
+
+    axios
+      .post(BASE_URL + "/api/v1/accident/getAccidentConstList", 
+      { construction:{constructName: user.construction.constructName, constructionId:user.construction.constructionId}})
+      .then((res) => {
+        console.log(res);
+        
+      })
+      .catch((err) => console.log(err));
+  
+  }
+
   return (
+    
     <DashboardLayout>
-      <Header />
-      <SuiBox mt={5} mb={3}>
-        <Grid container spacing={3}>
-          {/* 상단부 */}
-          <Grid item xs={12} xl={4}>
-            <TableContainer component={Paper}>
-              {/* 달력 */}
-              <Grid item xs={12}>
-                <SuiBox pt={1} px={1} mb={1}>
-                  <LocalizationProvider dateAdapter={AdapterDateFns}>
-                    <StaticDatePicker
-                      displayStaticWrapperAs="desktop"
-                      value={value}
-                      onChange={(newValue) => {
-                        setValue(newValue);
-                      }}
-                      renderInput={(params) => <TextField {...params} />}
-                    />
-                  </LocalizationProvider>
-                </SuiBox>
-              </Grid>
+      <div>
+      {
+        // 저장된 유저정보가 없으면 로그인 페이지로 이동
+        user!=null
+        ? 
+        <div>
+            <Header />
+              <TableInfo></TableInfo>
+              <TableAcc></TableAcc>
+            <Footer />
+        </div>
 
-              {/* 다이얼로그 테스트 */}
-              {/* <SuiBox pt={2} px={2} mb={1}>
-                <SuiBox mb={0.5}>
-                  <SuiTypography variant="h6" fontWeight="medium">
-                    Alerts test
-                  </SuiTypography>
-                </SuiBox>
-                <SuiBox mb={1}>
-                  <SuiTypography variant="button" fontWeight="regular" color="text">
-                    show alerts
-                  </SuiTypography>
-                </SuiBox>
-                <SuiButton
-                  component="a"
-                  // href={action.route}
-                  target="_blank"
-                  rel="noreferrer"
-                  variant="outlined"
-                  size="small"
-                  color="info"
-                  onClick={handleClickOpen}
-                >
-                  test
-                </SuiButton>
-              </SuiBox>
-              <Dialog
-                open={open}
-                onClose={handleClose}
-                aria-labelledby="alert-dialog-title"
-                aria-describedby="alert-dialog-description"
-              >
-                <DialogTitle id="alert-dialog-title">{"@알림창 테스트@"}</DialogTitle>
-                <DialogContent>
-                  <DialogContentText id="alert-dialog-description">
-                    대충 내용 어쩌구 저쩌구
-                  </DialogContentText>
-                </DialogContent>
-                <DialogActions>
-                  <Button onClick={handleClose}>Disagree</Button>
-                  <Button onClick={handleClose} autoFocus>
-                    Agree
-                  </Button>
-                </DialogActions>
-              </Dialog> */}
-            </TableContainer>
-          </Grid>
+        : 
+        <Routes>
+          {getRoutes(routes)}
+          <Route path="*" element={<Navigate to="/authentication/sign-in" />} />
+        </Routes>
+      }
+    </div>
+      
+    </DashboardLayout>
+  );
+}
 
-          {/* 컴포넌트 테스트  */}
-          <Grid item xs={12} xl={8}>
-            <Card id="delete-account">
-              <SuiBox pt={3} px={2}>
-                <SuiTypography variant="h6" fontWeight="medium">
-                  넣을 내용이 없음,,
-                </SuiTypography>
-              </SuiBox>
-              <SuiBox pt={1} pb={2} px={2}>
-                <SuiBox component="ul" display="flex" flexDirection="column" p={0} m={0}>
-                  <Bill
-                    name="oliver liam"
-                    company="viking burrito"
-                    email="oliver@burrito.com"
-                    vat="FRB1235476"
-                  />
-                </SuiBox>
-              </SuiBox>
-            </Card>
-          </Grid>
-        </Grid>
-      </SuiBox>
-
-      {/* 하단부 */}
-      <SuiBox mb={3}>
+function TableInfo(){
+  const [value, setValue] = React.useState(new Date());
+  return (
+      <SuiBox mb={3} pt={2}>
         <Card>
           <SuiBox pt={2} px={2}>
             <SuiBox mb={0.5}>
@@ -208,57 +188,65 @@ function Overview() {
           </SuiBox>
           <SuiBox p={2}>
             <Grid container spacing={3}>
-              {/* 사고 컴포넌트..? 데이터 받아올게 있으면 3개씩 출력하면 될지도 */}
-              <Grid item xs={12} md={6} xl={4}>
-                <DefaultProjectCard
-                  image={homeDecor1}
-                  label="project #2"
-                  title="modern"
-                  description="As Uber works through a huge amount of internal management turmoil."
-                  action={{
-                    type: "internal",
-                    route: "/pages/profile/profile-overview",
-                    color: "info",
-                    label: "view project",
-                  }}
-                />
+              <Grid item xs={4} md={4} xl={4}>
+                <LocalizationProvider dateAdapter={AdapterDateFns}>
+                  <StaticDatePicker
+                    displayStaticWrapperAs="desktop"
+                    value={value}
+                    onChange={(newValue) => {
+                      setValue(newValue);
+                    }}
+                    renderInput={(params) => <TextField {...params} />}
+                  />
+                </LocalizationProvider>
               </Grid>
-              <Grid item xs={12} md={6} xl={4}>
-                <DefaultProjectCard
-                  image={homeDecor2}
-                  label="project #1"
-                  title="scandinavian"
-                  description="Music is something that every person has his or her own specific opinion about."
-                  action={{
-                    type: "internal",
-                    route: "/pages/profile/profile-overview",
-                    color: "info",
-                    label: "view project",
-                  }}
-                />
+              <Grid item xs={12} md={8} xl={8}>
+                <Card id="delete-account">
+                  <SuiBox pt={3} px={2}>
+                    <SuiTypography variant="h6" fontWeight="medium">
+                      넣을 내용이 없음,,
+                    </SuiTypography>
+                  </SuiBox>
+                  <SuiBox pt={1} pb={2} px={2}>
+                    <SuiBox component="ul" display="flex" flexDirection="column" p={0} m={0}>
+                      <Bill
+                        name="oliver liam"
+                        company="viking burrito"
+                        email="oliver@burrito.com"
+                        vat="FRB1235476"
+                      />
+                    </SuiBox>
+                  </SuiBox>
+                </Card>
               </Grid>
-              <Grid item xs={12} md={6} xl={4}>
-                <DefaultProjectCard
-                  image={homeDecor3}
-                  label="project #3"
-                  title="minimalist"
-                  description="Different people have different taste, and various types of music."
-                  action={{
-                    type: "internal",
-                    route: "/pages/profile/profile-overview",
-                    color: "info",
-                    label: "view project",
-                  }}
-                />
-              </Grid>
+    
             </Grid>
           </SuiBox>
         </Card>
       </SuiBox>
-
-      {/* <Footer /> */}
-    </DashboardLayout>
-  );
+    )
+}
+function TableAcc(){
+  const { columns: prCols, rows: prRows } = projectsTableData;
+  return(
+    <Card>
+        <SuiBox display="flex" justifyContent="space-between" alignItems="center" p={3}>
+          <SuiTypography variant="h6">Projects table</SuiTypography>
+        </SuiBox>
+        <SuiBox
+          sx={{
+            "& .MuiTableRow-root:not(:last-child)": {
+              "& td": {
+                borderBottom: ({ borders: { borderWidth, borderColor } }) =>
+                  `${borderWidth[1]} solid ${borderColor}`,
+              },
+            },
+          }}
+        >
+          {/* <Table columns={prCols} rows={prRows} /> */}
+        </SuiBox>
+      </Card>
+  )
 }
 
 export default Overview;

@@ -15,7 +15,13 @@ import logoSlack from "assets/images/small-logos/logo-slack.svg";
 import logoWebDev from "assets/images/small-logos/logo-webdev.svg";
 import logoXD from "assets/images/small-logos/logo-xd.svg";
 
+
+import axios from "axios";
+import { BASE_URL } from "index";
+import { useEffect, useState } from "react";
+
 function Completion({ value, color }) {
+  
   return (
     <SuiBox display="flex" alignItems="center">
       <SuiTypography variant="caption" color="text" fontWeight="medium">
@@ -33,6 +39,7 @@ const action = (
     more_vert
   </Icon>
 );
+
 
 const projectsTableData = {
   columns: [
@@ -136,5 +143,9 @@ const projectsTableData = {
     },
   ],
 };
+function Overview() {
+  
+}
+
 
 export default projectsTableData;
