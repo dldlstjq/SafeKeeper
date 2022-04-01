@@ -85,7 +85,7 @@ function Projects() {
   const handleClose = () => setOpen(false);
   const handleClickOpen = () => setOpen(true);
 
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
   useEffect(() => {
     updateRooms();
@@ -137,6 +137,11 @@ function Projects() {
         setRooms(res.data);
       })
       .catch((err) => console.log(err));
+  }
+
+  function enterRoom() {
+    navigate("/cctv");
+    // alert("방 입장");
   }
 
   function Room({ roomName, roomId, deleteRoom /*, enter*/ }) {
@@ -278,6 +283,7 @@ function Projects() {
                     // opacity={0.7}
                     style={{ cursor: "pointer", marginLeft: "10px" }}
                     // borderBottom={`${borderWidth[1]} solid ${light.main}`}
+                    onClick={() => enterRoom()}
                   >
                     {room.roomName}
                   </SuiBox>
