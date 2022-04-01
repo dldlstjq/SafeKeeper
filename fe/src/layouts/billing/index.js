@@ -39,7 +39,7 @@ function Billing() {
     <DashboardLayout>
       <DashboardNavbar />
       <SuiBox mt={4}>
-        <SuiBox mb={1.5}>
+        {/* <SuiBox mb={1.5}>
           <Grid container spacing={3}>
             <Grid item xs={12} lg={8}>
               <Grid container spacing={3}>
@@ -71,15 +71,15 @@ function Billing() {
               <Invoices />
             </Grid>
           </Grid>
-        </SuiBox>
+        </SuiBox> */}
         <SuiBox my={3}>
           <Grid container spacing={3}>
-            <Grid item xs={12} md={7}>
+            <Grid item xs={12}>
               <BillingInformation />
             </Grid>
-            <Grid item xs={12} md={5}>
+            {/* <Grid item xs={12} md={5}>
               <Transactions />
-            </Grid>
+            </Grid> */}
           </Grid>
         </SuiBox>
       </SuiBox>
