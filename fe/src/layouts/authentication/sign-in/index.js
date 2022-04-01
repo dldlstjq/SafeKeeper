@@ -53,7 +53,16 @@ function SignIn() {
       .post(BASE_URL + "/api/v1/auth/login", cred)
       .then((res) => {
         localStorage.setItem("jwt", res.data.accessToken);
-        navigate("/");
+        axios.defaults.headers.common["Authorization"] = `Bearer ${res.data.accessToken}`;
+        axios
+          .get(BASE_URL + "/api/v1/users/me")
+          .then((res) => {
+            localStorage.setItem("user", JSON.stringify(res.data.user));
+            navigate("/");
+          })
+          .catch((err) => console.log(err));
+
+        // navigate("/");
       })
       .catch((err) => console.log(err));
   }
