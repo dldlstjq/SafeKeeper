@@ -150,11 +150,11 @@ MiniStatisticsCard.propTypes = {
     ]),
     text: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   }),
-  icon: PropTypes.shape({
-    color: PropTypes.oneOf(["primary", "secondary", "info", "success", "warning", "error", "dark"]),
-    component: PropTypes.node.isRequired,
-  }).isRequired,
-  direction: PropTypes.oneOf(["right", "left"]),
+  // icon: PropTypes.shape({
+  //   color: PropTypes.oneOf(["primary", "secondary", "info", "success", "warning", "error", "dark"]),
+  //   component: PropTypes.node.isRequired,
+  // }).isRequired,
+  // direction: PropTypes.oneOf(["right", "left"]),
 };
 
 export default MiniStatisticsCard;
