@@ -58,7 +58,7 @@ function SignIn() {
           .get(BASE_URL + "/api/v1/users/me")
           .then((res) => {
             localStorage.setItem("user", JSON.stringify(res.data.user));
-            navigate("/");
+            navigate("/room");
           })
           .catch((err) => console.log(err));
 
