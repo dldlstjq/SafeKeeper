@@ -43,6 +43,7 @@ import Profile from "layouts/profile";
 import SignIn from "layouts/authentication/sign-in";
 import SignUp from "layouts/authentication/sign-up";
 import Room from "layouts/room";
+import CCTV from "layouts/billing";
 
 // Soft UI Dashboard React icons
 import Shop from "examples/Icons/Shop";
@@ -69,6 +70,15 @@ const routes = [
     route: "/room",
     icon: <CustomerSupport size="12px" />,
     component: <Room />,
+    noCollapse: true,
+  },
+  {
+    type: "collapse",
+    name: "CCTV 확인",
+    key: "cctv",
+    route: "/cctv",
+    icon: <CustomerSupport size="12px" />,
+    component: <CCTV />,
     noCollapse: true,
   },
   {
