@@ -141,7 +141,13 @@ function DashboardNavbar({ absolute, light, isMini }) {
         {isMini ? null : (
           <SuiBox sx={(theme) => navbarRow(theme, { isMini })}>
             <SuiBox color={light ? "white" : "inherit"}>
-              <Link to="/authentication/sign-in">
+              <Link
+                to="/authentication/sign-in"
+                onClick={() => {
+                  localStorage.removeItem("jwt");
+                  localStorage.removeItem("user");
+                }}
+              >
                 <IconButton sx={navbarIconButton} size="small">
                   <Icon
                     sx={({ palette: { dark, white } }) => ({
