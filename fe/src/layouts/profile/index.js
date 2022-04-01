@@ -18,9 +18,9 @@ import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
 
 // @mui icons
-import FacebookIcon from "@mui/icons-material/Facebook";
-import TwitterIcon from "@mui/icons-material/Twitter";
-import InstagramIcon from "@mui/icons-material/Instagram";
+// import FacebookIcon from "@mui/icons-material/Facebook";
+// import TwitterIcon from "@mui/icons-material/Twitter";
+// import InstagramIcon from "@mui/icons-material/Instagram";
 
 // Soft UI Dashboard React components
 import SuiBox from "components/SuiBox";
@@ -29,71 +29,169 @@ import SuiTypography from "components/SuiTypography";
 // Soft UI Dashboard React examples
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import Footer from "examples/Footer";
-import ProfileInfoCard from "examples/Cards/InfoCards/ProfileInfoCard";
-import ProfilesList from "examples/Lists/ProfilesList";
+// import ProfileInfoCard from "examples/Cards/InfoCards/ProfileInfoCard";
+// import ProfilesList from "examples/Lists/ProfilesList";
 import DefaultProjectCard from "examples/Cards/ProjectCards/DefaultProjectCard";
-import PlaceholderCard from "examples/Cards/PlaceholderCard";
+// import PlaceholderCard from "examples/Cards/PlaceholderCard";
 
 // Overview page components
 import Header from "layouts/profile/components/Header";
-import PlatformSettings from "layouts/profile/components/PlatformSettings";
+// import PlatformSettings from "layouts/profile/components/PlatformSettings";
 
 // Data
-import profilesListData from "layouts/profile/data/profilesListData";
+// import profileZsListData from "layouts/profile/data/profilesListData";
 
 // Images
 import homeDecor1 from "assets/images/home-decor-1.jpg";
 import homeDecor2 from "assets/images/home-decor-2.jpg";
 import homeDecor3 from "assets/images/home-decor-3.jpg";
-import team1 from "assets/images/team-1.jpg";
-import team2 from "assets/images/team-2.jpg";
-import team3 from "assets/images/team-3.jpg";
-import team4 from "assets/images/team-4.jpg";
+// import team1 from "assets/images/team-1.jpg";
+// import team2 from "assets/images/team-2.jpg";
+// import team3 from "assets/images/team-3.jpg";
+// import team4 from "assets/images/team-4.jpg";
+
+//
+import * as React from "react";
+// import Table from '@mui/material/Table';
+// import TableBody from '@mui/material/TableBody';
+// import TableCell from '@mui/material/TableCell';
+import TableContainer from "@mui/material/TableContainer";
+// import TableHead from '@mui/material/TableHead';
+// import TableRow from '@mui/material/TableRow';
+import Paper from "@mui/material/Paper";
+
+import Button from "@mui/material/Button";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
+import SuiButton from "components/SuiButton";
+
+import TextField from "@mui/material/TextField";
+import AdapterDateFns from "@mui/lab/AdapterDateFns";
+import LocalizationProvider from "@mui/lab/LocalizationProvider";
+import StaticDatePicker from "@mui/lab/StaticDatePicker";
+
+// Billing page components
+import Bill from "layouts/billing/components/Bill";
+const rows = [
+  {
+    name: "Frozen yoghurt",
+    calories: 159,
+    fat: 6.0,
+    carbs: 24,
+    protein: 4.0,
+  },
+];
 
 function Overview() {
+  const [open, setOpen] = React.useState(false);
+  const [value, setValue] = React.useState(new Date());
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   return (
     <DashboardLayout>
       <Header />
       <SuiBox mt={5} mb={3}>
         <Grid container spacing={3}>
-          <Grid item xs={12} md={6} xl={4}>
-            <PlatformSettings />
-          </Grid>
-          <Grid item xs={12} md={6} xl={4}>
-            <ProfileInfoCard
-              title="profile information"
-              description="Hi, I’m Alec Thompson, Decisions: If you can’t decide, the answer is no. If two equally difficult paths, choose the one more painful in the short term (pain avoidance is creating an illusion of equality)."
-              info={{
-                fullName: "Alec M. Thompson",
-                mobile: "(44) 123 1234 123",
-                email: "alecthompson@mail.com",
-                location: "USA",
-              }}
-              social={[
-                {
-                  link: "https://www.facebook.com/CreativeTim/",
-                  icon: <FacebookIcon />,
-                  color: "facebook",
-                },
-                {
-                  link: "https://twitter.com/creativetim",
-                  icon: <TwitterIcon />,
-                  color: "twitter",
-                },
-                {
-                  link: "https://www.instagram.com/creativetimofficial/",
-                  icon: <InstagramIcon />,
-                  color: "instagram",
-                },
-              ]}
-              action={{ route: "", tooltip: "Edit Profile" }}
-            />
-          </Grid>
+          {/* 상단부 */}
           <Grid item xs={12} xl={4}>
-            <ProfilesList title="conversations" profiles={profilesListData} />
+            <TableContainer component={Paper}>
+              {/* 달력 */}
+              <Grid item xs={12}>
+                <SuiBox pt={1} px={1} mb={1}>
+                  <LocalizationProvider dateAdapter={AdapterDateFns}>
+                    <StaticDatePicker
+                      displayStaticWrapperAs="desktop"
+                      value={value}
+                      onChange={(newValue) => {
+                        setValue(newValue);
+                      }}
+                      renderInput={(params) => <TextField {...params} />}
+                    />
+                  </LocalizationProvider>
+                </SuiBox>
+              </Grid>
+
+              {/* 다이얼로그 테스트 */}
+              {/* <SuiBox pt={2} px={2} mb={1}>
+                <SuiBox mb={0.5}>
+                  <SuiTypography variant="h6" fontWeight="medium">
+                    Alerts test
+                  </SuiTypography>
+                </SuiBox>
+                <SuiBox mb={1}>
+                  <SuiTypography variant="button" fontWeight="regular" color="text">
+                    show alerts
+                  </SuiTypography>
+                </SuiBox>
+                <SuiButton
+                  component="a"
+                  // href={action.route}
+                  target="_blank"
+                  rel="noreferrer"
+                  variant="outlined"
+                  size="small"
+                  color="info"
+                  onClick={handleClickOpen}
+                >
+                  test
+                </SuiButton>
+              </SuiBox>
+              <Dialog
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+              >
+                <DialogTitle id="alert-dialog-title">{"@알림창 테스트@"}</DialogTitle>
+                <DialogContent>
+                  <DialogContentText id="alert-dialog-description">
+                    대충 내용 어쩌구 저쩌구
+                  </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                  <Button onClick={handleClose}>Disagree</Button>
+                  <Button onClick={handleClose} autoFocus>
+                    Agree
+                  </Button>
+                </DialogActions>
+              </Dialog> */}
+            </TableContainer>
+          </Grid>
+
+          {/* 컴포넌트 테스트  */}
+          <Grid item xs={12} xl={8}>
+            <Card id="delete-account">
+              <SuiBox pt={3} px={2}>
+                <SuiTypography variant="h6" fontWeight="medium">
+                  넣을 내용이 없음,,
+                </SuiTypography>
+              </SuiBox>
+              <SuiBox pt={1} pb={2} px={2}>
+                <SuiBox component="ul" display="flex" flexDirection="column" p={0} m={0}>
+                  <Bill
+                    name="oliver liam"
+                    company="viking burrito"
+                    email="oliver@burrito.com"
+                    vat="FRB1235476"
+                  />
+                </SuiBox>
+              </SuiBox>
+            </Card>
           </Grid>
         </Grid>
       </SuiBox>
+
+      {/* 하단부 */}
       <SuiBox mb={3}>
         <Card>
           <SuiBox pt={2} px={2}>
@@ -110,7 +208,8 @@ function Overview() {
           </SuiBox>
           <SuiBox p={2}>
             <Grid container spacing={3}>
-              <Grid item xs={12} md={6} xl={3}>
+              {/* 사고 컴포넌트..? 데이터 받아올게 있으면 3개씩 출력하면 될지도 */}
+              <Grid item xs={12} md={6} xl={4}>
                 <DefaultProjectCard
                   image={homeDecor1}
                   label="project #2"
@@ -122,15 +221,9 @@ function Overview() {
                     color: "info",
                     label: "view project",
                   }}
-                  authors={[
-                    { image: team1, name: "Elena Morison" },
-                    { image: team2, name: "Ryan Milly" },
-                    { image: team3, name: "Nick Daniel" },
-                    { image: team4, name: "Peterson" },
-                  ]}
                 />
               </Grid>
-              <Grid item xs={12} md={6} xl={3}>
+              <Grid item xs={12} md={6} xl={4}>
                 <DefaultProjectCard
                   image={homeDecor2}
                   label="project #1"
@@ -142,15 +235,9 @@ function Overview() {
                     color: "info",
                     label: "view project",
                   }}
-                  authors={[
-                    { image: team3, name: "Nick Daniel" },
-                    { image: team4, name: "Peterson" },
-                    { image: team1, name: "Elena Morison" },
-                    { image: team2, name: "Ryan Milly" },
-                  ]}
                 />
               </Grid>
-              <Grid item xs={12} md={6} xl={3}>
+              <Grid item xs={12} md={6} xl={4}>
                 <DefaultProjectCard
                   image={homeDecor3}
                   label="project #3"
@@ -162,23 +249,14 @@ function Overview() {
                     color: "info",
                     label: "view project",
                   }}
-                  authors={[
-                    { image: team4, name: "Peterson" },
-                    { image: team3, name: "Nick Daniel" },
-                    { image: team2, name: "Ryan Milly" },
-                    { image: team1, name: "Elena Morison" },
-                  ]}
                 />
-              </Grid>
-              <Grid item xs={12} md={6} xl={3}>
-                <PlaceholderCard title={{ variant: "h5", text: "New project" }} outlined />
               </Grid>
             </Grid>
           </SuiBox>
         </Card>
       </SuiBox>
 
-      <Footer />
+      {/* <Footer /> */}
     </DashboardLayout>
   );
 }

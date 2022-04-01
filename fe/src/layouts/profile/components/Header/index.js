@@ -18,9 +18,9 @@ import { useState, useEffect } from "react";
 // @mui material components
 import Card from "@mui/material/Card";
 import Grid from "@mui/material/Grid";
-import AppBar from "@mui/material/AppBar";
-import Tabs from "@mui/material/Tabs";
-import Tab from "@mui/material/Tab";
+// import AppBar from "@mui/material/AppBar";
+// import Tabs from "@mui/material/Tabs";
+// import Tab from "@mui/material/Tab";
 
 // Soft UI Dashboard React components
 import SuiBox from "components/SuiBox";
@@ -31,16 +31,16 @@ import SuiAvatar from "components/SuiAvatar";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 
 // Soft UI Dashboard React icons
-import Cube from "examples/Icons/Cube";
-import Document from "examples/Icons/Document";
-import Settings from "examples/Icons/Settings";
+// import Cube from "examples/Icons/Cube";
+// import Document from "examples/Icons/Document";
+// import Settings from "examples/Icons/Settings";
 
 // Soft UI Dashboard React base styles
 import breakpoints from "assets/theme/base/breakpoints";
 
 // Images
-import burceMars from "assets/images/bruce-mars.jpg";
-import curved0 from "assets/images/curved-images/curved0.jpg";
+import profile from "assets/images/profile.jpg";
+import bg_profile from "assets/images/curved-images/bg_profile.jpg";
 
 function Header() {
   const [tabsOrientation, setTabsOrientation] = useState("horizontal");
@@ -80,9 +80,9 @@ function Header() {
         sx={{
           backgroundImage: ({ functions: { rgba, linearGradient }, palette: { gradients } }) =>
             `${linearGradient(
-              rgba(gradients.info.main, 0.6),
-              rgba(gradients.info.state, 0.6)
-            )}, url(${curved0})`,
+              rgba(gradients.info.main, 0.2),
+              rgba(gradients.info.state, 0.2)
+            )}, url(${bg_profile})`,
           backgroundSize: "cover",
           backgroundPosition: "50%",
           overflow: "hidden",
@@ -103,7 +103,7 @@ function Header() {
         <Grid container spacing={3} alignItems="center">
           <Grid item>
             <SuiAvatar
-              src={burceMars}
+              src={profile}
               alt="profile-image"
               variant="rounded"
               size="xl"
@@ -113,26 +113,14 @@ function Header() {
           <Grid item>
             <SuiBox height="100%" mt={0.5} lineHeight={1}>
               <SuiTypography variant="h5" fontWeight="medium">
-                Alex Thompson
+                {/* 김싸피 */}
+                {JSON.parse(localStorage.getItem('user')).userName}
               </SuiTypography>
               <SuiTypography variant="button" color="text" fontWeight="medium">
-                CEO / Co-Founder
+                {/* 관리 1팀 */}
+                {JSON.parse(localStorage.getItem('user')).userRole}
               </SuiTypography>
             </SuiBox>
-          </Grid>
-          <Grid item xs={12} md={6} lg={4} sx={{ ml: "auto" }}>
-            <AppBar position="static">
-              <Tabs
-                orientation={tabsOrientation}
-                value={tabValue}
-                onChange={handleSetTabValue}
-                sx={{ background: "transparent" }}
-              >
-                <Tab label="App" icon={<Cube />} />
-                <Tab label="Message" icon={<Document />} />
-                <Tab label="Settings" icon={<Settings />} />
-              </Tabs>
-            </AppBar>
           </Grid>
         </Grid>
       </Card>

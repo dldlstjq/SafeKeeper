@@ -65,7 +65,7 @@ function Tables() {
           </Grid>
         </SuiBox>
       </SuiBox>
-      <Footer />
+      {/* <Footer /> */}
     </DashboardLayout>
   );
 }
