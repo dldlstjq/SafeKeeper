@@ -18,9 +18,7 @@ import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
 
 // @mui icons
-// import FacebookIcon from "@mui/icons-material/Facebook";
-// import TwitterIcon from "@mui/icons-material/Twitter";
-// import InstagramIcon from "@mui/icons-material/Instagram";
+import Icon from "@mui/material/Icon";
 
 // Soft UI Dashboard React components
 import SuiBox from "components/SuiBox";
@@ -29,93 +27,34 @@ import SuiTypography from "components/SuiTypography";
 // Soft UI Dashboard React examples
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import Footer from "examples/Footer";
-// import ProfileInfoCard from "examples/Cards/InfoCards/ProfileInfoCard";
-// import ProfilesList from "examples/Lists/ProfilesList";
-import DefaultProjectCard from "examples/Cards/ProjectCards/DefaultProjectCard";
-// import PlaceholderCard from "examples/Cards/PlaceholderCard";
+import Table from "examples/Tables/Table";
 
 // Overview page components
 import Header from "layouts/profile/components/Header";
-// import PlatformSettings from "layouts/profile/components/PlatformSettings";
-
-// Data
-// import profileZsListData from "layouts/profile/data/profilesListData";
+import Bill from "layouts/billing/components/Bill";
 
 // Images
-import homeDecor1 from "assets/images/home-decor-1.jpg";
-import homeDecor2 from "assets/images/home-decor-2.jpg";
-import homeDecor3 from "assets/images/home-decor-3.jpg";
-// import team1 from "assets/images/team-1.jpg";
-// import team2 from "assets/images/team-2.jpg";
-// import team3 from "assets/images/team-3.jpg";
-// import team4 from "assets/images/team-4.jpg";
+// import homeDecor1 from "assets/images/home-decor-1.jpg";
+
 
 //
 import * as React from "react";
-// import TableBody from '@mui/material/TableBody';
-// import TableCell from '@mui/material/TableCell';
-import TableContainer from "@mui/material/TableContainer";
-import Table from "examples/Tables/Table";
-// import TableHead from '@mui/material/TableHead';
-// import TableRow from '@mui/material/TableRow';
-import Paper from "@mui/material/Paper";
-
-import Button from "@mui/material/Button";
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
-import DialogTitle from "@mui/material/DialogTitle";
-import SuiButton from "components/SuiButton";
-
 import TextField from "@mui/material/TextField";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import StaticDatePicker from "@mui/lab/StaticDatePicker";
 
-// Billing page components
-import Bill from "layouts/billing/components/Bill";
-
 // Data
-import projectsTableData from "layouts/profile/data/projectsTableData";
 import axios from "axios";
 import { BASE_URL } from "index";
 import { useEffect, useState } from "react";
 
 // Soft UI Dashboard React routes
 import routes from "routes";
-import { Routes, Route, Navigate, useLocation } from "react-router-dom";
-
-
-const rows = [
-  {
-    name: "Frozen yoghurt",
-    calories: 159,
-    fat: 6.0,
-    carbs: 24,
-    protein: 4.0,
-  },
-];
+import { Routes, Route, Navigate } from "react-router-dom";
 
 function Overview() {
-  const [user, setUser] = useState(JSON.parse(localStorage.getItem("user")));
-  const [construction, setConst] = useState([]);
-  const [constructionName, setConstName] = useState("");
-  const [constructionId, setConstId] = useState("");
-  const [open, setOpen] = React.useState(false);
-
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-
-  useEffect(() => {
-    accidentConstList();
-  }, []);
-
+  let [user, setUser] = useState(JSON.parse(localStorage.getItem("user")));
   const getRoutes = (allRoutes) =>
   allRoutes.map((route) => {
     if (route.collapse) {
@@ -126,17 +65,65 @@ function Overview() {
     }
     return null;
   });
+  
+  let [enters, setEnters] = useState({columns: [
+    { name: "회사", align: "center" },
+  { name: "현장사진", align: "left" },
+  { name: "타입", align: "left" },
+  { name: "날짜", align: "center" },
+  { name: "상세설명", align: "center" }], rows: []});
+
+  useEffect(() => {
+    accidentConstList();
+  }, []);
 
   function accidentConstList() {
     if ( user!=null ) {
-      console.log(user.construction.constructName);
-      console.log(user.construction.constructionId);
+      // console.log(user.construction.constructName);
       axios
       .post(BASE_URL + "/api/v1/accident/getAccidentConstList", 
       { construction:{constructName: user.construction.constructName, constructionId:user.construction.constructionId}})
       .then((res) => {
-        console.log(res);
-        
+        console.log(res.data);
+
+        for (const i of res.data) {
+          if(i!=null){
+            // console.log(i);
+
+            setEnters((prevEnters) => ({
+              columns:[...prevEnters.columns],
+              rows: [
+                ...prevEnters.rows, 
+                {회사:
+                  (
+                    <SuiTypography variant="button" color="text" fontWeight="medium">
+                      {i.camera.construction.constructName}
+                    </SuiTypography>
+                  ), 
+                  현장사진:i.accidentPicture, 
+                  타입:
+                  (
+                    <SuiTypography variant="button" color="text" fontWeight="medium">
+                      { i.accidentType}
+                    </SuiTypography>
+                  ),
+                  날짜:
+                  (
+                    <SuiTypography variant="button" color="text" fontWeight="medium">
+                      {i.accidentDate}
+                    </SuiTypography>
+                  ),
+                  상세설명:
+                  (
+                    <SuiTypography variant="button" color="text" fontWeight="medium">
+                      {i.accidentDesc}
+                    </SuiTypography>
+                  ),
+                }
+              ],
+            }));
+          }
+        }
       })
       .catch((err) => console.log(err));
     } else {
@@ -154,7 +141,7 @@ function Overview() {
           <div>
               <Header />
                 <TableInfo></TableInfo>
-                <TableAcc></TableAcc>
+                <TableAcc ></TableAcc>
               <Footer />
           </div>
           : 
@@ -166,87 +153,89 @@ function Overview() {
       </div>
     </DashboardLayout>
   );
-}
 
-function TableInfo(){
-  const [value, setValue] = React.useState(new Date());
-  return (
-      <SuiBox mb={3} pt={2}>
-        <Card>
-          <SuiBox pt={2} px={2}>
-            <SuiBox mb={0.5}>
-              <SuiTypography variant="h6" fontWeight="medium">
-                Projects
-              </SuiTypography>
+  function TableInfo(){
+    const [value, setValue] = React.useState(new Date());
+    return (
+        <SuiBox mb={3} pt={2}>
+          <Card>
+            <SuiBox pt={2} px={2}>
+              <SuiBox mb={0.5}>
+                <SuiTypography variant="h6" fontWeight="medium">
+                  Projects
+                </SuiTypography>
+              </SuiBox>
+              <SuiBox mb={1}>
+                <SuiTypography variant="button" fontWeight="regular" color="text">
+                  Architects design houses
+                </SuiTypography>
+              </SuiBox>
             </SuiBox>
-            <SuiBox mb={1}>
-              <SuiTypography variant="button" fontWeight="regular" color="text">
-                Architects design houses
-              </SuiTypography>
-            </SuiBox>
-          </SuiBox>
-          <SuiBox p={2}>
-            <Grid container spacing={3}>
-              <Grid item xs={4} md={4} xl={4}>
-                <LocalizationProvider dateAdapter={AdapterDateFns}>
-                  <StaticDatePicker
-                    displayStaticWrapperAs="desktop"
-                    value={value}
-                    onChange={(newValue) => {
-                      setValue(newValue);
-                    }}
-                    renderInput={(params) => <TextField {...params} />}
-                  />
-                </LocalizationProvider>
-              </Grid>
-              <Grid item xs={12} md={8} xl={8}>
-                <Card id="delete-account">
-                  <SuiBox pt={3} px={2}>
-                    <SuiTypography variant="h6" fontWeight="medium">
-                      넣을 내용이 없음,,
-                    </SuiTypography>
-                  </SuiBox>
-                  <SuiBox pt={1} pb={2} px={2}>
-                    <SuiBox component="ul" display="flex" flexDirection="column" p={0} m={0}>
-                      <Bill
-                        name="oliver liam"
-                        company="viking burrito"
-                        email="oliver@burrito.com"
-                        vat="FRB1235476"
-                      />
+            <SuiBox p={2}>
+              <Grid container spacing={3}>
+                <Grid item xs={4} md={4} xl={4}>
+                  <LocalizationProvider dateAdapter={AdapterDateFns}>
+                    <StaticDatePicker
+                      displayStaticWrapperAs="desktop"
+                      value={value}
+                      onChange={(newValue) => {
+                        setValue(newValue);
+                      }}
+                      renderInput={(params) => <TextField {...params} />}
+                    />
+                  </LocalizationProvider>
+                </Grid>
+                <Grid item xs={12} md={8} xl={8}>
+                  <Card id="delete-account">
+                    <SuiBox pt={3} px={2}>
+                      <SuiTypography variant="h6" fontWeight="medium">
+                        넣을 내용이 없음,,
+                      </SuiTypography>
                     </SuiBox>
-                  </SuiBox>
-                </Card>
+                    <SuiBox pt={1} pb={2} px={2}>
+                      <SuiBox component="ul" display="flex" flexDirection="column" p={0} m={0}>
+                        <Bill
+                          name="oliver liam"
+                          company="viking burrito"
+                          email="oliver@burrito.com"
+                          vat="FRB1235476"
+                        />
+                      </SuiBox>
+                    </SuiBox>
+                  </Card>
+                </Grid>
+      
               </Grid>
+            </SuiBox>
+          </Card>
+        </SuiBox>
+      )
+  }
+
+  function TableAcc(){
+    const { columns: accCols, rows: accRows } = enters;
     
-            </Grid>
+    return(
+      <Card>
+          <SuiBox display="flex" justifyContent="space-between" alignItems="center" p={3}>
+            <SuiTypography variant="h6">현장 사고 기록</SuiTypography>
+          </SuiBox>
+          <SuiBox
+            sx={{
+              "& .MuiTableRow-root:not(:last-child)": {
+                "& td": {
+                  borderBottom: ({ borders: { borderWidth, borderColor } }) =>
+                    `${borderWidth[1]} solid ${borderColor}`,
+                },
+              },
+            }}
+          >
+            {/* <Table columns={prCols} rows={prRows} /> */}
+            <Table columns={accCols} rows={accRows} />
+
           </SuiBox>
         </Card>
-      </SuiBox>
     )
+  }
 }
-
-function TableAcc(){
-  const { columns: prCols, rows: prRows } = projectsTableData;
-  return(
-    <Card>
-        <SuiBox display="flex" justifyContent="space-between" alignItems="center" p={3}>
-          <SuiTypography variant="h6">Projects table</SuiTypography>
-        </SuiBox>
-        <SuiBox
-          sx={{
-            "& .MuiTableRow-root:not(:last-child)": {
-              "& td": {
-                borderBottom: ({ borders: { borderWidth, borderColor } }) =>
-                  `${borderWidth[1]} solid ${borderColor}`,
-              },
-            },
-          }}
-        >
-          {/* <Table columns={prCols} rows={prRows} /> */}
-        </SuiBox>
-      </Card>
-  )
-}
-
 export default Overview;
