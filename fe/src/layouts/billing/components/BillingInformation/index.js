@@ -79,7 +79,7 @@ function BillingInformation() {
             // mb={noGutter ? 0 : 1}
             mt={2}
           >
-            <SuiBox width="800px" height="500px" display="flex" flexDirection="column">
+            <SuiBox width="800px" height="1000px" display="flex" flexDirection="column">
               <video autoPlay ref={videoRef} />
               <button onClick={startVideo}>start</button>
               <button onClick={closeVideo}>stop</button>
