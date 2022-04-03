@@ -145,7 +145,7 @@ function Sidenav({ color, brand, brandName, routes, ...rest }) {
             <Icon sx={{ fontWeight: "bold" }}>close</Icon>
           </SuiTypography>
         </SuiBox>
-        <SuiBox component={NavLink} to="/" display="flex" alignItems="center">
+        <SuiBox component={NavLink} to="/room" display="flex" alignItems="center">
           {brand && <SuiBox component="img" src={brand} alt="Safety Keeper Logo" width="10rem" />}
           <SuiBox
             width={!brandName && "100%"}
