@@ -9,10 +9,11 @@ import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import PageLayout from "examples/LayoutContainers/PageLayout";
 import SuiBox from "components/SuiBox";
 import Grid from "@mui/material/Grid";
+import * as tmImage from "@teachablemachine/image";
 
 const OPENVIDU_SERVER_URL = "https://j6d101.p.ssafy.io:8443";
 const OPENVIDU_SERVER_SECRET = "vonovono";
-
+let labelContainer;
 class CCTV extends Component {
   constructor(props) {
     super(props);
@@ -26,6 +27,16 @@ class CCTV extends Component {
       mainStreamManager: undefined,
       publisher: undefined,
       subscribers: [],
+      webcam: new tmImage.Webcam(200, 200, true),
+      model: undefined,
+      URL: "https://teachablemachine.withgoogle.com/models/bNSPXCou8S/",
+      audiostate: false,
+      videostate: true,
+      check: false,
+      count: 0,
+      maxPredictinos: 0,
+      me: 0.0,
+      cap: 0.0,
     };
 
     this.joinSession = this.joinSession.bind(this);
@@ -35,10 +46,15 @@ class CCTV extends Component {
     this.handleChangeUserName = this.handleChangeUserName.bind(this);
     this.handleMainVideoStream = this.handleMainVideoStream.bind(this);
     this.onbeforeunload = this.onbeforeunload.bind(this);
+    this.init = this.init.bind(this);
+    this.predict = this.predict.bind(this);
+    this.loop = this.loop.bind(this);
   }
 
   componentDidMount() {
     window.addEventListener("beforeunload", this.onbeforeunload);
+
+    // this.joinSession();
   }
 
   componentWillUnmount() {
@@ -84,6 +100,11 @@ class CCTV extends Component {
     // --- 1) Get an OpenVidu object ---
 
     this.OV = new OpenVidu();
+
+    this.setmodel();
+    this.init();
+    // this.setState({ webcam: new tmImage.Webcam(200, 200, true) }); // width, height, flip
+    // this.setState({ URL: "../../my_model/" });
 
     // --- 2) Init a session ---
 
@@ -132,8 +153,8 @@ class CCTV extends Component {
             .connect(token, { clientData: this.state.myUserName })
             .then(async () => {
               var devices = await this.OV.getDevices();
-              console.log(this.OV);
-              console.log("devices", devices);
+              // console.log(this.OV);
+              // console.log("devices", devices);
               var videoDevices = devices.filter((device) => device.kind === "videoinput");
 
               // --- 5) Get your own camera stream ---
@@ -161,6 +182,10 @@ class CCTV extends Component {
                 mainStreamManager: publisher,
                 publisher: publisher,
               });
+
+              // console.log("publisher", this.state.publisher);
+              // console.log("currentVideoDevice", this.state.currentVideoDevice);
+              // console.log("mainStreamManager", this.state.mainStreamManager);
             })
             .catch((error) => {
               console.log(
@@ -182,6 +207,7 @@ class CCTV extends Component {
     if (mySession) {
       mySession.disconnect();
     }
+    this.state.webcam.stop();
 
     // Empty all properties...
     this.OV = null;
@@ -229,6 +255,102 @@ class CCTV extends Component {
       }
     } catch (e) {
       console.error(e);
+    }
+  }
+
+  // 모델 세팅
+  async setmodel() {
+    // this.setState(URL: "https://teachablemachine.withgoogle.com/models/bNSPXCou8S/");
+    // this.setState({ URL: "../../my_model/" });
+    // console.log(this.state.URL);
+    const modelURL = `${this.state.URL}model.json`;
+    const metadataURL = `${this.state.URL}metadata.json`;
+    // load the model and metadata
+    // Refer to tmImage.loadFromFiles() in the API to support files from a file picker
+    // Note: the pose library adds a tmPose object to your window (window.tmPose)
+    this.setState({
+      model: await tmImage.load(modelURL, metadataURL),
+    });
+    // console.log("model", this.state.model);
+    this.setState({
+      maxPredictinos: this.state.model.getTotalClasses(),
+    });
+    console.log("maxPredictinos", this.state.maxPredictinos);
+  }
+
+  // 티처블 머신
+  async init() {
+    // Convenience function to setup a webcam
+    const size = 200;
+    const flip = true; // whether to flip the webcam
+    // this.setState({ webcam: new tmImage.Webcam(size, size, flip) }); // width, height, flip
+    // console.log(this.state.webcam);
+    console.log("init 전 실행");
+    await this.state.webcam.setup(); // request access to the webcam
+    await this.state.webcam.play();
+
+    window.requestAnimationFrame(this.loop);
+    console.log("init 후 실행");
+
+    labelContainer = document.getElementById("label-container");
+    for (let i = 0; i < this.state.maxPredictions; i++) {
+      // and class labels
+      labelContainer.appendChild(document.createElement("div"));
+    }
+  }
+
+  async loop(timestamp) {
+    // console.log("loop 실행");
+    this.state.webcam.update(); // update the webcam frame
+    await this.predict();
+    window.requestAnimationFrame(this.loop);
+  }
+
+  async predict() {
+    // // Prediction #1: run input through posenet
+    // // estimatePose can take in an image, video or canvas html element
+    // const { pose, posenetOutput } = await this.state.model.estimatePose(this.state.webcam.canvas);
+    // console.log("predict 확인");
+    // // Prediction 2: run input through teachable machine classification model
+    // const prediction = await this.state.model.predict(posenetOutput);
+    // if (prediction[0].probability.toFixed(2) > 0.99) {
+    //   if (this.state.check) {
+    //     this.setState({
+    //       count: this.state.count + 1,
+    //     });
+    //     console.log(this.count);
+    //     this.state.session
+    //       .signal({
+    //         data: `${this.state.myUserName},${this.state.count}`, // Any string (optional)
+    //         to: [], // Array of Connection objects (optional. Broadcast to everyone if empty)
+    //         type: "count", // The type of message (optional)
+    //       })
+    //       .then(() => {
+    //         this.setState({ check: false });
+    //       })
+    //       .catch((error) => {});
+    //   }
+    //   this.setState({ status: "up" });
+    // } else if (prediction[1].probability.toFixed(2) > 0.99) {
+    //   this.setState({ status: "down" });
+    //   this.setState({ check: true });
+    // }
+
+    // this.state.webcam.canvas
+    const prediction = await this.state.model.predict(this.state.webcam.canvas);
+    console.log("predict 실행");
+
+    for (let i = 0; i < this.state.maxPredictions; i++) {
+      console.log("for문 실행");
+      if (prediction[i].className === "me") {
+        this.setState({ me: prediction[i].probability.toFixed(2) });
+      } else if (prediction[i].className === "cap") {
+        this.setState({ cap: prediction[i].probability.toFixed(2) });
+      }
+      const classPrediction = prediction[i].className + ": " + prediction[i].probability.toFixed(2);
+      // document.getElementById("labelContainer").childNodes[i].innerHTML = classPrediction;
+      // labelContainer.childNodes[i].innerHTML = classPrediction;
+      console.log(classPrediction);
     }
   }
 
@@ -334,6 +456,7 @@ class CCTV extends Component {
                     onClick={() => this.handleMainVideoStream(this.state.publisher)}
                   >
                     <UserVideoComponent streamManager={this.state.publisher} />
+                    <div id="label-container"></div>
                   </div>
                 ) : null}
                 {this.state.subscribers.map((sub, i) => (
