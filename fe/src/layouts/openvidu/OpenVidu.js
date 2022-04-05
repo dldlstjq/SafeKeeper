@@ -14,6 +14,9 @@ import * as tmImage from "@teachablemachine/image";
 const OPENVIDU_SERVER_URL = "https://j6d101.p.ssafy.io:8443";
 const OPENVIDU_SERVER_SECRET = "vonovono";
 let labelContainer;
+let seconds = 0;
+let start = -1;
+let end = 0;
 class CCTV extends Component {
   constructor(props) {
     super(props);
@@ -29,14 +32,16 @@ class CCTV extends Component {
       subscribers: [],
       webcam: new tmImage.Webcam(200, 200, true),
       model: undefined,
-      URL: "https://teachablemachine.withgoogle.com/models/bNSPXCou8S/",
+      URL: "https://teachablemachine.withgoogle.com/models/14qScEGlI/",
       audiostate: false,
       videostate: true,
       check: false,
       count: 0,
+      total: 0,
       maxPredictinos: 0,
-      me: 0.0,
-      cap: 0.0,
+      yes: 0.0,
+      no: 0.0,
+      contents: "",
     };
 
     this.joinSession = this.joinSession.bind(this);
@@ -53,7 +58,7 @@ class CCTV extends Component {
 
   componentDidMount() {
     window.addEventListener("beforeunload", this.onbeforeunload);
-
+    this.setmodel();
     // this.joinSession();
   }
 
@@ -101,7 +106,6 @@ class CCTV extends Component {
 
     this.OV = new OpenVidu();
 
-    this.setmodel();
     this.init();
     // this.setState({ webcam: new tmImage.Webcam(200, 200, true) }); // width, height, flip
     // this.setState({ URL: "../../my_model/" });
@@ -265,17 +269,20 @@ class CCTV extends Component {
     // console.log(this.state.URL);
     const modelURL = `${this.state.URL}model.json`;
     const metadataURL = `${this.state.URL}metadata.json`;
+    // const modelURL = model;
+    // const metadataURL = metadata;
+
     // load the model and metadata
     // Refer to tmImage.loadFromFiles() in the API to support files from a file picker
     // Note: the pose library adds a tmPose object to your window (window.tmPose)
     this.setState({
       model: await tmImage.load(modelURL, metadataURL),
     });
-    // console.log("model", this.state.model);
+    console.log("model", this.state.model);
     this.setState({
-      maxPredictinos: this.state.model.getTotalClasses(),
+      maxPredictions: this.state.model.getTotalClasses(),
     });
-    console.log("maxPredictinos", this.state.maxPredictinos);
+    console.log("maxPredictinos", this.state.maxPredictions);
   }
 
   // 티처블 머신
@@ -292,11 +299,11 @@ class CCTV extends Component {
     window.requestAnimationFrame(this.loop);
     console.log("init 후 실행");
 
-    labelContainer = document.getElementById("label-container");
-    for (let i = 0; i < this.state.maxPredictions; i++) {
-      // and class labels
-      labelContainer.appendChild(document.createElement("div"));
-    }
+    // labelContainer = document.getElementById("label-container");
+    // for (let i = 0; i < this.state.maxPredictions; i++) {
+    //   // and class labels
+    //   labelContainer.appendChild(document.createElement("div"));
+    // }
   }
 
   async loop(timestamp) {
@@ -336,21 +343,44 @@ class CCTV extends Component {
     //   this.setState({ check: true });
     // }
 
-    // this.state.webcam.canvas
     const prediction = await this.state.model.predict(this.state.webcam.canvas);
-    console.log("predict 실행");
 
     for (let i = 0; i < this.state.maxPredictions; i++) {
-      console.log("for문 실행");
-      if (prediction[i].className === "me") {
-        this.setState({ me: prediction[i].probability.toFixed(2) });
-      } else if (prediction[i].className === "cap") {
-        this.setState({ cap: prediction[i].probability.toFixed(2) });
+      if (prediction[i].className === "안전모착용") {
+        this.setState({ yes: prediction[i].probability.toFixed(2) });
+      } else if (prediction[i].className === "안전모미착용") {
+        this.setState({ no: prediction[i].probability.toFixed(2) });
+      }
+      if (prediction[0].className === "안전모착용" && prediction[0].probability.toFixed(2) >= 0.7) {
+        this.setState({ contents: "안전모 착용!!" });
+        start = -1;
+        end = 0;
+      } else if (
+        prediction[1].className === "안전모미착용" &&
+        prediction[1].probability.toFixed(2) >= 0.7
+      ) {
+        seconds = new Date().getSeconds();
+        if (start === -1) {
+          start = seconds;
+          // console.log("start", start);
+        }
+        end = seconds;
+        // console.log("end", end);
+        // 55초에 안쓴 상태에서 초가 바뀌어 2~3초로 갈 경우
+        if (end < start) end += 60;
+        if (start !== -1 && end - start >= 30) {
+          this.setState({ contents: "안전모 미착용!!" });
+          this.setState({ count: this.state.count + 1 });
+          console.log("경과시간", end - start);
+        }
+        // if (this.state.count % 20 === 0) {
+        //   this.setState({ total: this.state.total + 1 });
+        // }
       }
       const classPrediction = prediction[i].className + ": " + prediction[i].probability.toFixed(2);
       // document.getElementById("labelContainer").childNodes[i].innerHTML = classPrediction;
       // labelContainer.childNodes[i].innerHTML = classPrediction;
-      console.log(classPrediction);
+      // console.log(classPrediction);
     }
   }
 
@@ -456,7 +486,10 @@ class CCTV extends Component {
                     onClick={() => this.handleMainVideoStream(this.state.publisher)}
                   >
                     <UserVideoComponent streamManager={this.state.publisher} />
-                    <div id="label-container"></div>
+                    <div>안전모 착용: {this.state.yes}</div>
+                    <div>안전모 미착용: {this.state.no}</div>
+                    <div>{this.state.contents}</div>
+                    <div>횟수: {this.state.count}</div>
                   </div>
                 ) : null}
                 {this.state.subscribers.map((sub, i) => (
@@ -466,6 +499,10 @@ class CCTV extends Component {
                     onClick={() => this.handleMainVideoStream(sub)}
                   >
                     <UserVideoComponent streamManager={sub} />
+                    <div>안전모 착용: {this.state.yes}</div>
+                    <div>안전모 미착용: {this.state.no}</div>
+                    <div>{this.state.contents}</div>
+                    <div>횟수: {this.state.count}</div>
                   </div>
                 ))}
               </div>
