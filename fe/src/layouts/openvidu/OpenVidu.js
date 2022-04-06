@@ -505,7 +505,7 @@ class CCTV extends Component {
               <div
                 id="video-container"
                 className="video-container"
-                style={{ display: "flex", flexFlow: "row" }}
+                style={{ display: "flex", flexFlow: "row", justifyContent: "center" }}
               >
                 {this.state.publisher !== undefined ? (
                   <div
