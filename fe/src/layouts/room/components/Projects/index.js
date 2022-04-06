@@ -140,7 +140,7 @@ function Projects() {
   }
 
   function enterRoom() {
-    navigate("/cctv");
+    navigate("/openvidu");
     // alert("방 입장");
   }
 
@@ -236,8 +236,6 @@ function Projects() {
         {/* {renderMenu} */}
       </SuiBox>
 
-
-
       <TableContainer component={Paper}>
         <MuiTable sx={{ minWidth: 650 }} aria-label="simple table">
           <SuiBox component="thead">
@@ -267,7 +265,6 @@ function Projects() {
                 key={room.roomId}
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
               >
-                
                 <TableCell component="th" scope="row">
                   <SuiBox
                     component="th"
@@ -297,16 +294,9 @@ function Projects() {
                 </TableCell>
               </TableRow>
             ))}
-            
-
-
           </TableBody>
         </MuiTable>
       </TableContainer>
-      
-
-
-      
     </Card>
   );
 }

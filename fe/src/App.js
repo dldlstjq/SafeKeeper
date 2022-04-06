@@ -47,6 +47,8 @@ import { useSoftUIController, setMiniSidenav, setOpenConfigurator } from "contex
 // Images
 import brand from "assets/images/logo-removebg.png";
 
+import OpenVidu from "./layouts/openvidu/OpenVidu";
+
 export default function App() {
   const [controller, dispatch] = useSoftUIController();
   const { miniSidenav, direction, layout, openConfigurator, sidenavColor } = controller;
@@ -135,6 +137,9 @@ export default function App() {
     <CacheProvider value={rtlCache}>
       <ThemeProvider theme={themeRTL}>
         <CssBaseline />
+        {/* <Routes>
+          <Route path="/openvidu" element={<OpenVidu />} />
+        </Routes> */}
         {layout === "dashboard" && (
           <>
             <Sidenav
@@ -172,7 +177,8 @@ export default function App() {
       )}
       <Routes>
         {getRoutes(routes)}
-        <Route path="*" element={<Navigate to="/authentication/sign-in" />} />
+        <Route path="/openvidu" element={<OpenVidu />} />
+        <Route path="*" element={<Navigate to="/room" />} />
       </Routes>
     </ThemeProvider>
   );
