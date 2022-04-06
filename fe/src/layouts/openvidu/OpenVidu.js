@@ -392,8 +392,8 @@ class CCTV extends Component {
                   cameraId: 2,
                   cameraPlace: "1층",
                   construction: {
-                    constructName: this.state.user.construction.constructName,
-                    constructionId: this.state.user.construction.constructionId,
+                    constructName: "samsung",
+                    constructionId: 1,
                   },
                 },
                 room: {
