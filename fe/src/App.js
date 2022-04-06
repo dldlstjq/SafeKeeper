@@ -48,6 +48,7 @@ import { useSoftUIController, setMiniSidenav, setOpenConfigurator } from "contex
 import brand from "assets/images/logo-removebg.png";
 
 import OpenVidu from "./layouts/openvidu/OpenVidu";
+import SignIn from "./layouts/authentication/sign-in";
 
 export default function App() {
   const [controller, dispatch] = useSoftUIController();
@@ -55,6 +56,7 @@ export default function App() {
   const [onMouseEnter, setOnMouseEnter] = useState(false);
   const [rtlCache, setRtlCache] = useState(null);
   const { pathname } = useLocation();
+  const [user, setUser] = useState(localStorage.getItem("user"));
 
   // Cache for the rtl
   useMemo(() => {
@@ -109,30 +111,6 @@ export default function App() {
       return null;
     });
 
-  // const configsButton = (
-  //   <SuiBox
-  //     display="flex"
-  //     justifyContent="center"
-  //     alignItems="center"
-  //     width="3.5rem"
-  //     height="3.5rem"
-  //     bgColor="white"
-  //     shadow="sm"
-  //     borderRadius="50%"
-  //     position="fixed"
-  //     right="2rem"
-  //     bottom="2rem"
-  //     zIndex={99}
-  //     color="dark"
-  //     sx={{ cursor: "pointer" }}
-  //     onClick={handleConfiguratorOpen}
-  //   >
-  //     <Icon fontSize="default" color="inherit">
-  //       settings
-  //     </Icon>
-  //   </SuiBox>
-  // );
-
   return direction === "rtl" ? (
     <CacheProvider value={rtlCache}>
       <ThemeProvider theme={themeRTL}>
@@ -155,7 +133,7 @@ export default function App() {
         )}
         <Routes>
           {getRoutes(routes)}
-          <Route path="*" element={<Navigate to="/authentication/sign-in" />} />
+          <Route path="*" element={<SignIn />} />
         </Routes>
       </ThemeProvider>
     </CacheProvider>
@@ -178,7 +156,7 @@ export default function App() {
       <Routes>
         {getRoutes(routes)}
         <Route path="/openvidu" element={<OpenVidu />} />
-        <Route path="*" element={<Navigate to="/room" />} />
+        <Route path="*" element={<SignIn />} />
       </Routes>
     </ThemeProvider>
   );
