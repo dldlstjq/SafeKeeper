@@ -10,6 +10,7 @@ import PageLayout from "examples/LayoutContainers/PageLayout";
 import SuiBox from "components/SuiBox";
 import Grid from "@mui/material/Grid";
 import * as tmImage from "@teachablemachine/image";
+import { BASE_URL } from "index";
 
 const OPENVIDU_SERVER_URL = "https://j6d101.p.ssafy.io:8443";
 const OPENVIDU_SERVER_SECRET = "vonovono";
@@ -42,6 +43,9 @@ class CCTV extends Component {
       yes: 0.0,
       no: 0.0,
       contents: "",
+      ok: true,
+      user: JSON.parse(localStorage.getItem("user")),
+      capture: false,
     };
 
     this.joinSession = this.joinSession.bind(this);
@@ -355,6 +359,8 @@ class CCTV extends Component {
         this.setState({ contents: "안전모 착용!!" });
         start = -1;
         end = 0;
+        this.setState({ ok: true });
+        this.setState({ capture: false });
       } else if (
         prediction[1].className === "안전모미착용" &&
         prediction[1].probability.toFixed(2) >= 0.7
@@ -368,10 +374,36 @@ class CCTV extends Component {
         // console.log("end", end);
         // 55초에 안쓴 상태에서 초가 바뀌어 2~3초로 갈 경우
         if (end < start) end += 60;
-        if (start !== -1 && end - start >= 30) {
+        if (start !== -1 && end - start >= 10) {
           this.setState({ contents: "안전모 미착용!!" });
+          this.setState({ ok: false });
           this.setState({ count: this.state.count + 1 });
+
           console.log("경과시간", end - start);
+          if (!this.state.capture) {
+            this.setState({ capture: true });
+            axios
+              .post(BASE_URL + "/api/v1/accident", {
+                accidentDate: new Date(),
+                accidentDesc: "사진 설명",
+                accidentPicture: "string",
+                accidentType: "안전모 미착용",
+                camera: {
+                  cameraId: 2,
+                  cameraPlace: "1층",
+                  construction: {
+                    constructName: this.state.user.construction.constructName,
+                    constructionId: this.state.user.construction.constructionId,
+                  },
+                },
+                room: {
+                  roomId: 37,
+                  roomName: "123",
+                },
+              })
+              .then((res) => {})
+              .catch((err) => console.log(err));
+          }
         }
         // if (this.state.count % 20 === 0) {
         //   this.setState({ total: this.state.total + 1 });
@@ -485,11 +517,12 @@ class CCTV extends Component {
                     className="stream-container"
                     onClick={() => this.handleMainVideoStream(this.state.publisher)}
                   >
-                    <UserVideoComponent streamManager={this.state.publisher} />
+                    <UserVideoComponent streamManager={this.state.publisher} ok={this.state.ok} />
                     <div>안전모 착용: {this.state.yes}</div>
                     <div>안전모 미착용: {this.state.no}</div>
-                    <div>{this.state.contents}</div>
-                    <div>횟수: {this.state.count}</div>
+                    {this.state.ok === false && <h1 className="caution">{this.state.contents}</h1>}
+                    {/* <div>{this.state.contents}</div> */}
+                    {/* <div>횟수: {this.state.count}</div> */}
                   </div>
                 ) : null}
                 {this.state.subscribers.map((sub, i) => (
@@ -498,11 +531,12 @@ class CCTV extends Component {
                     className="stream-container "
                     onClick={() => this.handleMainVideoStream(sub)}
                   >
-                    <UserVideoComponent streamManager={sub} />
+                    <UserVideoComponent streamManager={sub} ok={this.state.ok} />
                     <div>안전모 착용: {this.state.yes}</div>
                     <div>안전모 미착용: {this.state.no}</div>
-                    <div>{this.state.contents}</div>
-                    <div>횟수: {this.state.count}</div>
+                    {this.state.ok === false && <h1 className="caution">{this.state.contents}</h1>}
+                    {/* <div>{this.state.contents}</div> */}
+                    {/* <div>횟수: {this.state.count}</div> */}
                   </div>
                 ))}
               </div>
