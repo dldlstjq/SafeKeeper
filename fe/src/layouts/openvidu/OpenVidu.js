@@ -1,7 +1,7 @@
 import axios from "axios";
 import { OpenVidu } from "openvidu-browser";
 import React, { Component } from "react";
-import "./OpenVidu.css";
+// import "./OpenVidu.css";
 import UserVideoComponent from "./UserVideoComponent";
 import logo from "assets/images/logo.png";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
@@ -424,7 +424,7 @@ class CCTV extends Component {
       <PageLayout>
         <div className="container">
           {this.state.session === undefined ? (
-            <div id="join">
+            <div id="join" style={{ display: "flex", flexFlow: "column", alignItems: "center" }}>
               <div id="img-div">
                 <img
                   src={logo}
@@ -432,12 +432,13 @@ class CCTV extends Component {
                   style={{
                     width: "500px",
                     height: "300px",
-                    marginTop: "200px",
                   }}
                 />
               </div>
-              <div id="join-dialog" className="jumbotron vertical-center">
-                {/* <h1> Join a video session </h1> */}
+              <div
+                id="join-dialog"
+                // className="jumbotron vertical-center"
+              >
                 <form className="form-group" onSubmit={this.joinSession}>
                   <p>
                     <label>닉네임: </label>
@@ -477,16 +478,6 @@ class CCTV extends Component {
           {this.state.session !== undefined ? (
             <div id="session">
               <div id="session-header">
-                {/* <img
-                    src={logo}
-                    alt="OpenVidu logo"
-                    style={{
-                      width: "250px",
-                      height: "150px",
-                    }}
-                  /> */}
-                {/* <h1 id="session-title">{mySessionId}</h1> */}
-
                 {/* <input
                 className="btn btn-large btn-danger"
                 type="button"
@@ -511,7 +502,11 @@ class CCTV extends Component {
                 />
               </div>
             ) : null} */}
-              <div id="video-container" className="video-container">
+              <div
+                id="video-container"
+                className="video-container"
+                style={{ display: "flex", flexFlow: "row" }}
+              >
                 {this.state.publisher !== undefined ? (
                   <div
                     className="stream-container"
