@@ -251,3 +251,13 @@ a:hover .demo-logo {
     top: 57%;
   }
 }
+
+@keyframes blink-effect {
+  50% {
+    opacity: 0;
+  }
+}
+.caution {
+  color: red;
+  animation: blink-effect 1s step-end infinite;
+}
