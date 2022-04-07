@@ -41,6 +41,7 @@ import curved6 from "assets/images/crane.jpg";
 
 import axios from "axios";
 import { BASE_URL } from "index";
+import { Update } from "@mui/icons-material";
 
 function SignUp() {
   const [company, setCompany] = useState();
@@ -76,11 +77,15 @@ function SignUp() {
   }, [pw]);
 
   useEffect(() => {
+    update();
+  }, []);
+
+  function update() {
     axios
       .get(BASE_URL + "/api/v1/construction/getConstruction")
       .then((res) => setCompanies(res.data))
       .catch((err) => console.log(err));
-  }, []);
+  }
 
   function allClear() {
     for (const key in inputs) {
@@ -137,41 +142,7 @@ function SignUp() {
   function add() {
     axios
       .post(BASE_URL + "/api/v1/construction", { constructName: company })
-      .then((res) => {
-        /*
-        (openVidu로 카메라를 대체하여 DB의 카메라 등록이 의미 없어짐) 
-        sol1) 
-        1. 처음 대시보드?를 로드하면 유저정보를 가져옴 o
-        2. 만약 유저가 소속된 회사에 카메라가 없다면 
-        3. 임시 카메라 1대를 등록시킴
-              
-        sol2)
-        1. 처음 회사를 생성하면
-        2. 임시 카메라 1대를 등록시킴
-        */
-        
-        for (const i of res.data) {
-          console.log(i)
-          if (i != null) {
-            axios
-            .post(BASE_URL + "/api/v1/camera/", {
-              cameraPlace: "1층",
-              construction: {
-                constructName: i.constructionName,
-                constructionId: i.constructionId
-              },
-              room: {
-                roomId: 0,
-                roomName: "string"
-              }
-            })
-            .then((res2) => {
-              console.log(res2.data)           
-            })
-            .catch((err2) => console.log(err2));
-          }
-        }     
-      })
+      .then(() => update())
       .catch((err) => console.log(err));
   }
 
@@ -231,8 +202,8 @@ function SignUp() {
               />
             </SuiBox>
             <Autocomplete
+              required
               onChange={(event, newValue) => {
-                // console.log(newValue);
                 setInputs({
                   ...inputs,
                   company: [newValue, Boolean(newValue)],
@@ -298,7 +269,14 @@ function SignUp() {
         </DialogContent>
         <DialogActions>
           <SuiButton onClick={handleClose}>취소</SuiButton>
-          <SuiButton onClick={add}>등록</SuiButton>
+          <SuiButton
+            onClick={() => {
+              add();
+              handleClose();
+            }}
+          >
+            등록
+          </SuiButton>
         </DialogActions>
       </Dialog>
     </BasicLayout>
