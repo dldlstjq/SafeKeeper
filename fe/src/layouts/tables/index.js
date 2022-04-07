@@ -38,104 +38,53 @@ import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from "r
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { BASE_URL } from "index";
-import { func } from "prop-types";
+import { Button } from "@mui/material";
 let data = [
   {
     name: "09",
     count: 0,
-    // uv: 1100,
     amt: 2000,
   },
   {
     name: "10",
     count: 0,
-    // uv: 1400,
     amt: 2000,
   },
   {
     name: "11",
     count: 0,
-    // uv: 1500,
     amt: 2000,
   },
   {
     name: "12",
     count: 0,
-    // uv: 1001,
     amt: 2000,
   },
   {
     name: "13",
     count: 0,
-    // uv: 1500,
     amt: 2000,
   },
   {
     name: "14",
     count: 0,
-    // uv: 1050,
     amt: 2000,
   },
   {
     name: "15",
     count: 0,
-    // uv: 1050,
     amt: 2000,
   },
   {
     name: "16",
     count: 0,
-    // uv: 1100,
     amt: 2000,
   },
   {
     name: "17",
     count: 0,
-    // uv: 1200,
     amt: 2000,
   },
-  // {
-  //   name: "Page A",
-  //   uv: 4000,
-  //   pv: 2400,
-  //   amt: 2400,
-  // },
-  // {
-  //   name: "Page B",
-  //   uv: 3000,
-  //   pv: 1398,
-  //   amt: 2210,
-  // },
-  // {
-  //   name: "Page C",
-  //   uv: 2000,
-  //   pv: 9800,
-  //   amt: 2290,
-  // },
-  // {
-  //   name: "Page D",
-  //   uv: 2780,
-  //   pv: 3908,
-  //   amt: 2000,
-  // },
-  // {
-  //   name: "Page E",
-  //   uv: 1890,
-  //   pv: 4800,
-  //   amt: 2181,
-  // },
-  // {
-  //   name: "Page F",
-  //   uv: 2390,
-  //   pv: 3800,
-  //   amt: 2500,
-  // },
-  // {
-  //   name: "Page G",
-  //   uv: 3490,
-  //   pv: 4300,
-  //   amt: 2100,
-  // },
 ];
 
 function Tables() {
@@ -153,7 +102,7 @@ function Tables() {
         },
       })
       .then((res) => {
-        console.log(res.data);
+        // console.log(res.data);
         setAccident(res.data);
         // for (let i = 0; i < data.length; ++i) {
         //   for (let j = 0; j < accident.length; ++j) {
@@ -168,8 +117,6 @@ function Tables() {
         // setDatas(data);
       })
       .catch((err) => console.log(err));
-
-    // accident.filter((data) => {});
   }, []);
 
   function showChart() {
@@ -180,10 +127,10 @@ function Tables() {
         if (data[i].name === hour) {
           data[i].count++;
         }
-        console.log(accident[j].accidentDate);
+        // console.log(accident[j].accidentDate);
       }
     }
-    console.log(data);
+    // console.log(data);
     setDatas(data);
   }
 
@@ -195,7 +142,7 @@ function Tables() {
           <Grid container spacing={3}>
             <Grid item xs={12} lg={12}>
               <h1>통계</h1>
-              <button onClick={showChart}>보기</button>
+              <Button onClick={showChart}>보기</Button>
               {show && (
                 <LineChart
                   width={1000}
