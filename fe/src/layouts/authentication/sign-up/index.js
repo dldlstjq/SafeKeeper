@@ -137,7 +137,41 @@ function SignUp() {
   function add() {
     axios
       .post(BASE_URL + "/api/v1/construction", { constructName: company })
-      .then((res) => console.log(res))
+      .then((res) => {
+        /*
+        (openVidu로 카메라를 대체하여 DB의 카메라 등록이 의미 없어짐) 
+        sol1) 
+        1. 처음 대시보드?를 로드하면 유저정보를 가져옴 o
+        2. 만약 유저가 소속된 회사에 카메라가 없다면 
+        3. 임시 카메라 1대를 등록시킴
+              
+        sol2)
+        1. 처음 회사를 생성하면
+        2. 임시 카메라 1대를 등록시킴
+        */
+        
+        for (const i of res.data) {
+          console.log(i)
+          if (i != null) {
+            axios
+            .post(BASE_URL + "/api/v1/camera/", {
+              cameraPlace: "1층",
+              construction: {
+                constructName: i.constructionName,
+                constructionId: i.constructionId
+              },
+              room: {
+                roomId: 0,
+                roomName: "string"
+              }
+            })
+            .then((res2) => {
+              console.log(res2.data)           
+            })
+            .catch((err2) => console.log(err2));
+          }
+        }     
+      })
       .catch((err) => console.log(err));
   }
 
