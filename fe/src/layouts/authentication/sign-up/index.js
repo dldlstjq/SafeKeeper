@@ -41,6 +41,7 @@ import curved6 from "assets/images/crane.jpg";
 
 import axios from "axios";
 import { BASE_URL } from "index";
+import { Update } from "@mui/icons-material";
 
 function SignUp() {
   const [company, setCompany] = useState();
@@ -76,11 +77,15 @@ function SignUp() {
   }, [pw]);
 
   useEffect(() => {
+    update();
+  }, []);
+
+  function update() {
     axios
       .get(BASE_URL + "/api/v1/construction/getConstruction")
       .then((res) => setCompanies(res.data))
       .catch((err) => console.log(err));
-  }, []);
+  }
 
   function allClear() {
     for (const key in inputs) {
@@ -137,7 +142,7 @@ function SignUp() {
   function add() {
     axios
       .post(BASE_URL + "/api/v1/construction", { constructName: company })
-      .then((res) => console.log(res))
+      .then(() => update())
       .catch((err) => console.log(err));
   }
 
@@ -197,8 +202,8 @@ function SignUp() {
               />
             </SuiBox>
             <Autocomplete
+              required
               onChange={(event, newValue) => {
-                // console.log(newValue);
                 setInputs({
                   ...inputs,
                   company: [newValue, Boolean(newValue)],
@@ -264,7 +269,14 @@ function SignUp() {
         </DialogContent>
         <DialogActions>
           <SuiButton onClick={handleClose}>취소</SuiButton>
-          <SuiButton onClick={add}>등록</SuiButton>
+          <SuiButton
+            onClick={() => {
+              add();
+              handleClose();
+            }}
+          >
+            등록
+          </SuiButton>
         </DialogActions>
       </Dialog>
     </BasicLayout>
