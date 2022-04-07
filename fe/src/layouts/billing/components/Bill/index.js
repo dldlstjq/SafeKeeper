@@ -70,14 +70,14 @@ function Bill({ name, company, email, vat, noGutter }) {
         </SuiBox>
         <SuiBox mb={1} lineHeight={0}>
           <SuiTypography variant="caption" color="text">
-            Email Address:&nbsp;&nbsp;&nbsp;
+            UserId:&nbsp;&nbsp;&nbsp;
             <SuiTypography variant="caption" fontWeight="medium">
               {email}
             </SuiTypography>
           </SuiTypography>
         </SuiBox>
         <SuiTypography variant="caption" color="text">
-          VAT Number:&nbsp;&nbsp;&nbsp;
+          Position:&nbsp;&nbsp;&nbsp;
           <SuiTypography variant="caption" fontWeight="medium">
             {vat}
           </SuiTypography>
