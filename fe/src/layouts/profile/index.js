@@ -86,8 +86,8 @@ function Overview() {
       axios
         .post(BASE_URL + "/api/v1/accident/getAccidentConstList", {
           construction: {
-            constructName: "samsung",
-            constructionId: 1,
+            constructName: user.construction.constructName,
+            constructionId: user.construction.constructionId,
           },
         })
         .then((res) => {
