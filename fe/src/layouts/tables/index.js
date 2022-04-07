@@ -32,9 +32,107 @@ import typography from "assets/theme/base/typography";
 
 // Data
 import gradientLineChartData from "layouts/dashboard/data/gradientLineChartData";
+// import data from "./data.json";
+import { ResponsiveLine } from "@nivo/line";
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from "recharts";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { BASE_URL } from "index";
+import { Button } from "@mui/material";
+let data = [
+  {
+    name: "09",
+    count: 0,
+    amt: 2000,
+  },
+  {
+    name: "10",
+    count: 0,
+    amt: 2000,
+  },
+  {
+    name: "11",
+    count: 0,
+    amt: 2000,
+  },
+  {
+    name: "12",
+    count: 0,
+    amt: 2000,
+  },
+  {
+    name: "13",
+    count: 0,
+    amt: 2000,
+  },
+  {
+    name: "14",
+    count: 0,
+    amt: 2000,
+  },
+  {
+    name: "15",
+    count: 0,
+    amt: 2000,
+  },
+  {
+    name: "16",
+    count: 0,
+    amt: 2000,
+  },
+  {
+    name: "17",
+    count: 0,
+    amt: 2000,
+  },
+];
 
 function Tables() {
   const { size } = typography;
+  const [accident, setAccident] = useState([]);
+  const [datas, setDatas] = useState([]);
+  const [show, setShow] = useState(false);
+
+  useEffect(() => {
+    axios
+      .post(BASE_URL + "/api/v1/accident/getAccidentConstList", {
+        construction: {
+          constructName: "samsung",
+          constructionId: 1,
+        },
+      })
+      .then((res) => {
+        // console.log(res.data);
+        setAccident(res.data);
+        // for (let i = 0; i < data.length; ++i) {
+        //   for (let j = 0; j < accident.length; ++j) {
+        //     const hour = accident[j].accidentDate.substr(11, 2);
+        //     if (data[i].name === hour) {
+        //       data[i].count++;
+        //     }
+        //     console.log(accident[j].accidentDate);
+        //   }
+        // }
+        // console.log(data);
+        // setDatas(data);
+      })
+      .catch((err) => console.log(err));
+  }, []);
+
+  function showChart() {
+    setShow(true);
+    for (let i = 0; i < data.length; ++i) {
+      for (let j = 0; j < accident.length; ++j) {
+        const hour = accident[j].accidentDate.substr(11, 2);
+        if (data[i].name === hour) {
+          data[i].count++;
+        }
+        // console.log(accident[j].accidentDate);
+      }
+    }
+    // console.log(data);
+    setDatas(data);
+  }
 
   return (
     <DashboardLayout>
@@ -43,7 +141,31 @@ function Tables() {
         <SuiBox mb={3}>
           <Grid container spacing={3}>
             <Grid item xs={12} lg={12}>
-              <GradientLineChart
+              <h1>통계</h1>
+              <Button onClick={showChart}>보기</Button>
+              {show && (
+                <LineChart
+                  width={1000}
+                  height={500}
+                  data={datas}
+                  margin={{
+                    top: 5,
+                    right: 30,
+                    left: 20,
+                    bottom: 5,
+                  }}
+                >
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis dataKey="name" />
+                  <YAxis />
+                  <Tooltip />
+                  <Legend />
+                  <Line type="monotone" dataKey="count" stroke="#8884d8" activeDot={{ r: 8 }} />
+                  {/* <Line type="monotone" dataKey="uv" stroke="#82ca9d" /> */}
+                </LineChart>
+              )}
+
+              {/* <GradientLineChart
                 title="통계 그래프"
                 description={
                   <SuiBox display="flex" alignItems="center">
@@ -60,7 +182,7 @@ function Tables() {
                 }
                 height="20.25rem"
                 chart={gradientLineChartData}
-              />
+              /> */}
             </Grid>
           </Grid>
         </SuiBox>
