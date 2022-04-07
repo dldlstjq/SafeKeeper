@@ -92,13 +92,14 @@ function Tables() {
   const [accident, setAccident] = useState([]);
   const [datas, setDatas] = useState([]);
   const [show, setShow] = useState(false);
+  const [user, setUser] = useState(JSON.parse(localStorage.getItem("user")));
 
   useEffect(() => {
     axios
       .post(BASE_URL + "/api/v1/accident/getAccidentConstList", {
         construction: {
-          constructName: "samsung",
-          constructionId: 1,
+          constructName: user.construction.constructName,
+          constructionId: user.construction.constructionId,
         },
       })
       .then((res) => {
