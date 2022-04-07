@@ -124,7 +124,8 @@ function Tables() {
     for (let i = 0; i < data.length; ++i) {
       for (let j = 0; j < accident.length; ++j) {
         const hour = accident[j].accidentDate.substr(11, 2);
-        if (data[i].name === hour) {
+
+        if (Number(data[i].name) === Number(hour) + 9) {
           data[i].count++;
         }
         // console.log(accident[j].accidentDate);
