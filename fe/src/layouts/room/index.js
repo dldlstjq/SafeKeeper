@@ -40,6 +40,9 @@ import hyundai from "assets/images/hyundai.jpg";
 // import BuildByDevelopers from "layouts/dashboard/components/BuildByDevelopers";
 // import WorkWithTheRockets from "layouts/dashboard/components/WorkWithTheRockets";
 import Projects from "layouts/room/components/Projects";
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { BASE_URL } from "index";
 // import OrderOverview from "layouts/dashboard/components/OrderOverview";
 
 // Data
@@ -49,6 +52,24 @@ import Projects from "layouts/room/components/Projects";
 function Room() {
   // const { size } = typography;
   // const { chart, items } = reportsBarChartData;
+  let [user, setUser] = useState(JSON.parse(localStorage.getItem("user")));
+
+  useEffect(() => {
+    if (user === undefined) {
+      axios
+        .post(BASE_URL + "/api/v1/camera/getConstCameraList", {
+          construction: {
+            constructName: user.construction.constructName,
+            constructionId: user.construction.constructionId,
+          },
+        })
+        .then((res) => {
+          console.log(res.data);
+          localStorage.setItem("camera", JSON.stringify(res.data[0]));
+        })
+        .catch((err) => console.log(err));
+    }
+  }, []);
 
   return (
     <DashboardLayout>
