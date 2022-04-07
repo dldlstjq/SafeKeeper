@@ -11,7 +11,7 @@ import SuiBox from "components/SuiBox";
 import Grid from "@mui/material/Grid";
 import * as tmImage from "@teachablemachine/image";
 import { BASE_URL } from "index";
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 
 const OPENVIDU_SERVER_URL = "https://j6d101.p.ssafy.io:8443";
 const OPENVIDU_SERVER_SECRET = "vonovono";
@@ -390,17 +390,17 @@ class CCTV extends Component {
                 accidentPicture: "string",
                 accidentType: "안전모 미착용",
                 camera: {
-                  cameraId: 2,
+                  cameraId: 1,
                   cameraPlace: "1층",
                   construction: {
                     constructName: "samsung",
                     constructionId: 1,
                   },
                 },
-                room: {
-                  roomId: 37,
-                  roomName: "123",
-                },
+                // room: {
+                //   roomId: 37,
+                //   roomName: "123",
+                // },
               })
               .then((res) => {})
               .catch((err) => console.log(err));
@@ -433,8 +433,8 @@ class CCTV extends Component {
                   style={{
                     width: "500px",
                     height: "300px",
-                    marginTop:'8rem',
-                    marginBottom:'3rem'
+                    marginTop: "8rem",
+                    marginBottom: "3rem",
                   }}
                 />
               </div>
@@ -475,7 +475,7 @@ class CCTV extends Component {
                   </p>
                   <Link to="/room">
                     <ExitToAppIcon />
-                    </Link>
+                  </Link>
                 </form>
               </div>
             </div>
