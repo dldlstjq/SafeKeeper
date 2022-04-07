@@ -47,6 +47,7 @@ class CCTV extends Component {
       ok: true,
       user: JSON.parse(localStorage.getItem("user")),
       capture: false,
+      camera: JSON.parse(localStorage.getItem("camera")),
     };
 
     this.joinSession = this.joinSession.bind(this);
@@ -390,10 +391,10 @@ class CCTV extends Component {
                 accidentPicture: "string",
                 accidentType: "안전모 미착용",
                 camera: {
-                  cameraId: 1,
-                  cameraPlace: "1층",
+                  cameraId: this.state.camera.cameraId,
+                  cameraPlace: this.state.camera.cameraPlace,
                   construction: {
-                    constructName: this.state.user.construction.constructionName,
+                    constructName: this.state.user.construction.constructName,
                     constructionId: this.state.user.construction.constructionId,
                   },
                 },
