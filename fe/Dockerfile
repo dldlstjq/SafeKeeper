@@ -3,5 +3,6 @@ COPY ./ ./
 # RUN npm install
 RUN npm install -g serve
 RUN npm install -save react-scripts
+RUN npm i @tensorflow/tfjs-node
 RUN npm run build
 ENTRYPOINT ["serve", "-s", "build"]
