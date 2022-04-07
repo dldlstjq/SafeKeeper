@@ -37,12 +37,15 @@ public class ConstructionController {
             @ApiResponse(code = 404, message = "사용자 없음"),
             @ApiResponse(code = 500, message = "서버 오류")
     })
-    public ResponseEntity<? extends BaseResponseBody> constructionRegister(
+    public ResponseEntity<List<ConstructionDto.ConstructionRes>> constructionRegister(
             @RequestBody @ApiParam(value="회사 등록 정보", required = true) ConstructionRegisterPostReq registerInfo){
 
         Construction construction = constructionService.createConstruction(registerInfo);
 
-        return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
+        //등록한 회사 정보 반환
+        List<ConstructionDto.ConstructionRes> list = constructionService.resConstList(registerInfo.getConstructName());
+
+        return ResponseEntity.status(200).body(list);
     }
 
 

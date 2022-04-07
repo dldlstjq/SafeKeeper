@@ -2,7 +2,6 @@ package com.ssafy.api.service;
 
 
 import com.ssafy.api.dto.ConstructionDto;
-import com.ssafy.api.dto.UserDto;
 import com.ssafy.db.entity.Construction;
 import com.ssafy.db.repository.ConstructionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +25,21 @@ public class ConstructionServiceImpl implements ConstructionService{
                 .constructName(constRegisterInfo.getConstructName())
                 .build();
         return constructionRepository.save(construction);
+    }
+
+    @Override
+    public List<ConstructionDto.ConstructionRes> resConstList(String constRegisterInfo) {
+        List<Construction> list = constructionRepository.resConstInfo(constRegisterInfo);
+
+        List<ConstructionDto.ConstructionRes> result = new ArrayList<>();
+
+        for (Construction construction : list) {
+            ConstructionDto.ConstructionRes constructionListRes = new ConstructionDto.ConstructionRes();
+            constructionListRes.setConstructionId(construction.getConstructionId());
+            constructionListRes.setConstructionName(construction.getConstructName());
+            result.add(constructionListRes);
+        }
+        return result;
     }
 
     @Override
