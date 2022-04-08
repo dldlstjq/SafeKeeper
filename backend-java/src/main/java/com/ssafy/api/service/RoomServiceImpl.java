@@ -70,13 +70,28 @@ public class RoomServiceImpl implements RoomService{
     @Override
     public List<RoomDto.RoomRes> getRoomListByUser(Long userId){
         List<RoomDto.RoomRes> result = new ArrayList<>();
-        List<RoomUser> list = roomUserRepository.selectRoomByUser(userId);
-        for(RoomUser roomUser : list){
-            Room room = roomUser.getRoom();
+        List<Room> list = roomRepository.searchUserHasRoom(userId);
+        for(Room room : list){
+            System.out.println(room.toString());
             RoomDto.RoomRes roomRes = RoomDto.RoomRes.of(room);
+            roomRes.setRoomId(room.getRoomId());
+            roomRes.setRoomName(room.getRoomName());
+            roomRes.setRoomPassword(room.getRoomPassword());
             result.add(roomRes);
         }
 
         return result;
+    }
+
+    @Override
+    public void deleteRoomByRoomId(RoomDto.RoomDeleteDelReq roomDeleteDelReq){
+        Long roomId = roomDeleteDelReq.getRoomId();
+        roomUserRepository.deleteRoomUserByRoomId(roomId);
+        roomRepository.deledeRoomByRoomname(roomId);
+    }
+
+    public void deleteRoomUserByUserId(RoomDto.RoomUserDeleteDelReq roomUserDeleteDelReq){
+        Long userId = roomUserDeleteDelReq.getUserId();
+        roomUserRepository.deleteRoomUserByRoomId(userId);
     }
 }

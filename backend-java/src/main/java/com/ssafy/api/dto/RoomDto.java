@@ -44,8 +44,6 @@ public class RoomDto {
         String roomName;
         @ApiModelProperty(name="방 비밀번호", required = true)
         String roomPassword;
-        @ApiModelProperty(name="유저", required = true)
-        User user;
 
         public static RoomRes of(Room room) {
             RoomRes res = new RoomRes();
@@ -59,7 +57,6 @@ public class RoomDto {
             RoomRes res = new RoomRes();
             res.setRoomId(room.getRoomId());
             res.setRoomName(room.getRoomName());
-            res.setUser(user);
             // 비밀번호는 나중에 논의
             return res;
         }
@@ -78,5 +75,29 @@ public class RoomDto {
         Room room;
         @ApiModelProperty(name="유저", required = true)
         User user;
+    }
+
+    /**
+     * 방 삭제 API ([del] /api/v1/room) 요청에 대한 응답값 정의.
+     */
+
+    @Getter
+    @Setter
+    @ApiModel("RoomDeleteDelReq")
+    public static class RoomDeleteDelReq{
+        @ApiModelProperty(name="방", required = true)
+        Long roomId;
+    }
+
+    /**
+     * 방 참여 유저 삭제 API ([del] /api/v1/room/user) 요청에 대한 응답값 정의.
+     */
+
+    @Getter
+    @Setter
+    @ApiModel("RoomUserDeleteDelReq")
+    public static class RoomUserDeleteDelReq{
+        @ApiModelProperty(name="방", required = true)
+        Long userId;
     }
 }

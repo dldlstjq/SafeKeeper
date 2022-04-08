@@ -89,11 +89,11 @@ public class UserDto {
     @ApiModel("UserResponse")
     public static class UserRes{
         @ApiModelProperty(name="User ID")
-        String userId;
+        User user;
 
         public static com.ssafy.api.dto.UserDto.UserRes of(User user) {
             com.ssafy.api.dto.UserDto.UserRes res = new com.ssafy.api.dto.UserDto.UserRes();
-            res.setUserId(user.getUserId());
+            res.setUser(user);
             return res;
         }
     }

@@ -11,6 +11,6 @@ import java.util.List;
  */
 public interface ConstructionService {
     Construction createConstruction(ConstructionRegisterPostReq constRegisterInfo);
-
+    List<ConstructionDto.ConstructionRes> resConstList(String constRegisterInfo);
     List<ConstructionDto.ConstructionRes> getConstructionList();
 }
