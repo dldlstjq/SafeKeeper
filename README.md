@@ -76,7 +76,7 @@ https://www.notion.so/SSAFY-8e6141ecf8604fcba37f47d710c7c6cc
 
 # ERD
 
-![ERD(변동사항 없음)](image/ERD(변동사항 없음).png)
+![ERD(변동사항 없음)](image/ERD(변동사항 없음)-16493828861241.png)
 
 
 
