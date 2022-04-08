@@ -44,8 +44,7 @@ https://www.notion.so/SSAFY-8e6141ecf8604fcba37f47d710c7c6cc
 - 쓰러진 사람 확인 (추후 추가 기능)
 - 화재 현장 확인 (추후 추가 기능)
 - 건물 균열 탐지 (추후 추가 기능)
-- 시연 시나리오
-  - https://lab.ssafy.com/s06-ai-image-sub2/S06P22D101/-/blob/master/exec/%EC%8B%9C%EC%97%B0%20%EC%8B%9C%EB%82%98%EB%A6%AC%EC%98%A4-PDF.pdf
+- [시연 시나리오](./exec/시연 시나리오-PDF.pdf)
 
 
 # 데이터 수집 방안
