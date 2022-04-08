@@ -1,3 +1,14 @@
+# 팀원 소개
+
+- 강태훈(팀장) : BE, AI 모델링
+- 권영준 : FE - OpenVidu 적용
+- 방호진: BE-빌드 및 배포 담당, FE-디자인 적용
+- 이인섭: BE, FE OpenVidu 적용
+- 홍지원: AI 모델링
+- 최형오: AI 모델링
+
+
+
 # 기획 아이디어
 
 - 작업 현장 안전 장비 확인
@@ -29,6 +40,9 @@ https://j6d101.p.ssafy.io/
 - 쓰러진 사람 확인 (추후 추가 기능)
 - 화재 현장 확인 (추후 추가 기능)
 - 건물 균열 탐지 (추후 추가 기능)
+- 시연 시나리오
+  - https://lab.ssafy.com/s06-ai-image-sub2/S06P22D101/-/blob/master/exec/%EC%8B%9C%EC%97%B0%20%EC%8B%9C%EB%82%98%EB%A6%AC%EC%98%A4-PDF.pdf
+
 
 # 데이터 수집 방안
 
@@ -53,3 +67,30 @@ https://j6d101.p.ssafy.io/
 - 추가적으로 개별로 이미지를 찍어, 데이터를 라벨링 예정
 
   - 안전모, 안전화 구입
+
+
+
+# ERD
+
+![ERD(변동사항 없음)](image/ERD(변동사항 없음).png)
+
+
+
+# 시스템 구성도
+
+![시스템 구성도](image/시스템 구성도.PNG)
+
+
+
+# 시퀀스 다이어그램
+
+https://lab.ssafy.com/s06-ai-image-sub2/S06P22D101/-/blob/master/%EC%82%B0%EC%B6%9C%EB%AC%BC/%EC%8B%9C%ED%80%80%EC%8A%A4%20%EB%8B%A4%EC%9D%B4%EC%96%B4%EA%B7%B8%EB%9E%A8.pdf
+
+
+
+# 빌드 및 배포 과정
+
+https://lab.ssafy.com/s06-ai-image-sub2/S06P22D101/-/blob/master/exec/%EB%B9%8C%EB%93%9C%20%EB%B0%8F%20%EB%B0%B0%ED%8F%AC.md
+
+
+
