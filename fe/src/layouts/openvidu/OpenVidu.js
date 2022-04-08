@@ -391,8 +391,8 @@ class CCTV extends Component {
                 accidentPicture: "string",
                 accidentType: "안전모 미착용",
                 camera: {
-                  cameraId: this.state.camera.cameraId,
-                  cameraPlace: this.state.camera.cameraPlace,
+                  cameraId: 1,
+                  cameraPlace: "1층",
                   construction: {
                     constructName: this.state.user.construction.constructName,
                     constructionId: this.state.user.construction.constructionId,
