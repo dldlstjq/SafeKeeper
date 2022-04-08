@@ -6,6 +6,10 @@
 
 https://j6d101.p.ssafy.io/
 
+# 노션
+
+https://www.notion.so/SSAFY-8e6141ecf8604fcba37f47d710c7c6cc
+
 # 기획 배경
 
 - 작업현장에서 안전장비 미착용으로 인한 사고 방지
