@@ -88,13 +88,13 @@ https://www.notion.so/SSAFY-8e6141ecf8604fcba37f47d710c7c6cc
 
 # 시퀀스 다이어그램
 
-[시퀀스 다이어그램](#https://lab.ssafy.com/s06-ai-image-sub2/s06p22d101/-/blob/master/%ec%82%b0%ec%b6%9c%eb%ac%bc/%ec%8b%9c%ed%80%80%ec%8a%a4%20%eb%8b%a4%ec%9d%b4%ec%96%b4%ea%b7%b8%eb%9e%a8.pdf)
+[시퀀스 다이어그램](./산출물/시퀀스 다이어그램.pdf)
 
 
 
 # 빌드 및 배포 과정
 
-[빌드 및 배포 파일](#https://lab.ssafy.com/s06-ai-image-sub2/S06P22D101/-/blob/master/exec/%EB%B9%8C%EB%93%9C%20%EB%B0%8F%20%EB%B0%B0%ED%8F%AC.md)
+[빌드 및 배포 파일](./exec/빌드 및 배포.md)
 
 
 
